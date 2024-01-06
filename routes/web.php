@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\MasterData\Customer;
 use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Login::class);
+Route::get('/customer', Customer::class);
