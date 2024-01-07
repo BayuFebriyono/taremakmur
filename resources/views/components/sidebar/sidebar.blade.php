@@ -22,5 +22,7 @@
             </div>
         </li>
 
+        <livewire:auth.logout />
+
     </ul>
 </nav>
