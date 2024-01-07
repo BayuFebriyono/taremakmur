@@ -16,7 +16,8 @@ class Customer extends Component
 
     public $active = 'customer';
     public $search = '';
-    public $isAddData = false;
+ public $modalStatus = '';
+    public $customerId = null;
 
     public $nama = '';
     public $alamat = '';
@@ -48,22 +49,45 @@ class Customer extends Component
         $this->resetFields();
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         ModelsCustomer::destroy($id);
         session()->flash('success', 'Data telah dihapus');
-
     }
 
     public function addData()
     {
-        $this->isAddData = true;
+        $this->modalStatus = 'add';
+    }
+
+    public function edit($id)
+    {
+        $data = ModelsCustomer::find($id);
+        $this->nama = $data->nama;
+        $this->alamat = $data->alamat;
+        $this->customerId = $data->id;
+       $this->modalStatus = 'edit';
+    }
+
+    public function update()
+    {
+        ModelsCustomer::find($this->customerId)
+            ->update([
+                'nama' => $this->nama,
+                'alamat' => $this->alamat
+            ]);
+        
+        session()->flash('success', 'Data berhasil diubah');
+        $this->resetFields();
     }
 
     public function resetFields()
     {
-        $this->isAddData = false;
+      
 
         $this->nama = '';
         $this->alamat = '';
+        $this->modalStatus = '';
+        $this->customerId = null;
     }
 }
