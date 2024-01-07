@@ -49,7 +49,7 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $customer->nama }}</td>
                             <td>{{ $customer->alamat }}</td>
-                            <td></td>
+                            <td><button wire:click="delete('{{ $customer->id }}')" wire:confirm="Apakah anda yakin ingin menghapus?" class="btn btn-danger d-inline"><i class="mdi mdi-trash-can"></i></button></td>
                         </tr>
                     @endforeach
                 </tbody>

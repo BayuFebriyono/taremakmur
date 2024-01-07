@@ -48,6 +48,12 @@ class Customer extends Component
         $this->resetFields();
     }
 
+    public function delete($id){
+        ModelsCustomer::destroy($id);
+        session()->flash('success', 'Data telah dihapus');
+
+    }
+
     public function addData()
     {
         $this->isAddData = true;
