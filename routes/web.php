@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', Login::class);
-Route::get('/customer', Customer::class);
+Route::get('/', Login::class)->name('login');
+Route::get('/customer', Customer::class)->middleware('auth');

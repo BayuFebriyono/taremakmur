@@ -25,42 +25,55 @@
 </head>
 
 <body class="with-welcome-text">
-  <div class="container-scroller">
+    <div class="container-scroller">
 
-    <!-- partial:partials/_navbar.html -->
-      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
-  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-    <div class="me-3">
-      <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
-        <span class="icon-menu"></span>
-      </button>
-    </div>
-
-  </div>
-
-  </nav>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_settings-panel.html -->
-
-
-      <!-- partial -->
-      <!-- partial:partials/_sidebar.html -->
-        @include('components.sidebar.sidebar')
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          {{ $slot }}
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
 
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
+      <div class="navbar-menu-wrapper d-flex align-items-top">
+
+        <ul class="navbar-nav ms-auto">
+
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-bs-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+          <!-- partial:partials/_settings-panel.html -->
+          <div class="theme-setting-wrapper">
+
     </div>
-    <!-- page-body-wrapper ends -->
-  </div>
+
+          <!-- partial -->
+          <!-- partial:partials/_sidebar.html -->
+      @include('components.sidebar.sidebar')
+          <!-- partial -->
+          <div class="main-panel">
+            <div class="content-wrapper">
+             {{ $slot }}
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+
+    </footer>
+            <!-- partial -->
+          </div>
+          <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+      </div>
   <!-- container-scroller -->
 
   <!-- plugins:js -->

@@ -22,7 +22,7 @@ class Login extends Component
         ]);
 
         if(Auth::attempt(['username' => $this->username, 'password' => $this->password])){
-            dd('login ok');
+            return $this->redirect('/customer', true);
         }else{
             session()->flash('error', 'Username atau Password Salah');
             return $this->redirect('/', true);
