@@ -17,7 +17,8 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="/customer">Customer</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/customer">Customer</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">Suplier</a></li>
                 </ul>
             </div>
         </li>

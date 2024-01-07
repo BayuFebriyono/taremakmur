@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Admin\MasterData\Customer;
+use App\Livewire\Admin\MasterData\Suplier;
 use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Login::class)->name('login');
-Route::get('/customer', Customer::class)->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/customer', Customer::class);
+    Route::get('/suplier', Suplier::class);
+});
