@@ -19,7 +19,7 @@
                 <ul class="nav flex-column sub-menu">
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/customer">Customer</a></li>
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">Suplier</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">BarangPmi</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/barang">Barang</a></li>
                 </ul>
             </div>
         </li>

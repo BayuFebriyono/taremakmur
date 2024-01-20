@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\MasterData\Barang;
 use App\Livewire\Admin\MasterData\Customer;
 use App\Livewire\Admin\MasterData\Suplier;
 use App\Livewire\Auth\Login;
@@ -21,6 +22,7 @@ Route::get('/', Login::class)->name('login');
 Route::middleware('auth')->group(function () {
     Route::get('/customer', Customer::class);
     Route::get('/suplier', Suplier::class);
+    Route::get('/barang', Barang::class);
 });
 
 Route::get('/tes', function(){
