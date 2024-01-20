@@ -22,3 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/customer', Customer::class);
     Route::get('/suplier', Suplier::class);
 });
+
+Route::get('/tes', function(){
+    return uniqid();
+});

@@ -11,7 +11,7 @@
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
                 aria-controls="ui-basic">
-                <i class="menu-icon mdi mdi-database-check"></i>
+                <i class="men1u-icon mdi mdi-database-check"></i>
                 <span class="menu-title">Master Data</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -19,6 +19,7 @@
                 <ul class="nav flex-column sub-menu">
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/customer">Customer</a></li>
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">Suplier</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">BarangPmi</a></li>
                 </ul>
             </div>
         </li>
