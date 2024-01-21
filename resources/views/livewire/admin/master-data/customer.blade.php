@@ -1,10 +1,14 @@
 <div>
     <button wire:click="addData" class="btn btn-primary">Tambahkan Data</button>
+    <button wire:click='importExcel' class="btn btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import Excel</button>
     @if (session('success'))
         <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    @endif
+    @if ($excel)
+        <livewire:admin.excel.customer-excel />
     @endif
 
     @if ($modalStatus == 'add')

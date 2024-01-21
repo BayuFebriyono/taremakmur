@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\MasterData;
 
 use App\Models\Customer as ModelsCustomer;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,11 +17,12 @@ class Customer extends Component
 
     public $active = 'customer';
     public $search = '';
- public $modalStatus = '';
+    public $modalStatus = '';
     public $customerId = null;
 
     public $nama = '';
     public $alamat = '';
+    public $excel = false;
 
     public function render()
     {
@@ -66,7 +68,7 @@ class Customer extends Component
         $this->nama = $data->nama;
         $this->alamat = $data->alamat;
         $this->customerId = $data->id;
-       $this->modalStatus = 'edit';
+        $this->modalStatus = 'edit';
     }
 
     public function update()
@@ -76,18 +78,32 @@ class Customer extends Component
                 'nama' => $this->nama,
                 'alamat' => $this->alamat
             ]);
-        
+
         session()->flash('success', 'Data berhasil diubah');
         $this->resetFields();
     }
 
     public function resetFields()
     {
-      
+
 
         $this->nama = '';
         $this->alamat = '';
         $this->modalStatus = '';
         $this->customerId = null;
+    }
+
+    public function importExcel()
+    {
+        $this->excel = true;
+    }
+
+    #[On('cancelExcelCustomer')]
+    public function cancelExcel($message='')
+    {
+        $this->excel = false;
+        if($message){
+            session()->flash('success', $message);
+        }
     }
 }
