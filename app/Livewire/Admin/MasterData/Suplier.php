@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\MasterData;
 
 use App\Models\Suplier as ModelsSuplier;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,6 +23,8 @@ class Suplier extends Component
     public $satuan = '';
     public $unit = 0;
     public $suplierId = null;
+
+    public $excel = false;
 
     public function render()
     {
@@ -105,5 +108,17 @@ class Suplier extends Component
         $this->satuan = '';
         $this->unit = 0;
         $this->suplierId = null;
+    }
+
+    public function importExcel(){
+        $this->excel = true;
+    }
+
+    #[On('cancelExcelSuplier')]
+    public function cancelExcel($message = ''){
+        $this->excel = false;
+        if($message){
+            session()->flash('success', $message);
+        }
     }
 }

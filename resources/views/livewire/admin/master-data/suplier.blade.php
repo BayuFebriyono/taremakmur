@@ -1,11 +1,16 @@
 <div>
 
     <button wire:click="addData" class="btn btn-primary">Tambahkan Data</button>
+    <button wire:click='importExcel' class="btn btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import Excel</button>
     @if (session('success'))
         <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    @endif
+
+    @if ($excel)
+        <livewire:admin.excel.suplier-excel />
     @endif
 
     @if ($modalStatus == 'add')
@@ -126,11 +131,12 @@
                                 <td>{{ $suplier->suplier }}</td>
                                 <td>{{ $suplier->satuan }}</td>
                                 <td>{{ $suplier->unit }}</td>
-                                <td><button wire:click="edit('{{ $suplier->id }}')" class="btn btn-warning d-inline"><i
-                                            class="mdi mdi-pen"></i></button></td>
-                                <td><button wire:click="delete('{{ $suplier->id }}')"
+                                <td><button wire:click="edit('{{ $suplier->id }}')"
+                                        class="btn btn-warning d-inline"><i class="mdi mdi-pen"></i></button>
+                                    <button wire:click="delete('{{ $suplier->id }}')"
                                         wire:confirm="Apakah anda yakin ingin menghapus?"
-                                        class="btn btn-danger d-inline"><i class="mdi mdi-trash-can"></i></button></td>
+                                        class="btn btn-danger d-inline"><i class="mdi mdi-trash-can"></i></button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
