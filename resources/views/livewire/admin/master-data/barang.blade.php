@@ -1,5 +1,6 @@
 <div>
     <button wire:click='addData' class="btn btn-primary">Tambahkan Data</button>
+    <button wire:click='importExcel' class="btn btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import Excel</button>
     @if (session('success'))
         <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
             {{ session('success') }}
@@ -7,6 +8,9 @@
         </div>
     @endif
 
+    @if ($excel)
+        <livewire:admin.excel.barang-excel />
+    @endif
     @if ($statusModal == 'add')
         <div class="card my-3">
             <div class="card-header">

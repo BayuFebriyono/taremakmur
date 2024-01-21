@@ -80,10 +80,11 @@
                                 <td>{{ $customer->nama }}</td>
                                 <td>{{ $customer->alamat }}</td>
                                 <td><button wire:click="edit('{{ $customer->id }}')" class="btn btn-warning d-inline"><i
-                                            class="mdi mdi-pen"></i></button></td>
-                                <td><button wire:click="delete('{{ $customer->id }}')"
+                                            class="mdi mdi-pen"></i></button>
+                                    <button wire:click="delete('{{ $customer->id }}')"
                                         wire:confirm="Apakah anda yakin ingin menghapus?"
-                                        class="btn btn-danger d-inline"><i class="mdi mdi-trash-can"></i></button></td>
+                                        class="btn btn-danger d-inline"><i class="mdi mdi-trash-can"></i></button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -6,6 +6,7 @@ use App\Models\Barang as ModelsBarang;
 use App\Models\Suplier as ModelsSuplier;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -36,6 +37,7 @@ class Barang extends Component
     public $statusModal = '';
     public $barangId = null;
     public $search = '';
+    public $excel = false;
 
     public function mount()
     {
@@ -151,5 +153,18 @@ class Barang extends Component
         $this->diskon = 0;
         $this->statusModal = '';
         $this->barangId = null;
+    }
+
+    public function importExcel()
+    {
+        $this->excel = true;
+    }
+
+    #[On('cancelExcelBarang')]
+    public function cancelExcel($message = ''){
+        $this->excel = false;
+        if($message){
+            session()->flash('success', $message);
+        }
     }
 }
