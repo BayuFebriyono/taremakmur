@@ -13,4 +13,9 @@ class Pembelian extends Model
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
     public $incrementing = false;
+
+    public function kode_barang()
+    {
+        return $this->belongsTo(Barang::class,'kode_barang', 'kode_barang');
+    }
 }
