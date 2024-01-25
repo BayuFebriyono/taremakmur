@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('no_invoice');
             $table->string('kode_barang');
             $table->integer('qty');
-            $table->integer('aktual');
+            $table->integer('aktual')->default(0);
             $table->integer('harga');
             $table->double('diskon')->default(0);
             $table->string('remark')->nullable();
