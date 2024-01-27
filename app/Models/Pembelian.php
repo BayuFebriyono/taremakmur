@@ -14,8 +14,13 @@ class Pembelian extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
 
-    public function kode_barang()
+    public function barang()
     {
-        return $this->belongsTo(Barang::class,'kode_barang', 'kode_barang');
+        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
+    }
+
+    public function suplier()
+    {
+        return $this->belongsTo(Suplier::class);
     }
 }
