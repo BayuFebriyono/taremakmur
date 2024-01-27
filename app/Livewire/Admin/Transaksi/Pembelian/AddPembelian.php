@@ -15,6 +15,13 @@ class AddPembelian extends Component
     public $supliers;
     public $serachSuplier = '';
     public $namaBarang = '';
+    // Remark Utils;
+    public $showRemarkId = '';
+    public $remark;
+    // Aktual Utils
+    public $showAktualId = '';
+    public $aktual;
+
 
     // Props addPembelian
     public $suplierId;
@@ -35,10 +42,10 @@ class AddPembelian extends Component
     }
     public function render()
     {
-        $this->pembelians = Pembelian::where('status', 'WAITING')
+        $this->pembelians = Pembelian::whereNot('status', 'SAVED')
             ->with(['barang', 'suplier'])
             ->get();
-            // dd($this->pembelians);
+        // dd($this->pembelians);
         return view('livewire.admin.transaksi.pembelian.add-pembelian');
     }
 
@@ -54,6 +61,7 @@ class AddPembelian extends Component
             'no_invoice' => $this->noInvoice,
             'kode_barang' => $this->kodeBarang,
             'qty' => $this->quantity,
+            'aktual' => $this->quantity,
             'harga' => $this->harga,
             'diskon' => $this->diskon
         ]);
@@ -69,6 +77,48 @@ class AddPembelian extends Component
     public function filterSuplier()
     {
         $this->supliers = Suplier::where('nama', 'like', '%' . $this->serachSuplier . '%')->get();
+    }
+
+    public function showRemark($id)
+    {
+        $this->showRemarkId = $id;
+    }
+
+    public function saveRemark()
+    {
+        Pembelian::find($this->showRemarkId)->update([
+            'remark' => $this->remark
+        ]);
+        $this->showRemarkId = '';
+    }
+
+    public function showAktual($id)
+    {
+        $this->showAktualId = $id;
+    }
+
+    public function saveAktual()
+    {
+        Pembelian::find($this->showAktualId)->update([
+            'aktual' => $this->aktual
+        ]);
+
+        $this->showAktualId = '';
+    }
+
+    public function confirmed($id)
+    {
+        Pembelian::find($id)->update([
+            'status' => 'CONFIRMED'
+        ]);
+    }
+
+    public function waiting($id)
+    {
+        Pembelian::find($id)->update([
+            'status' => 'WAITING'
+        ]);
+        
     }
 
     public function add()

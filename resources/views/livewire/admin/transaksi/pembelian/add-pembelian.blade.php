@@ -9,7 +9,40 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+
+    {{-- modal --}}
+
     <div class="container">
+        {{-- Form Edit Remark --}}
+        @if ($showRemarkId)
+            <form wire:submit='saveRemark'>
+                <div class="row my-3">
+                    <div class="col-md-8">
+                        <input wire:model='remark' type="text" class="form-control " placeholder="Remark...">
+                    </div>
+                    <div class="col-md-4 ">
+                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                        <button type="button" class="btn btn-sm btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        @endif
+        {{-- Form Edit Aktual --}}
+        @if ($showAktualId)
+            <form wire:submit='saveAktual'>
+                <div class="row my-3">
+                    <div class="col-md-8">
+                        <input wire:model='aktual' type="number" class="form-control " placeholder="Aktual...">
+                    </div>
+                    <div class="col-md-4 ">
+                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                        <button type="button" class="btn btn-sm btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        @endif
+
+
         @if ($showModal)
             <div class="card mb-3">
                 <div class="card-body">
@@ -48,7 +81,8 @@
                             {{-- Quantity --}}
                             <div class="col-md-6">
                                 <label for="Qty" class="form-label">Quantity</label>
-                                <input wire:model='quantity' type="number" id="Qty" class="form-control" required>
+                                <input wire:model='quantity' type="number" id="Qty" class="form-control"
+                                    required>
                             </div>
                         </div>
 
@@ -107,14 +141,20 @@
                                     <td>{{ $pembelian->kode_barang }}</td>
                                     <td>{{ $pembelian->barang->nama_barang }}</td>
                                     <td>{{ $pembelian->qty }}</td>
-                                    <td>{{ $pembelian->aktual }}</td>
+                                    <td wire:click='showAktual("{{ $pembelian->id }}")' role="button" class="text-primary"><u>{{ $pembelian->aktual }}</u></td>
                                     <td>{{ formatRupiah($pembelian->harga) }}</td>
                                     <td>{{ $pembelian->suplier->nama }}</td>
                                     <td>{{ $pembelian->diskon }}</td>
-                                    <td>{{ $pembelian->remark ?? '-' }}</td>
+                                    <td wire:click='showRemark("{{ $pembelian->id }}")' role="button"
+                                        class="text-primary"><u>{{ $pembelian->remark ?? '-' }}</u>
+                                    </td>
                                     <td>
                                         @if ($pembelian->status == 'WAITING')
-                                            <span class="btn btn-sm btn-warning"><i class="mdi mdi-check-outline"></i></span>
+                                            <span wire:click='confirmed("{{ $pembelian->id }}")' role="button" class="btn btn-sm btn-warning"><i
+                                                    class="mdi mdi-check-outline"></i></span>
+                                        @elseif ($pembelian->status == 'CONFIRMED')
+                                        <span wire:click='waiting("{{ $pembelian->id }}")' role="button" class="btn btn-sm btn-success"><i
+                                            class="mdi mdi-check-outline"></i></span>
                                         @endif
                                     </td>
                                 </tr>
@@ -122,6 +162,10 @@
                         </tbody>
                     </table>
 
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-success">Save</button>
+                    <button class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </div>
