@@ -111,7 +111,7 @@
                                     <td>{{ formatRupiah($pembelian->harga) }}</td>
                                     <td>{{ $pembelian->suplier->nama }}</td>
                                     <td>{{ $pembelian->diskon }}</td>
-                                    <td>{{ $pembelian->remark }}</td>
+                                    <td>{{ $pembelian->remark ?? '-' }}</td>
                                     <td>
                                         @if ($pembelian->status == 'WAITING')
                                             <span class="btn btn-sm btn-warning"><i class="mdi mdi-check-outline"></i></span>
