@@ -113,6 +113,10 @@
 
         <div class="card">
             <div class="card-body">
+                    <div class="d-flex justify-content-end mb-2">
+                        <button wire:click='confirmAll' class="btn btn-success"><i class="mdi mdi-check-all"></i>&nbsp;Confirm All</button>
+                    </div>
+                
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -164,8 +168,8 @@
 
                 </div>
                 <div class="mt-3">
-                    <button class="btn btn-success">Save</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <button wire:click='save' class="btn btn-success">Save</button>
+                    <button wire:click='delete' class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </div>

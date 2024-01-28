@@ -113,12 +113,33 @@ class AddPembelian extends Component
         ]);
     }
 
+    public function confirmAll()
+    {
+        Pembelian::whereIn('id', $this->pembelians->pluck('id')->toArray())
+            ->update([
+                'status' => 'CONFIRMED'
+            ]);
+    }
+
+    public function save()
+    {
+        Pembelian::where('status', 'CONFIRMED')
+            ->update([
+                'status' => 'SAVED'
+            ]);
+    }
+
+    public function delete()
+    {
+        Pembelian::whereIn('id', $this->pembelians->pluck('id')->toArray())
+            ->delete();
+    }
+
     public function waiting($id)
     {
         Pembelian::find($id)->update([
             'status' => 'WAITING'
         ]);
-        
     }
 
     public function add()
