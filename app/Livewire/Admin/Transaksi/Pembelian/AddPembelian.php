@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Transaksi\Pembelian;
 use App\Models\Barang;
 use App\Models\Pembelian;
 use App\Models\Suplier;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class AddPembelian extends Component
@@ -15,6 +16,7 @@ class AddPembelian extends Component
     public $supliers;
     public $serachSuplier = '';
     public $namaBarang = '';
+    public $excel = false;
     // Remark Utils;
     public $showRemarkId = '';
     public $remark;
@@ -90,6 +92,18 @@ class AddPembelian extends Component
             'remark' => $this->remark
         ]);
         $this->showRemarkId = '';
+    }
+
+    public function showExcel()
+    {
+
+        $this->excel = true;
+    }
+
+    #[On('cancel-excel')]
+    public function cancelExcel()
+    {
+        $this->excel = false;
     }
 
     public function showAktual($id)

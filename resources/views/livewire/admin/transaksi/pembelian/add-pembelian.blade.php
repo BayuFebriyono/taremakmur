@@ -1,7 +1,8 @@
 <div>
     <div class="mb-3">
         <button wire:click='add' class="btn btn-sm btn-primary ">Tambahkan Pembelian</button>
-        <button class="btn btn-sm btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import Pembelian</button>
+        <button wire:click='showExcel()' class="btn btn-sm btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import
+            Pembelian</button>
     </div>
     @if (session('success'))
         <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
@@ -10,9 +11,13 @@
         </div>
     @endif
 
-    {{-- modal --}}
+
+
 
     <div class="container">
+        @if ($excel)
+            <livewire:admin.transaksi.pembelian.excel-add-pembelian />
+        @endif
         {{-- Form Edit Remark --}}
         @if ($showRemarkId)
             <form wire:submit='saveRemark'>
@@ -113,10 +118,11 @@
 
         <div class="card">
             <div class="card-body">
-                    <div class="d-flex justify-content-end mb-2">
-                        <button wire:click='confirmAll' class="btn btn-success"><i class="mdi mdi-check-all"></i>&nbsp;Confirm All</button>
-                    </div>
-                
+                <div class="d-flex justify-content-end mb-2">
+                    <button wire:click='confirmAll' class="btn btn-success"><i
+                            class="mdi mdi-check-all"></i>&nbsp;Confirm All</button>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -145,7 +151,8 @@
                                     <td>{{ $pembelian->kode_barang }}</td>
                                     <td>{{ $pembelian->barang->nama_barang }}</td>
                                     <td>{{ $pembelian->qty }}</td>
-                                    <td wire:click='showAktual("{{ $pembelian->id }}")' role="button" class="text-primary"><u>{{ $pembelian->aktual }}</u></td>
+                                    <td wire:click='showAktual("{{ $pembelian->id }}")' role="button"
+                                        class="text-primary"><u>{{ $pembelian->aktual }}</u></td>
                                     <td>{{ formatRupiah($pembelian->harga) }}</td>
                                     <td>{{ $pembelian->suplier->nama }}</td>
                                     <td>{{ $pembelian->diskon }}</td>
@@ -154,23 +161,26 @@
                                     </td>
                                     <td>
                                         @if ($pembelian->status == 'WAITING')
-                                            <span wire:click='confirmed("{{ $pembelian->id }}")' role="button" class="btn btn-sm btn-warning"><i
+                                            <span wire:click='confirmed("{{ $pembelian->id }}")' role="button"
+                                                class="btn btn-sm btn-warning"><i
                                                     class="mdi mdi-check-outline"></i></span>
                                         @elseif ($pembelian->status == 'CONFIRMED')
-                                        <span wire:click='waiting("{{ $pembelian->id }}")' role="button" class="btn btn-sm btn-success"><i
-                                            class="mdi mdi-check-outline"></i></span>
+                                            <span wire:click='waiting("{{ $pembelian->id }}")' role="button"
+                                                class="btn btn-sm btn-success"><i
+                                                    class="mdi mdi-check-outline"></i></span>
                                         @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-
                 </div>
-                <div class="mt-3">
-                    <button wire:click='save' class="btn btn-success">Save</button>
-                    <button wire:click='delete' class="btn btn-danger">Delete</button>
-                </div>
+                @if ($pembelians->count())
+                    <div class="mt-3">
+                        <button wire:click='save' class="btn btn-success">Save</button>
+                        <button wire:click='delete' class="btn btn-danger">Delete</button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
