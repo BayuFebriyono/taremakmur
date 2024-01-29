@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary"><span wire:loading class="spinner-grow spinner-grow-sm" ></span>Simpan</button>
                             <button wire:click='cancel' type="button" class="btn btn-secondary">Cancel</button>
                         </div>
                     </form>

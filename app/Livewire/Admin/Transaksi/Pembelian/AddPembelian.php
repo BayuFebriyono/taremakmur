@@ -104,7 +104,7 @@ class AddPembelian extends Component
     public function cancelExcel($message = '')
     {
         $this->excel = false;
-        if($message){
+        if ($message) {
             session()->flash('success', $message);
         }
     }
@@ -140,6 +140,16 @@ class AddPembelian extends Component
 
     public function save()
     {
+        // Update balance(stock) barang
+        $pembelians = $this->pembelians->where('status', 'CONFIRMED');
+        foreach ($pembelians as $pembelian) {
+            $barang = Barang::where('kode_barang', $pembelian->kode_barang)->first();
+            $barang->update([
+                'balance' => $barang->balance += $pembelian->aktual
+            ]);
+        }
+
+        // Update status saved ke DB
         Pembelian::where('status', 'CONFIRMED')
             ->update([
                 'status' => 'SAVED'
