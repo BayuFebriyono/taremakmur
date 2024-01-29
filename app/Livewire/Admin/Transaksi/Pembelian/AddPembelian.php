@@ -101,9 +101,12 @@ class AddPembelian extends Component
     }
 
     #[On('cancel-excel')]
-    public function cancelExcel()
+    public function cancelExcel($message = '')
     {
         $this->excel = false;
+        if($message){
+            session()->flash('success', $message);
+        }
     }
 
     public function showAktual($id)
