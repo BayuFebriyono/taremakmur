@@ -59,7 +59,7 @@
                                 <input wire:model='serachSuplier' wire:change='filterSuplier' type="text"
                                     class="form-control" placeholder="cari suplier...">
                                 <select wire:model='suplierId' id="Suplier" class="form-select mt-1" required>
-                                    <option value="" selected disabled>---Pilih Suplier---</option>
+                                    <option value="" selected>---Pilih Suplier---</option>
                                     @foreach ($supliers as $suplier)
                                         <option wire:key='{{ $suplier->id }}' value="{{ $suplier->id }}">
                                             {{ $suplier->nama }}</option>

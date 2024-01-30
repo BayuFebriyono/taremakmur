@@ -55,7 +55,8 @@ class AddPembelian extends Component
     {
         $this->validate([
             'namaBarang' => 'required',
-            'diskon' => 'numeric'
+            'diskon' => 'numeric',
+            'suplierId' => 'required'
         ]);
 
         Pembelian::create([
@@ -154,6 +155,8 @@ class AddPembelian extends Component
             ->update([
                 'status' => 'SAVED'
             ]);
+
+        $this->dispatch('saved')->to(ListPembelian::class);
     }
 
     public function delete()
