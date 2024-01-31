@@ -35,6 +35,7 @@
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian">Pembelian</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan">penjualan</a></li>
                   
                 </ul>
             </div>
