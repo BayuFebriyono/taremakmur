@@ -100,6 +100,7 @@ class AddPenjualan extends Component
         ]);
         // delete waiting
         Penjualan::where('status', 'WAITING')->delete();
+        $this->dispatch('saved')->to(ListPenjualan::class);
     }
 
     public function waiting($id)
