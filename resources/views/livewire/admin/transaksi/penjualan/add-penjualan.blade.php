@@ -7,32 +7,62 @@
             Penjualan</button>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     {{-- Modal Add Penjualan --}}
     @if ($showModal)
         <div class="card mt-3">
             <div class="card-body">
-                <form>
+                <form wire:submit='store'>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="noNota" class="form-label">No Nota</label>
-                            <input type="text" class="form-control" value="{{ uniqid() }}" required>
+                            <input wire:model='noNota' type="text" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <label for="KodeBarang" class="form-label">Kode Barang</label>
-                            <input type="text" class="form-control" required>
-                            <p class="fs-6 fw-bold mt-1">Nama Barang :</p>
+                            <input wire:model='kodeBarang' wire:change='cekBarang' type="text" class="form-control"
+                                required>
+                            <p class="fs-6 fw-bold mt-1">Nama Barang : {{ $namaBarang }}</p>
+                            @error($namaBarang)
+                                <p class="text-danger">Kode Barang tidak ditemukan</p>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="Quantity" class="form-label">Quantity</label>
-                            <input type="number" class="form-control" required>
+                            <input wire:model='quantity' type="number" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <label for="Harga" class="form-label">Harga</label>
-                            <select class="form-select" required>
+                            <select wire:model='harga' class="form-select" required>
                                 <option value="" selected>---Pilih Harga---</option>
+                                @if ($barang)
+                                    <option value="{{ $barang->kredit_dus }}">Kredit Dus -
+                                        {{ formatRupiah($barang->kredit_dus) }}</option>
+                                    <option value="{{ $barang->kredit_pack }}">Kredit Pack -
+                                        {{ formatRupiah($barang->kredit_pack) }}</option>
+                                    <option value="{{ $barang->kredit_pcs }}">Kredit Pcs -
+                                        {{ formatRupiah($barang->kredit_pcs) }}</option>
+                                    <option value="{{ $barang->cash_dus }}">Cash Dus -
+                                        {{ formatRupiah($barang->cash_dus) }}</option>
+                                    <option value="{{ $barang->cash_pack }}">Cash pack -
+                                        {{ formatRupiah($barang->cash_pack) }}</option>
+                                    <option value="{{ $barang->cash_pcs }}">Cash Pcs -
+                                        {{ formatRupiah($barang->cash_pcs) }}</option>
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -40,16 +70,16 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="Diskon" class="form-label">Diskon</label>
-                            <input type="number" class="form-control" required>
+                            <input wire:model='diskon' type="number" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <label for="Toko" class="form-label">Toko</label>
-                            <input type="text" class="form-control" required>
+                            <input wire:model='toko' type="text" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button wire:loading.attr='disabled' wire:target='store' type="submit" class="btn btn-primary">Simpan</button>
                         <button wire:click='cancel' type="button" class="btn btn-secondary">Cancel</button>
                     </div>
                 </form>
