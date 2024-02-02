@@ -156,6 +156,7 @@ class AddPembelian extends Component
                 'status' => 'SAVED'
             ]);
 
+        Pembelian::where('status', 'WAITING')->delete();
         $this->dispatch('saved')->to(ListPembelian::class);
     }
 
