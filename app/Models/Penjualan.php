@@ -12,4 +12,8 @@ class Penjualan extends Model
 
     protected $guarded = ['id'];
     public $incrementing = false;
+
+    public function barang(){
+        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
+    }
 }

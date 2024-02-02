@@ -79,7 +79,8 @@
                     </div>
 
                     <div class="mt-3">
-                        <button wire:loading.attr='disabled' wire:target='store' type="submit" class="btn btn-primary">Simpan</button>
+                        <button wire:loading.attr='disabled' wire:target='store' type="submit"
+                            class="btn btn-primary">Simpan</button>
                         <button wire:click='cancel' type="button" class="btn btn-secondary">Cancel</button>
                     </div>
                 </form>
@@ -115,15 +116,41 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        @foreach ($penjualans as $penjualan)
+                            <tr wire:key='{{ $penjualan->id }}'>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ Carbon\Carbon::parse($penjualan->created_at)->isoFormat('D MMM YYYY') }}</td>
+                                <td>{{ $penjualan->no_nota }}</td>
+                                <td>{{ $penjualan->kode_barang }}</td>
+                                <td>{{ $penjualan->barang->nama_barang }}</td>
+                                <td>{{ $penjualan->qty }}</td>
+                                <td>{{ $penjualan->aktual }}</td>
+                                <td>{{ $penjualan->harga }}</td>
+                                <td>{{ $penjualan->diskon }}</td>
+                                <td>{{ $penjualan->remark }}</td>
+                                <td>{{ $penjualan->toko }}</td>
+                                <td>
+                                    @if ($penjualan->status == 'WAITING')
+                                        <span wire:click='confirm("{{ $penjualan->id }}")' role="button"
+                                            class="btn btn-sm btn-warning"><i
+                                                class="mdi mdi-check-outline"></i></span>
+                                    @elseif ($penjualan->status == 'CONFIRMED')
+                                        <span wire:click='waiting("{{ $penjualan->id }}")' role="button"
+                                            class="btn btn-sm btn-success"><i
+                                                class="mdi mdi-check-outline"></i></span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-
-            <div class="mt-3">
-                <button wire:click='save' class="btn btn-success">Save</button>
-                <button wire:click='delete' class="btn btn-danger">Delete</button>
-            </div>
+            @if ($penjualans->count())
+                <div class="mt-3">
+                    <button wire:click='save' class="btn btn-success">Save</button>
+                    <button wire:click='delete' class="btn btn-danger">Delete</button>
+                </div>
+            @endif
 
         </div>
     </div>

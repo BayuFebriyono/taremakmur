@@ -31,7 +31,9 @@ class AddPenjualan extends Component
 
     public function render()
     {
-        return view('livewire.admin.transaksi.penjualan.add-penjualan');
+        return view('livewire.admin.transaksi.penjualan.add-penjualan', [
+            'penjualans' => Penjualan::whereNot('status', 'SAVED')->get()
+        ]);
     }
 
     public function store()
@@ -46,7 +48,7 @@ class AddPenjualan extends Component
             'toko' => 'required',
         ]);
 
-        if($this->cekStockBarang()){
+        if ($this->cekStockBarang()) {
             Penjualan::create([
                 'no_nota' => $this->noNota,
                 'kode_barang' => $this->kodeBarang,
@@ -63,10 +65,31 @@ class AddPenjualan extends Component
             // ]);
 
             session()->flash('success', 'Data berhasil ditambahkan');
-        }else{
+        } else {
             session()->flash('error', 'Stock barang kurang');
         }
+    }
 
+    public function confirm($id)
+    {
+        Penjualan::find($id)
+            ->update([
+                'status' => 'CONFIRMED'
+            ]);
+    }
+
+    public function confirmAll()
+    {
+        Penjualan::whereNot('status', 'SAVED')->update([
+            'status' => 'CONFIRMED'
+        ]);
+    }
+
+    public function waiting($id)
+    {
+        Penjualan::find($id)->update([
+            'status' => 'WAITING'
+        ]);
     }
 
     public function cekBarang()
@@ -88,11 +111,11 @@ class AddPenjualan extends Component
         $this->showModal = false;
     }
 
-    private function cekStockBarang() : bool
+    private function cekStockBarang(): bool
     {
         $stockBarang = Barang::select('balance')->where('kode_barang', $this->kodeBarang)->first();
-        
-        if($stockBarang->balance >= $this->quantity) return true;
+
+        if ($stockBarang->balance >= $this->quantity) return true;
         return false;
     }
 }
