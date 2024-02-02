@@ -85,6 +85,23 @@ class AddPenjualan extends Component
         ]);
     }
 
+    public function save()
+    {
+        // update balance
+        $penjualans = Penjualan::where('status', 'CONFIRMED')->get();
+        foreach ($penjualans as $penjualan) {
+            Barang::where('kode_barang', $penjualan->kode_barang)->update([
+                'balance' => DB::raw('balance - ' . $penjualan->qty)
+            ]);
+        }
+        // update yang confirmed
+        Penjualan::whereIn('id', $penjualans->pluck('id'))->update([
+            'status' => 'SAVED'
+        ]);
+        // delete waiting
+        Penjualan::where('status', 'WAITING')->delete();
+    }
+
     public function waiting($id)
     {
         Penjualan::find($id)->update([
@@ -92,12 +109,17 @@ class AddPenjualan extends Component
         ]);
     }
 
+    public function delete()
+    {
+        Penjualan::whereNot('status', 'SAVED')->delete();
+    }
+
     public function cekBarang()
     {
         $barang = Barang::where('kode_barang', $this->kodeBarang)
             ->first();
         $this->barang = $barang;
-        $this->namaBarang = $barang->nama_barang;
+        $this->namaBarang = $barang->nama_barang ?? '';
     }
 
 

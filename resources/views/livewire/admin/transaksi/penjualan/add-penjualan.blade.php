@@ -147,8 +147,8 @@
             </div>
             @if ($penjualans->count())
                 <div class="mt-3">
-                    <button wire:click='save' class="btn btn-success">Save</button>
-                    <button wire:click='delete' class="btn btn-danger">Delete</button>
+                    <button wire:loading.attr='disabled' wire:target='save' wire:click='save' class="btn btn-success"> <span wire:loading wire:target='save' class="spinner-grow spinner-grow-sm" ></span>Save</button>
+                    <button wire:loading.attr='disabled' wire:target='delete' wire:click='delete' class="btn btn-danger"><span wire:loading wire:target='delete' class="spinner-grow spinner-grow-sm" ></span>Delete</button>
                 </div>
             @endif
 
