@@ -16,15 +16,17 @@ return new class extends Migration
             $table->foreignUuid('suplier_id');
             $table->string('kode_barang')->unique();
             $table->string('nama_barang');
-            $table->integer('stock')->default(0);
-            $table->integer('balance')->default(0);
+            $table->integer('stock_sto')->default(0);
+            $table->integer('stock_dus')->default(0);
+            $table->integer('stock_renteng')->default(0);
             $table->integer('kredit_dus')->nullable();
             $table->integer('kredit_pack')->nullable();
             $table->integer('kredit_pcs')->nullable();
             $table->integer('cash_dus')->nullable();
             $table->integer('cash_pack')->nullable();
             $table->integer('cash_pcs')->nullable();
-            $table->boolean('diskon')->nullable();
+            $table->double('diskon')->nullable();
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }
