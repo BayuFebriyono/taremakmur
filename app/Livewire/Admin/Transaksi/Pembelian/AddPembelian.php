@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Transaksi\Pembelian;
 
 use App\Models\Barang;
 use App\Models\Pembelian;
+use App\Models\QtyReport;
 use App\Models\Suplier;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -145,6 +146,13 @@ class AddPembelian extends Component
         $pembelians = $this->pembelians->where('status', 'CONFIRMED');
         foreach ($pembelians as $pembelian) {
             $barang = Barang::where('kode_barang', $pembelian->kode_barang)->first();
+            // update qtyreport
+            QtyReport::create([
+                'kode_barang' => $pembelian->kode_barang,
+                'in' => $pembelian->aktual,
+                'balance' => $barang->balance + $pembelian->aktual
+            ]);
+            
             $barang->update([
                 'balance' => $barang->balance += $pembelian->aktual
             ]);
@@ -157,6 +165,7 @@ class AddPembelian extends Component
             ]);
 
         Pembelian::where('status', 'WAITING')->delete();
+
         $this->dispatch('saved')->to(ListPembelian::class);
     }
 

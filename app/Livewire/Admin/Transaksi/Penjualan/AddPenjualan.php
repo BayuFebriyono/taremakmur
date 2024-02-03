@@ -3,10 +3,11 @@
 namespace App\Livewire\Admin\Transaksi\Penjualan;
 
 use App\Models\Barang;
-use App\Models\Penjualan;
-use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use App\Models\Penjualan;
+use App\Models\QtyReport;
+use Livewire\Attributes\On;
+use Illuminate\Support\Facades\DB;
 
 class AddPenjualan extends Component
 {
@@ -98,8 +99,16 @@ class AddPenjualan extends Component
         // update balance
         $penjualans = Penjualan::where('status', 'CONFIRMED')->get();
         foreach ($penjualans as $penjualan) {
-            Barang::where('kode_barang', $penjualan->kode_barang)->update([
-                'balance' => DB::raw('balance - ' . $penjualan->aktual)
+            $barang = Barang::where('kode_barang', $penjualan->kode_barang)->first();
+             // update qtyreport
+             QtyReport::create([
+                'kode_barang' => $penjualan->kode_barang,
+                'out' => $penjualan->aktual,
+                'balance' => $barang->balance - $penjualan->aktual
+            ]);
+
+            $barang->update([
+                'balance' => $barang->balance - $penjualan->aktual
             ]);
         }
         // update yang confirmed
