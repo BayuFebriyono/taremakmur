@@ -232,10 +232,12 @@
                                 <td>{{ formatRupiah($barang->cash_pcs) }}</td>
                                 <td>{{ formatRupiah($barang->diskon) }}</td>
                                 <td>
-                                    @if($barang->aktif)
-                                    <span role="button" class="btn btn-success"><i class="mdi mdi-eye-outline"></i></span>
+                                    @if ($barang->aktif)
+                                        <span wire:click='nonAktif("{{ $barang->id }}")' role="button"
+                                            class="btn btn-success"><i class="mdi mdi-eye-outline"></i></span>
                                     @else
-                                    <span role="button" class="btn btn-danger"><i class="mdi mdi-eye-closed"></i></span>
+                                        <span wire:click='aktif("{{ $barang->id }}")' role="button"
+                                            class="btn btn-danger"><i class="mdi mdi-eye-closed"></i></span>
                                     @endif
                                 </td>
                                 <td><button wire:click="edit('{{ $barang->id }}')"
@@ -249,7 +251,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $barangs->links(data:['scrollTo' => false]) }}
+                {{ $barangs->links(data: ['scrollTo' => false]) }}
             </div>
         </div>
     </div>

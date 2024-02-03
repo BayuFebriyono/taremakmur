@@ -139,6 +139,16 @@ class Barang extends Component
         ]);
     }
 
+    public function aktif($id)
+    {
+        ModelsBarang::find($id)->update(['aktif' => true]);
+    }
+
+    public function nonAktif($id)
+    {
+        ModelsBarang::find($id)->update(['aktif' => false]);
+    }
+
     public function cancel()
     {
         $this->kodeBarang;
@@ -161,9 +171,10 @@ class Barang extends Component
     }
 
     #[On('cancelExcelBarang')]
-    public function cancelExcel($message = ''){
+    public function cancelExcel($message = '')
+    {
         $this->excel = false;
-        if($message){
+        if ($message) {
             session()->flash('success', $message);
         }
     }
