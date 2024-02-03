@@ -213,6 +213,7 @@
                             <th scope="col">Cash Pack</th>
                             <th scope="col">Cash Pcs</th>
                             <th scope="col">Diskon</th>
+                            <th scope="col">Aktif</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
@@ -230,6 +231,13 @@
                                 <td>{{ formatRupiah($barang->cash_pack) }}</td>
                                 <td>{{ formatRupiah($barang->cash_pcs) }}</td>
                                 <td>{{ formatRupiah($barang->diskon) }}</td>
+                                <td>
+                                    @if($barang->aktif)
+                                    <span role="button" class="btn btn-success"><i class="mdi mdi-eye-outline"></i></span>
+                                    @else
+                                    <span role="button" class="btn btn-danger"><i class="mdi mdi-eye-closed"></i></span>
+                                    @endif
+                                </td>
                                 <td><button wire:click="edit('{{ $barang->id }}')"
                                         class="btn btn-warning d-inline"><i class="mdi mdi-pen"></i></button>
                                     <button wire:click="delete('{{ $barang->id }}')"
