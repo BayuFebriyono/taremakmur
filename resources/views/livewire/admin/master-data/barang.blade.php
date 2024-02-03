@@ -241,7 +241,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $barangs->links() }}
+                {{ $barangs->links(data:['scrollTo' => false]) }}
             </div>
         </div>
     </div>

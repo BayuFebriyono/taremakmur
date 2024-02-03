@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Transaksi\Penjualan;
 use App\Models\Barang;
 use App\Models\Penjualan;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class AddPenjualan extends Component
@@ -14,6 +15,7 @@ class AddPenjualan extends Component
     public $showModal = false;
     public $namaBarang = '';
     public $barang;
+    public $excel = false;
     // update utils
     public $remarkId;
     public $remark;
@@ -143,7 +145,8 @@ class AddPenjualan extends Component
         $this->remarkId = null;
     }
 
-    public function saveAktual(){
+    public function saveAktual()
+    {
         Penjualan::find($this->aktualId)->update([
             'aktual' => $this->aktual
         ]);
@@ -164,6 +167,20 @@ class AddPenjualan extends Component
     public function cancel()
     {
         $this->showModal = false;
+    }
+
+    public function addExcel()
+    {
+        $this->excel = true;
+    }
+
+    #[On('cancel-excel')]
+    public function cancelExcel($message = '', $type='success')
+    {
+        $this->excel = false;
+        if($message){
+            session()->flash($type, $message);
+        }
     }
 
     private function cekStockBarang(): bool

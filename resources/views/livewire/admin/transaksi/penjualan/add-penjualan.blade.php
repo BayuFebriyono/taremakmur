@@ -3,7 +3,7 @@
 
     <div class="mt-3">
         <button wire:click='add' class="btn btn-sm btn-primary">Tambahkan Data</button>
-        <button wire:click='showExcel()' class="btn btn-sm btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import
+        <button wire:click='addExcel()' class="btn btn-sm btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import
             Penjualan</button>
     </div>
 
@@ -86,6 +86,11 @@
                 </form>
             </div>
         </div>
+    @endif
+
+    {{-- Modal Excel --}}
+    @if ($excel)
+        <livewire:admin.transaksi.penjualan.excel-add />
     @endif
 
          {{-- Form Edit Remark --}}

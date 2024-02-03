@@ -54,7 +54,7 @@
                            @endforeach
                         </tbody>
                     </table>
-                    {{ $pembelians->links() }}
+                    {{ $pembelians->links(data:['scrollTo' => false]) }}
                 </div>
             </div>
         </div>

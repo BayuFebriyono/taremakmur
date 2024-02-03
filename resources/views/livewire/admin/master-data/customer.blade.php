@@ -90,7 +90,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $customers->links() }}
+            {{ $customers->links(data:['scrollTo' => false]) }}
         </div>
     </div>
 

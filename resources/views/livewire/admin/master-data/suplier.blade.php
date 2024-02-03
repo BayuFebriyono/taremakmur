@@ -142,7 +142,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $supliers->links() }}
+            {{ $supliers->links(data:['scrollTo' => false]) }}
         </div>
     </div>
 </div>
