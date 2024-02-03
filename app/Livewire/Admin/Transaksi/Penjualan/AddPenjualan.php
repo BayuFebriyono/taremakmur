@@ -14,6 +14,12 @@ class AddPenjualan extends Component
     public $showModal = false;
     public $namaBarang = '';
     public $barang;
+    // update utils
+    public $remarkId;
+    public $remark;
+    public $aktualId;
+    public $aktual;
+
 
     // Property Model Penjualan
     public $noNota;
@@ -91,7 +97,7 @@ class AddPenjualan extends Component
         $penjualans = Penjualan::where('status', 'CONFIRMED')->get();
         foreach ($penjualans as $penjualan) {
             Barang::where('kode_barang', $penjualan->kode_barang)->update([
-                'balance' => DB::raw('balance - ' . $penjualan->qty)
+                'balance' => DB::raw('balance - ' . $penjualan->aktual)
             ]);
         }
         // update yang confirmed
@@ -123,6 +129,32 @@ class AddPenjualan extends Component
         $this->namaBarang = $barang->nama_barang ?? '';
     }
 
+    public function addRemark($id)
+    {
+        $this->remarkId = $id;
+    }
+
+    public function saveRemark()
+    {
+        Penjualan::find($this->remarkId)->update([
+            'remark' => $this->remark
+        ]);
+
+        $this->remarkId = null;
+    }
+
+    public function saveAktual(){
+        Penjualan::find($this->aktualId)->update([
+            'aktual' => $this->aktual
+        ]);
+
+        $this->aktualId = null;
+    }
+
+    public function addAktual($id)
+    {
+        $this->aktualId = $id;
+    }
 
     public function add()
     {

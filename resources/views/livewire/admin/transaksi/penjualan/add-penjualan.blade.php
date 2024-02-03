@@ -88,6 +88,35 @@
         </div>
     @endif
 
+         {{-- Form Edit Remark --}}
+        @if ($remarkId)
+        <form wire:submit='saveRemark'>
+            <div class="row my-3">
+                <div class="col-md-8">
+                    <input wire:model='remark' type="text" class="form-control " placeholder="Remark...">
+                </div>
+                <div class="col-md-4 ">
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </form>
+    @endif
+
+         {{-- Form Edit Aktual --}}
+        @if ($aktualId)
+        <form wire:submit='saveAktual'>
+            <div class="row my-3">
+                <div class="col-md-8">
+                    <input wire:model='aktual' type="text" class="form-control " placeholder="Aktual...">
+                </div>
+                <div class="col-md-4 ">
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </form>
+    @endif
 
     {{-- table --}}
     <div class="card mt-4">
@@ -96,7 +125,7 @@
                 <button wire:click='confirmAll' class="btn btn-success"><i class="mdi mdi-check-all"></i>&nbsp;Confirm
                     All</button>
             </div>
-
+        
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -124,10 +153,10 @@
                                 <td>{{ $penjualan->kode_barang }}</td>
                                 <td>{{ $penjualan->barang->nama_barang }}</td>
                                 <td>{{ $penjualan->qty }}</td>
-                                <td>{{ $penjualan->aktual }}</td>
+                                <td wire:click='addAktual("{{ $penjualan->id }}")' role="button" class="text-primary"><u>{{ $penjualan->aktual }}</u></td>
                                 <td>{{ $penjualan->harga }}</td>
                                 <td>{{ $penjualan->diskon }}</td>
-                                <td>{{ $penjualan->remark }}</td>
+                                <td wire:click='addRemark("{{ $penjualan->id }}")' class="text-primary" role="button"><u>{{ $penjualan->remark ?? '-' }}</u></td>
                                 <td>{{ $penjualan->toko }}</td>
                                 <td>
                                     @if ($penjualan->status == 'WAITING')
