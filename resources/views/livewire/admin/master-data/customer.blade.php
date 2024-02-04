@@ -61,8 +61,26 @@
     <div class="card mt-5">
         <div class="card-header">Data Customer</div>
         <div class="card-body">
-            <input wire:model.live="search" type="text" class="form-control"
-                placeholder="Cari berdasarkan nama atau alamat....">
+            <div class="d-flex align-items-center">
+                <p class="p-2">Tampilkan</p>
+                <div class="p-2">
+                    <select class="form-select" wire:model.change='perPage'>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="{{ $customers->count() }}">All</option>
+                    </select>
+                </div>
+                <div class="ms-auto p-2">
+                    <input wire:model.live="search" type="text" class="form-control" placeholder="Cari...">
+                </div>
+                <div class=" p-2">
+                    <button wire:click='exportExcel' class="btn btn-inverse-success btn-md"> <span wire:loading wire:target='exportExcel' class="spinner-grow spinner-grow-sm" ></span>Export</button>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -90,7 +108,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $customers->links(data:['scrollTo' => false]) }}
+            {{ $customers->links(data: ['scrollTo' => false]) }}
         </div>
     </div>
 
