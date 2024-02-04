@@ -92,6 +92,12 @@
                             <input wire:model='diskon' type="number" class="form-control">
                         </div>
 
+                        <div class="my-4 col-md-6">
+                            <label for="Jumlah Renteng">Min Pack</label>
+                            <input wire:model='jumlahRenteng' type="number" class="form-control"  placeholder="Jumlah renteng dalam satu dus" required>
+                        </div>
+
+
                         <button type="submit" class="btn btn-primary">Submit</button>
 
                     </div>
@@ -182,6 +188,11 @@
                             <input wire:model='diskon' type="number" class="form-control">
                         </div>
 
+                        <div class="my-4 col-md-6">
+                            <label for="Jumlah Renteng">Min Pack</label>
+                            <input wire:model='jumlahRenteng' type="number" class="form-control"  placeholder="Jumlah renteng dalam satu dus" required>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Submit</button>
 
                     </div>
@@ -206,6 +217,7 @@
                             <th scope="col">Suplier</th>
                             <th scope="col">Kode Barang</th>
                             <th scope="col">Nama Barang</th>
+                            <th scope="col">Min Pack</th>
                             <th scope="col">Kredit Dus</th>
                             <th scope="col">Kredit Pack</th>
                             <th scope="col">Kredit Pcs</th>
@@ -224,6 +236,7 @@
                                 <td>{{ $barang->suplier->nama }}</td>
                                 <td>{{ $barang->kode_barang }}</td>
                                 <td>{{ $barang->nama_barang }}</td>
+                                <td>{{ $barang->jumlah_renteng }}</td>
                                 <td>{{ formatRupiah($barang->kredit_dus) }}</td>
                                 <td>{{ formatRupiah($barang->kredit_pack) }}</td>
                                 <td>{{ formatRupiah($barang->kredit_pcs) }}</td>

@@ -32,6 +32,7 @@ class Barang extends Component
     public $cashPack = 0;
     public $cashPcs = 0;
     public $diskon = 0;
+    public $jumlahRenteng = '';
 
     // utils property
     public $statusModal = '';
@@ -71,6 +72,7 @@ class Barang extends Component
         $this->cashPcs = $barang->cash_pcs;
         $this->diskon = $barang->diskon;
         $this->barangId = $barang->id;
+        $this->jumlahRenteng = $barang->jumlah_renteng;
     }
 
     public function update()
@@ -93,7 +95,8 @@ class Barang extends Component
             'cash_dus' => $this->cashDus,
             'cash_pack' => $this->cashPack,
             'cash_pcs' => $this->cashPcs,
-            'diskon' => $this->diskon
+            'diskon' => $this->diskon,
+            'jumlah_renteng' => $this->jumlahRenteng
         ]);
         $this->cancel();
         session()->flash('success', 'Data telah diubah');
@@ -117,7 +120,8 @@ class Barang extends Component
             'cash_dus' => $this->cashDus,
             'cash_pack' => $this->cashPack,
             'cash_pcs' => $this->cashPcs,
-            'diskon' => $this->diskon
+            'diskon' => $this->diskon,
+            'jumlah_renteng' => $this->jumlahRenteng
         ]);
 
         $this->cancel();
@@ -162,6 +166,7 @@ class Barang extends Component
         $this->cashPcs = 0;
         $this->diskon = 0;
         $this->statusModal = '';
+        $this->jumlahRenteng = '';
         $this->barangId = null;
     }
 

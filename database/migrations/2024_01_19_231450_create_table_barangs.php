@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('kode_barang')->unique();
             $table->string('nama_barang');
             $table->integer('stock_sto')->default(0);
-            $table->integer('stock_dus')->default(0);
+            $table->integer('jumlah_renteng')->default(0);
             $table->integer('stock_renteng')->default(0);
             $table->integer('kredit_dus')->nullable();
             $table->integer('kredit_pack')->nullable();
