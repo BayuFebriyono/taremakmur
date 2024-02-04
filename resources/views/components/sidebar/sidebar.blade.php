@@ -26,35 +26,22 @@
 
 
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#transaksi" aria-expanded="false"
-                aria-controls="transaksi">
-                <i class="men1u-icon mdi mdi-cash-multiple"></i>
-                <span class="menu-title">Transaksi</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPembelian" aria-expanded="false"
+                aria-controls="transaksiPembelian">
+                <i class="men1u-icon mdi mdi-basket-fill"></i>
+                <span class="menu-title">Pembelian</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="transaksi">
+            <div class="collapse" id="transaksiPembelian">
                 <ul class="nav flex-column sub-menu">
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian">Pembelian</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan">penjualan</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian">Invoice</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan">Riwayat</a></li>
                   
                 </ul>
             </div>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#report" aria-expanded="false"
-                aria-controls="report">
-                <i class="men1u-icon mdi mdi-cash-multiple"></i>
-                <span class="menu-title">Report</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="report">
-                <ul class="nav flex-column sub-menu">
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/qty-report">Qty Report</a></li>
-                  
-                </ul>
-            </div>
-        </li>
+       
 
         <livewire:auth.logout />
 
