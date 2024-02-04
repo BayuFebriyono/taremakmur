@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('header_pembelians', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id');
+            $table->foreignUuid('suplier_id');
             $table->string('no_invoice')->unique();
             $table->timestamps();
         });

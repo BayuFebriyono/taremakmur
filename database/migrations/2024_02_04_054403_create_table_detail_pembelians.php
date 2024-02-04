@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('detail_pembelians', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('suplier_id');
             $table->string('no_invoice');
             $table->string('kode_barang');
             $table->string('qty');
@@ -21,6 +20,7 @@ return new class extends Migration
             $table->string('harga');
             $table->double('diskon');
             $table->string('remark')->nullable();
+            $table->string('status')->default('WAITING');
             $table->timestamps();
         });
     }
