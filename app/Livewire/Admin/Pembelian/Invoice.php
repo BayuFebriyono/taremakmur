@@ -77,15 +77,18 @@ class Invoice extends Component
                 'no_invoice' => $noInvoice
             ]);
 
-            $confirmedBarang = $this->dataPembelian->where('status', 'CONFIRMED')->map(function ($item) use ($noInvoice) {
-                unset($item['id']);
-                unset($item['nama_barang']);
-                $item['no_invoice'] = $noInvoice;
-                return $item;
-            });
+            $confirmedBarang = $this->dataPembelian->where('status', 'CONFIRMED')
+                ->map(function ($item) use ($noInvoice) {
+                    unset($item['id']);
+                    unset($item['nama_barang']);
+                    $item['no_invoice'] = $noInvoice;
+                    return $item;
+                });
             $confirmedBarang->each(function ($item) {
                 DetailPembelian::create($item);
             });
+            session()->flash('success', "Berhasil dibuat dengan no invoice {$noInvoice}");
+            $this->dataPembelian = collect();
         } else {
             session()->flash('error', 'Tambahkan barang terlebih dulu');
         }
