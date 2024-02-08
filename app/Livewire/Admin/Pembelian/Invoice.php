@@ -3,6 +3,9 @@
 namespace App\Livewire\Admin\Pembelian;
 
 use App\Models\Barang;
+use App\Models\DetailPembelian;
+use App\Models\HeaderPembelian;
+use App\Models\Suplier;
 use Exception;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -16,6 +19,8 @@ class Invoice extends Component
     public $dataPembelian;
     public $aktualId = '';
     public $remarkId = '';
+    public $supliers = [];
+    public $namaSuplier = '';
 
     public $namaBarang;
     public $kodeBarang;
@@ -24,10 +29,12 @@ class Invoice extends Component
     public $harga;
     public $aktual;
     public $remark;
+    public $suplierId;
 
     public function mount()
     {
         $this->dataPembelian = collect();
+        $this->supliers = Suplier::all();
     }
 
     public function render()
@@ -53,6 +60,35 @@ class Invoice extends Component
             'remark' => null,
             'status' => 'WAITING'
         ]);
+    }
+
+    public function simpan()
+    {
+        $this->validate([
+            'suplierId' => 'required'
+        ]);
+
+        if ($this->dataPembelian->count() > 0) {
+            $no = HeaderPembelian::where('suplier_id', $this->suplierId)->get()->count();
+            $noInvoice = $no + 1 . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
+            HeaderPembelian::create([
+                'user_id' => auth()->user()->id,
+                'suplier_id' => $this->suplierId,
+                'no_invoice' => $noInvoice
+            ]);
+
+            $confirmedBarang = $this->dataPembelian->where('status', 'CONFIRMED')->map(function ($item) use ($noInvoice) {
+                unset($item['id']);
+                unset($item['nama_barang']);
+                $item['no_invoice'] = $noInvoice;
+                return $item;
+            });
+            $confirmedBarang->each(function ($item) {
+                DetailPembelian::create($item);
+            });
+        } else {
+            session()->flash('error', 'Tambahkan barang terlebih dulu');
+        }
     }
 
     public function cancel()
@@ -132,5 +168,10 @@ class Invoice extends Component
         } catch (Exception $e) {
             $this->namaBarang = '';
         }
+    }
+
+    public function cariSuplier()
+    {
+        $this->supliers = Suplier::where('nama', 'like', '%' . $this->namaSuplier . '%')->get();
     }
 }
