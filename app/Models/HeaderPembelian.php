@@ -13,4 +13,14 @@ class HeaderPembelian extends Model
     protected $guarded = ['id'];
     protected $table = 'header_pembelians';
     public $incrementing = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function suplier()
+    {
+        return $this->belongsTo(Suplier::class);
+    }
 }

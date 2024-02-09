@@ -35,7 +35,7 @@
             <div class="collapse" id="transaksiPembelian">
                 <ul class="nav flex-column sub-menu">
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian-invoice">Invoice</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan">Riwayat</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian-history">Riwayat</a></li>
                   
                 </ul>
             </div>

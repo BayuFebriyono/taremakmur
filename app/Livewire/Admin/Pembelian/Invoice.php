@@ -85,6 +85,10 @@ class Invoice extends Component
                     return $item;
                 });
             $confirmedBarang->each(function ($item) {
+                $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+                $barang->update([
+                    'stock_renteng' => $barang->stock_renteng + ($item['qty'] * $barang->jumlah_renteng )
+                ]);
                 DetailPembelian::create($item);
             });
             session()->flash('success', "Berhasil dibuat dengan no invoice {$noInvoice}");
