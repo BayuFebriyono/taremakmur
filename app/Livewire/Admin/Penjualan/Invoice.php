@@ -115,7 +115,8 @@ class Invoice extends Component
                     Report::create([
                         'kode_barang' => $item['kode_barang'],
                         'out' => $item['qty'] * $barang->jumlah_renteng,
-                        'harga' => $item['harga']
+                        'harga' => $item['harga'],
+                        'stock' => $barang->stock_sto
                     ]);
                 } else {
                     $barang->update([
@@ -124,7 +125,8 @@ class Invoice extends Component
                     Report::create([
                         'kode_barang' => $item['kode_barang'],
                         'out' => $item['qty'],
-                        'harga' => $item['harga']
+                        'harga' => $item['harga'],
+                        'stock' => $barang->stock_sto
                     ]);
                 }
                 DetailPenjualan::create($item);

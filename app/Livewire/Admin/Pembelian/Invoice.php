@@ -96,7 +96,8 @@ class Invoice extends Component
                 Report::create([
                     'kode_barang' => $item['kode_barang'],
                     'in' => $item['qty'] * $barang->jumlah_renteng,
-                    'harga' => $item['harga']
+                    'harga' => $item['harga'],
+                    'stock' => $barang->stock_sto
                 ]);
             });
             session()->flash('success', "Berhasil dibuat dengan no invoice {$noInvoice}");

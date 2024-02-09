@@ -58,6 +58,21 @@
             </div>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#report" aria-expanded="false"
+                aria-controls="report">
+                <i class="men1u-icon mdi mdi-chart-bar"></i>
+                <span class="menu-title">Report</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="report">
+                <ul class="nav flex-column sub-menu">
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/report">Report Qty</a></li>
+                  
+                </ul>
+            </div>
+        </li>
+
        
 
         <livewire:auth.logout />

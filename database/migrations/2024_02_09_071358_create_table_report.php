@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('kode_barang');
+            $table->integer('stock');
             $table->integer('in')->nullable();
             $table->integer('out')->nullable();
             $table->integer('harga')->nullable();
