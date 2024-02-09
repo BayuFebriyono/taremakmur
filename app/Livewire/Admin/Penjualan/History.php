@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Admin\Penjualan;
 
-use App\Models\DetailPenjualan;
-use App\Models\HeaderPenjualan;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
+use App\Models\DetailPenjualan;
+use App\Models\HeaderPenjualan;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Livewire\Attributes\Layout;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('History Penjualan')]
@@ -32,5 +33,15 @@ class History extends Component
         DetailPenjualan::where('no_invoice', $noInvoice)->delete();
         HeaderPenjualan::where('no_invoice', $noInvoice)->delete();
         session()->flash('success', 'Data berhasil dihapus');
+    }
+
+    public function generateNota($no_invoice)
+    {
+        $data = HeaderPenjualan::where('no_invoice', $no_invoice)->with('detail_penjualan.barang')->first();
+        $pdf = Pdf::loadView('print.nota-penjualan', ['data' => $data])->setPaper('80mm', 'auto')->output();
+        return response()->streamDownload(
+            fn () => print($pdf),
+            'nota_penjualan.pdf'
+        );
     }
 }

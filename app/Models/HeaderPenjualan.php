@@ -23,4 +23,9 @@ class HeaderPenjualan extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function detail_penjualan()
+    {
+        return $this->hasMany(DetailPenjualan::class, 'no_invoice', 'no_invoice');
+    }
 }
