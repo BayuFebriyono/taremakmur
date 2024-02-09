@@ -13,4 +13,14 @@ class HeaderPenjualan extends Model
     protected $table = 'header_penjualans';
     protected $guarded = ['id'];
     public $incrementing = false;
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
