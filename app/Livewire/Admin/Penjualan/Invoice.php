@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Admin\Penjualan;
 
+use Exception;
 use App\Models\Barang;
+use App\Models\Report;
+use Livewire\Component;
 use App\Models\Customer;
+use Livewire\Attributes\Title;
 use App\Models\DetailPenjualan;
 use App\Models\HeaderPenjualan;
-use Exception;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
-use Livewire\Component;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('Penjualan')]
@@ -89,7 +90,7 @@ class Invoice extends Component
         ]);
 
         if ($this->dataPenjualan->count() > 0) {
-    
+
             $noInvoice = $this->generateNota();
             HeaderPenjualan::create([
                 'user_id' => auth()->user()->id,
@@ -111,9 +112,19 @@ class Invoice extends Component
                     $barang->update([
                         'stock_renteng' => $barang->stock_renteng - ($item['qty'] * $barang->jumlah_renteng)
                     ]);
+                    Report::create([
+                        'kode_barang' => $item['kode_barang'],
+                        'out' => $item['qty'] * $barang->jumlah_renteng,
+                        'harga' => $item['harga']
+                    ]);
                 } else {
                     $barang->update([
                         'stock_renteng' => $barang->stock_renteng - ($item['qty'])
+                    ]);
+                    Report::create([
+                        'kode_barang' => $item['kode_barang'],
+                        'out' => $item['qty'],
+                        'harga' => $item['harga']
                     ]);
                 }
                 DetailPenjualan::create($item);

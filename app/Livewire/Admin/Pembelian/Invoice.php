@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Pembelian;
 use App\Models\Barang;
 use App\Models\DetailPembelian;
 use App\Models\HeaderPembelian;
+use App\Models\Report;
 use App\Models\Suplier;
 use Exception;
 use Livewire\Attributes\Layout;
@@ -24,7 +25,7 @@ class Invoice extends Component
 
     public $namaBarang;
     public $kodeBarang;
-    public $diskon;
+    public $diskon = 0;
     public $qty;
     public $harga;
     public $aktual;
@@ -92,6 +93,11 @@ class Invoice extends Component
                     'stock_renteng' => $barang->stock_renteng + ($item['qty'] * $barang->jumlah_renteng )
                 ]);
                 DetailPembelian::create($item);
+                Report::create([
+                    'kode_barang' => $item['kode_barang'],
+                    'in' => $item['qty'] * $barang->jumlah_renteng,
+                    'harga' => $item['harga']
+                ]);
             });
             session()->flash('success', "Berhasil dibuat dengan no invoice {$noInvoice}");
             $this->dataPembelian = collect();
