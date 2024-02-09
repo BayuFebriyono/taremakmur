@@ -43,7 +43,7 @@
                             <td>{{ $pembelian->suplier->nama }}</td>
                             <td>{{ Carbon\Carbon::parse($pembelian->created_at)->isoFormat('D MMM YYYY') }}</td>
                             <td>
-                                <button wire:click='generateNota' type="button" class="btn btn-sm btn-info"><span
+                                <button wire:click='generateNota("{{ $pembelian->no_invoice }}")' type="button" class="btn btn-sm btn-info"><span
                                         class="mdi mdi-printer-outline"></span></button>
                                 <button type="button" class="btn btn-sm btn-success"><span
                                         class="mdi mdi-eye-outline"></span></button>

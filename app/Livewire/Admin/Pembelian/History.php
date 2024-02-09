@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Pembelian;
 
 use App\Models\HeaderPembelian;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -25,12 +26,15 @@ class History extends Component
         ]);
     }
 
-    public function generateNota()
+    public function generateNota($no_invoice)
     {
-        $pdf = Pdf::loadView('print.nota-pembelian')->setPaper('80mm', 'auto')->output();
+        $data = HeaderPembelian::where('no_invoice', $no_invoice)->with('detail_pembelian')->first();
+// dd($data->toArray());
+        $pdf = Pdf::loadView('print.nota-pembelian', ['data' => $data])->setPaper('80mm', 'auto')->output();
         return response()->streamDownload(
             fn() => print($pdf),
             'file_name.pdf'
         );
+
     }
 }

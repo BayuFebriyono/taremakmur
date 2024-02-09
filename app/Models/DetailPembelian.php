@@ -13,4 +13,9 @@ class DetailPembelian extends Model
     protected $guarded = ['id'];
     protected $table = 'detail_pembelians';
     public $incrementing = false;
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
+    }
 }

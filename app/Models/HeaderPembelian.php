@@ -23,4 +23,9 @@ class HeaderPembelian extends Model
     {
         return $this->belongsTo(Suplier::class);
     }
+
+    public function detail_pembelian()
+    {
+        return $this->hasMany(DetailPembelian::class, 'no_invoice', 'no_invoice');
+    }
 }
