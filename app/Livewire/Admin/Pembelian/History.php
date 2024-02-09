@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Pembelian;
 
+use App\Models\DetailPembelian;
 use App\Models\HeaderPembelian;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
@@ -20,21 +21,30 @@ class History extends Component
 
     public function render()
     {
-        $pembelians = HeaderPembelian::with(['user', 'suplier'])->latest()->paginate($this->perPage);
+        $pembelians = HeaderPembelian::with(['user', 'suplier'])
+            ->where('no_invoice', 'like' , '%' . $this->search .'%')
+            ->latest()->paginate($this->perPage);
         return view('livewire.admin.pembelian.history', [
             'pembelians' => $pembelians
         ]);
     }
 
+    public function delete($noInvoice)
+    {
+        DetailPembelian::where('no_invoice', $noInvoice)->delete();
+        HeaderPembelian::where('no_invoice', $noInvoice)->delete();
+
+        session()->flash('success', 'Data berhasil dihapus');
+    }
+
     public function generateNota($no_invoice)
     {
         $data = HeaderPembelian::where('no_invoice', $no_invoice)->with('detail_pembelian')->first();
-// dd($data->toArray());
+        // dd($data->toArray());
         $pdf = Pdf::loadView('print.nota-pembelian', ['data' => $data])->setPaper('80mm', 'auto')->output();
         return response()->streamDownload(
-            fn() => print($pdf),
+            fn () => print($pdf),
             'file_name.pdf'
         );
-
     }
 }

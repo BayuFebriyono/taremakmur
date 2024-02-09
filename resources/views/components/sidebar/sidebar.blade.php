@@ -41,6 +41,23 @@
             </div>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPenjualan" aria-expanded="false"
+                aria-controls="transaksiPenjualan">
+                <i class="men1u-icon mdi mdi-cart-arrow-right"></i>
+                <span class="menu-title">Penjualan</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="transaksiPenjualan">
+                <ul class="nav flex-column sub-menu">
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/#">Invoice</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/#">Perlu Persetujuan</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/#">Riwayat</a></li>
+                  
+                </ul>
+            </div>
+        </li>
+
        
 
         <livewire:auth.logout />

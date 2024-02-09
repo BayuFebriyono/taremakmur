@@ -77,6 +77,7 @@ class Invoice extends Component
                 'no_invoice' => $noInvoice
             ]);
 
+            // Menata collection sebelum di looping
             $confirmedBarang = $this->dataPembelian->where('status', 'CONFIRMED')
                 ->map(function ($item) use ($noInvoice) {
                     unset($item['id']);
@@ -84,6 +85,7 @@ class Invoice extends Component
                     $item['no_invoice'] = $noInvoice;
                     return $item;
                 });
+            // looping update ke database
             $confirmedBarang->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
                 $barang->update([
