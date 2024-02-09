@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id');
             $table->foreignUuid('customer_id');
-            $table->string('invoice');
+            $table->string('no_invoice');
             $table->string('status')->default('WAITING');
             $table->timestamps();
         });

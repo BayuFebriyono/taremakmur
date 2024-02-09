@@ -1,5 +1,10 @@
 <div class="container">
-
+    @if (session('error-top'))
+        <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+            {{ session('error-top') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     @if (!$showForm)
         {{-- Cari Invoice --}}
         <div class="card">
@@ -37,8 +42,8 @@
 
                         <div class="col-md-6">
                             <label for="Diskon" class="form-label">Diskon</label>
-                            <input wire:model.change='diskon' type="number" class="form-control" placeholder="Masukkan diskon"
-                                required>
+                            <input wire:model.change='diskon' type="number" class="form-control"
+                                placeholder="Masukkan diskon" required>
                         </div>
                     </div>
 
@@ -81,7 +86,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <button wire:click='addBarang' type="submit" class="btn btn-md btn-inverse-primary">Submit</button>
+                    <button wire:click='store' type="submit" class="btn btn-md btn-inverse-primary">Submit</button>
                     <button wire:click='cancel' type="button" class="btn btn-md btn-inverse-danger ">Cancel</button>
                 </div>
             </div>
@@ -112,7 +117,7 @@
                     </div>
                     <div class="ms-auto p-2">
                         <label for="customer" class="form-label">Pilih Customer</label>
-                        <input wire:model='namaCustomer' wire:change='cariCustomer' type="text"
+                        <input wire:model='namaCustomer' wire:change='searchCustomer' type="text"
                             class="form-control mb-2" placeholder="Cari customer...">
                         <select wire:model.change='customerId' class="form-select" required>
                             <option value="">---Pilih customer---</option>
@@ -121,7 +126,7 @@
                             @endforeach
                         </select>
                         @error($customerId)
-                            <p class="text-danger">Pilih Suplier Dulu</p>
+                            <p class="text-danger">Pilih Customer Dulu</p>
                         @enderror
                     </div>
                     <div class="p-2">
@@ -169,6 +174,7 @@
                                 <th>Nama Barang</th>
                                 <th>Qty</th>
                                 <th>Aktual</th>
+                                <th>Harga Satuan</th>
                                 <th>Harga</th>
                                 <th>Diskon</th>
                                 <th>Remarks</th>
@@ -176,14 +182,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($dataPembelian as $data)
+                            @foreach ($dataPenjualan as $data)
                                 <tr wire:key='{{ $data['id'] }}'>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data['kode_barang'] }}</td>
                                     <td>{{ $data['nama_barang'] }}</td>
-                                    <td>{{ $data['qty'] }}</td>
+                                    <td>{{ $data['qty'] . ' ' . $data['jenis'] }}</td>
                                     <td wire:click='showAktual("{{ $data['id'] }}")' class="text-primary"
                                         role="button"><u>{{ $data['aktual'] }}</u></td>
+                                    <td>{{ formatRupiah($data['harga_satuan']) }}</td>
                                     <td>{{ formatRupiah($data['harga']) }}</td>
                                     <td>{{ $data['diskon'] }}</td>
                                     <td wire:click='showRemark("{{ $data['id'] }}")' role="button"
@@ -200,7 +207,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
