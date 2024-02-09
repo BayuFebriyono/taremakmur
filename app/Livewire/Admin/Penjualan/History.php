@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Penjualan;
 
+use App\Models\DetailPenjualan;
 use App\Models\HeaderPenjualan;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -19,10 +20,17 @@ class History extends Component
     public function render()
     {
         $penjualans = HeaderPenjualan::with(['user', 'customer'])
-            ->where('no_invoice', 'like', '%' . $this->search. '%')
+            ->where('no_invoice', 'like', '%' . $this->search . '%')
             ->latest()->paginate($this->perPage);
-        return view('livewire.admin.penjualan.history',[
+        return view('livewire.admin.penjualan.history', [
             'penjualans' => $penjualans
         ]);
+    }
+
+    public function delete($noInvoice)
+    {
+        DetailPenjualan::where('no_invoice', $noInvoice)->delete();
+        HeaderPenjualan::where('no_invoice', $noInvoice)->delete();
+        session()->flash('success', 'Data berhasil dihapus');
     }
 }

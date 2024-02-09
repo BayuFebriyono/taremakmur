@@ -89,8 +89,8 @@ class Invoice extends Component
         ]);
 
         if ($this->dataPenjualan->count() > 0) {
-            $no = HeaderPenjualan::count();
-            $noInvoice = "P" . str_pad($no + 1, 7, '0', STR_PAD_LEFT);
+    
+            $noInvoice = $this->generateNota();
             HeaderPenjualan::create([
                 'user_id' => auth()->user()->id,
                 'customer_id' => $this->customerId,
@@ -202,20 +202,39 @@ class Invoice extends Component
         $this->remarkId = '';
     }
 
-    public function searchCustomer(){
-        $this->customers = Customer::where('nama', 'like', '%' . $this->namaCustomer.'%')->get();
-
+    public function searchCustomer()
+    {
+        $this->customers = Customer::where('nama', 'like', '%' . $this->namaCustomer . '%')->get();
     }
 
     private function cekStock(): bool
     {
         if ($this->jenis == 'dus') {
-            $jumlah = (int)$this->barang->stock_renteng * (int)$this->qty;
+            $jumlah = (int)$this->barang->jumlah_renteng * (int)$this->qty;
             if ($this->barang->stock_renteng < $jumlah) return false;
             return true;
         } else {
             if ($this->barang->stock_renteng < $this->qty) return false;
             return true;
         }
+    }
+
+    private function generateNota()
+    {
+        // String awal
+        $stringAwal = HeaderPenjualan::select('no_invoice')->latest()->first()->no_invoice;
+
+        // Mengekstrak nomor dari string
+        $nomor = intval(substr($stringAwal, 1)); // Mengabaikan huruf 'P'
+
+        // Menambahkan 1 ke nomor
+        $nomorBaru = $nomor + 1;
+
+        // Memformat nomor baru dengan 7 digit
+        $nomorFormat = sprintf('%07d', $nomorBaru);
+
+        // Menyusun kembali string dengan huruf 'P' dan nomor yang diformat
+        $stringBaru = "P" . $nomorFormat;
+        return $stringBaru;
     }
 }
