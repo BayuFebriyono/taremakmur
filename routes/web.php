@@ -5,6 +5,7 @@ use App\Livewire\Admin\MasterData\Customer;
 use App\Livewire\Admin\MasterData\Suplier;
 use App\Livewire\Admin\Pembelian\History;
 use App\Livewire\Admin\Pembelian\Invoice;
+use App\Livewire\Admin\Penjualan\Invoice as PenjualanInvoice;
 use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/barang', Barang::class);
     Route::get('/pembelian-invoice', Invoice::class);
     Route::get('/pembelian-history', History::class);
+    Route::get('/penjualan-invoice', PenjualanInvoice::class);
 });
 
 Route::get('/tes', function(){
