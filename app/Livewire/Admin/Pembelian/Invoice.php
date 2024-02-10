@@ -223,4 +223,11 @@ class Invoice extends Component
     {
         $this->isEdit = true;
     }
+
+    #[On('cancel-edit')]
+    public function cancelEdit($message = '', $type ='success')
+    {
+        $this->isEdit = false;
+        if ($message) session()->flash($type, $message);
+    }
 }

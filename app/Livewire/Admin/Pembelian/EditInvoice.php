@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Admin\Pembelian;
 
+use App\Models\Barang;
+use App\Models\Report;
+use Livewire\Component;
 use App\Models\DetailPembelian;
 use App\Models\HeaderPembelian;
-use Livewire\Component;
 
 class EditInvoice extends Component
 {
@@ -77,5 +79,39 @@ class EditInvoice extends Component
         ]);
         $this->aktualId = '';
         $this->aktual = '';
+    }
+
+    public function cancel()
+    {
+        $this->dispatch('cancel-edit')->to(Invoice::class);
+    }
+
+    public function simpan()
+    {
+        DetailPembelian::where('no_invoice', $this->noInvoice)
+            ->where('status', 'WAITING')
+            ->delete();
+        $detail = DetailPembelian::where('no_invoice', $this->noInvoice)
+            ->where('status', 'CONFIRMED')
+            ->get();
+        $detail->each(function ($item) {
+
+            // update stock
+            $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+            $barang->update([
+                'stock_renteng' => $barang->stock_renteng + ($item['qty'] * $barang->jumlah_renteng)
+            ]);
+            Report::create([
+                'kode_barang' => $item['kode_barang'],
+                'in' => $item['qty'] * $barang->jumlah_renteng,
+                'harga' => $item['harga'],
+                'stock' => $barang->stock_sto
+            ]);
+        });
+
+        HeaderPembelian::where('no_invoice', $this->noInvoice)->update([
+            'status' => 'CONFIRMED'
+        ]);
+        $this->dispatch('cancel-edit', message : 'Berhasil dikonfirmasi', type: 'success-top')->to(Invoice::class);
     }
 }
