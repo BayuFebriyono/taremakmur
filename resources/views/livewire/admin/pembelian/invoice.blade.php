@@ -14,11 +14,11 @@
                 <p class="text-muted">Menu dibawah ini dugunakan untuk mencari no invoice yang sudah ada</p>
                 <form class="mt-2" wire:submit='cariInvoice'>
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-10 col-8">
                             <input wire:model='noInvoice' type="text" class="form-control"
                                 placeholder="Masukkan No Invoice Yang Sudah Ada">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-4">
                             <button type="submit" class="btn btn-inverse-primary">Cari</button>
                         </div>
                     </div>
@@ -30,7 +30,11 @@
 
         {{-- Card Waiting --}}
         <div class="mt-3">
-            <livewire:admin.pembelian.waiting-confirm />
+            @if (!$isEdit)
+                <livewire:admin.pembelian.waiting-confirm />
+            @else
+                <livewire:admin.pembelian.edit-invoice :noInvoice="$noInvoice"/>
+            @endif
         </div>
     @else
         {{-- Form Pembelian --}}
@@ -44,10 +48,12 @@
                             <label for="kodeBarang" class="form-label">Kode Barang</label>
                             <input wire:model='cariBarang' wire:change='searchBarang' type="text"
                                 class="form-control" placeholder="Cari nama barang" required>
-                            <select wire:change='pilihBarang' wire:model.change='kodeBarang' class="form-select mt-1" required>
+                            <select wire:change='pilihBarang' wire:model.change='kodeBarang' class="form-select mt-1"
+                                required>
                                 <option value="">---Pilih Barang---</option>
                                 @foreach ($barangs as $barang)
-                                    <option wire:key='{{ $barang->id }}' value="{{ $barang->kode_barang }}">{{ $barang->kode_barang }} - {{ $barang->nama_barang }}</option>
+                                    <option wire:key='{{ $barang->id }}' value="{{ $barang->kode_barang }}">
+                                        {{ $barang->kode_barang }} - {{ $barang->nama_barang }}</option>
                                 @endforeach
                             </select>
                         </div>

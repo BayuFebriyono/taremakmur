@@ -27,6 +27,7 @@ class Invoice extends Component
     public $barangs = [];
     public $cariBarang = '';
     public $barang;
+    public $isEdit = false;
 
 
     public $namaBarang;
@@ -47,7 +48,7 @@ class Invoice extends Component
 
     public function render()
     {
-        
+
         return view('livewire.admin.pembelian.invoice');
     }
 
@@ -210,11 +211,16 @@ class Invoice extends Component
 
     public function pilihBarang()
     {
-        try{
+        try {
             $this->barang = Barang::where('kode_barang', $this->kodeBarang)->first();
             $this->harga = $this->barang->harga_beli_dus;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $this->barang = collect();
         }
+    }
+
+    public function cariInvoice()
+    {
+        $this->isEdit = true;
     }
 }
