@@ -51,39 +51,29 @@
                             </div>
                         </div>
 
+                        
                         <div class="row my-4">
-                            <div class="col-md-6">
-                                <label for="kreditDus" class="form-label">Kredit Dus</label>
-                                <input wire:model='kreditDus' type="number" class="form-control">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="kreditPack" class="form-label">Kredit Pack</label>
-                                <input wire:model='kreditPack' type="number" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="row my-4">
-                            <div class="col-md-6">
-                                <label for="kreditPcs" class="form-label">Kredit Pcs</label>
-                                <input wire:model='kreditPcs' type="number" class="form-control">
-                            </div>
 
                             <div class="col-md-6">
                                 <label for="cashDus" class="form-label">Cash Dus</label>
                                 <input wire:model='cashDus' type="number" class="form-control">
                             </div>
-                        </div>
 
-                        <div class="row my-4">
                             <div class="col-md-6">
                                 <label for="cashPack" class="form-label">Cash Pack</label>
                                 <input wire:model='cashPack' type="number" class="form-control">
                             </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-6">
+                                <label for="kreditDus" class="form-label">Harga Beli Dus</label>
+                                <input wire:model='hargaBeliDus' type="number" class="form-control">
+                            </div>
 
                             <div class="col-md-6">
-                                <label for="cashPcs" class="form-label">Cash Pcs</label>
-                                <input wire:model='cashPcs' type="number" class="form-control">
+                                <label for="kreditPack" class="form-label">Harga Beli Pcs</label>
+                                <input wire:model='hargaBeliPack' type="number" class="form-control">
                             </div>
                         </div>
 

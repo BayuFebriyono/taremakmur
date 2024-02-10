@@ -43,14 +43,12 @@ class BarangExcel extends Component
                     'suplier_id' => $suplier->id,
                     'kode_barang' => $row[1],
                     'nama_barang' => $row[2],
-                    // 'kredit_dus' => $row[3],
-                    // 'kredit_pack' => $row[4],
-                    // 'kredit_pcs' => $row[5],
                     'cash_dus' => $row[3],
                     'cash_pack' => $row[4],
-                    // 'cash_pcs' => $row[8],
-                    'diskon' => $row[5],
-                    'jumlah_renteng' => $row[6]
+                    'harga_beli_dus' => $row[5],
+                    'harga_beli_pack' => $row[6],
+                    'diskon' => $row[7],
+                    'jumlah_renteng' => $row[8]
                 ]);
             }
 

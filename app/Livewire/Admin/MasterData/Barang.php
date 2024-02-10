@@ -25,12 +25,10 @@ class Barang extends Component
     public $kodeBarang;
     public $namaBarang;
     public $suplierId;
-    public $kreditDus = 0;
-    public $kreditPack = 0;
-    public $kreditPcs = 0;
+    public $hargaBeliDus = 0;
+    public $hargaBeliPack = 0;
     public $cashDus = 0;
     public $cashPack = 0;
-    public $cashPcs = 0;
     public $diskon = 0;
     public $jumlahRenteng = '';
 
@@ -64,12 +62,10 @@ class Barang extends Component
 
         $this->namaBarang = $barang->nama_barang;
         $this->suplierId = $barang->suplier_id;
-        $this->kreditDus = $barang->kredit_dus;
-        $this->kreditPack = $barang->kredit_pack;
-        $this->kreditPcs = $barang->kredit_pcs;
+        $this->hargaBeliDus = $barang->kredit_dus;
+        $this->hargaBeliPack = $barang->kredit_pack;
         $this->cashDus = $barang->cash_dus;
         $this->cashPack = $barang->cash_pack;
-        $this->cashPcs = $barang->cash_pcs;
         $this->diskon = $barang->diskon;
         $this->barangId = $barang->id;
         $this->jumlahRenteng = $barang->jumlah_renteng;
@@ -89,12 +85,10 @@ class Barang extends Component
             'suplier_id' => $this->suplierId,
             'kode_barang' => $this->kodeBarang,
             'nama_barang' => $this->namaBarang,
-            'kredit_dus' => $this->kreditDus,
-            'kredit_pack' => $this->kreditPack,
-            'kredit_pcs' => $this->kreditPcs,
+            'harga_beli_dus' => $this->hargaBeliDus,
+            'harga_beli_pack' => $this->hargaBeliPack,
             'cash_dus' => $this->cashDus,
             'cash_pack' => $this->cashPack,
-            'cash_pcs' => $this->cashPcs,
             'diskon' => $this->diskon,
             'jumlah_renteng' => $this->jumlahRenteng
         ]);
@@ -114,12 +108,10 @@ class Barang extends Component
             'suplier_id' => $this->suplierId,
             'kode_barang' => $this->kodeBarang,
             'nama_barang' => $this->namaBarang,
-            'kredit_dus' => $this->kreditDus,
-            'kredit_pack' => $this->kreditPack,
-            'kredit_pcs' => $this->kreditPcs,
+            'harga_beli_dus' => $this->hargaBeliDus,
+            'harga_beli_pack' => $this->hargaBeliPack,
             'cash_dus' => $this->cashDus,
             'cash_pack' => $this->cashPack,
-            'cash_pcs' => $this->cashPcs,
             'diskon' => $this->diskon,
             'jumlah_renteng' => $this->jumlahRenteng
         ]);
@@ -158,12 +150,10 @@ class Barang extends Component
         $this->kodeBarang;
         $this->namaBarang;
         $this->suplierId;
-        $this->kreditDus = 0;
-        $this->kreditPack = 0;
-        $this->kreditPcs = 0;
+        $this->hargaBeliDus = 0;
+        $this->hargaBeliPack = 0;
         $this->cashDus = 0;
         $this->cashPack = 0;
-        $this->cashPcs = 0;
         $this->diskon = 0;
         $this->statusModal = '';
         $this->jumlahRenteng = '';
