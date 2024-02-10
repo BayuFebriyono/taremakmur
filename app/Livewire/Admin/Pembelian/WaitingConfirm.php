@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Pembelian;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\DetailPembelian;
 use App\Models\HeaderPembelian;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -37,5 +38,12 @@ class WaitingConfirm extends Component
         );
     }
 
+    public function delete($noInvoice)
+    {
+        DetailPembelian::where('no_invoice', $noInvoice)->delete();
+        HeaderPembelian::where('no_invoice', $noInvoice)->delete();
+
+        session()->flash('success', 'Data berhasil dihapus');
+    }
 
 }

@@ -42,9 +42,14 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="kodeBarang" class="form-label">Kode Barang</label>
-                            <input wire:model='kodeBarang' wire:change='searchBarang' type="text"
-                                class="form-control" placeholder="Masukkan kode barang" required>
-                            <p class="fw-bold mt-1">Nama Barang : {{ $namaBarang }}</p>
+                            <input wire:model='cariBarang' wire:change='searchBarang' type="text"
+                                class="form-control" placeholder="Cari nama barang" required>
+                            <select wire:change='pilihBarang' wire:model.change='kodeBarang' class="form-select mt-1" required>
+                                <option value="">---Pilih Barang---</option>
+                                @foreach ($barangs as $barang)
+                                    <option wire:key='{{ $barang->id }}' value="{{ $barang->kode_barang }}">{{ $barang->kode_barang }} - {{ $barang->nama_barang }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="col-md-6">
@@ -63,8 +68,9 @@
 
                         <div class="col-md-6">
                             <label for="harga" class="form-label">Harga</label>
-                            <input wire:model='harga' type="number" id="harga" class="form-control"
+                            <input wire:model.change='harga' type="number" id="harga" class="form-control"
                                 placeholder="Masukkan harga" required>
+                            <p class="fw-bold">Harga : {{ formatRupiah($harga) }}</p>
                         </div>
                     </div>
                     <div class="mt-3">

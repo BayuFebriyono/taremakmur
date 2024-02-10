@@ -24,10 +24,13 @@ class Invoice extends Component
     public $supliers = [];
     public $namaSuplier = '';
     public $noInvoice = '';
-    
+    public $barangs = [];
+    public $cariBarang = '';
+    public $barang;
+
 
     public $namaBarang;
-    public $kodeBarang;
+    public $kodeBarang = '';
     public $diskon = 0;
     public $qty;
     public $harga;
@@ -39,10 +42,12 @@ class Invoice extends Component
     {
         $this->dataPembelian = collect();
         $this->supliers = Suplier::all();
+        $this->barangs = Barang::all();
     }
 
     public function render()
     {
+        
         return view('livewire.admin.pembelian.invoice');
     }
 
@@ -53,10 +58,14 @@ class Invoice extends Component
 
     public function addBarang()
     {
+        $this->validate([
+            'kodeBarang' => 'required'
+        ]);
+
         $this->dataPembelian->push([
             'id' => uniqid(),
             'kode_barang' => $this->kodeBarang,
-            'nama_barang' => $this->namaBarang,
+            'nama_barang' => $this->barang->nama_barang,
             'qty' => $this->qty,
             'aktual' => $this->qty,
             'harga' => $this->harga,
@@ -185,20 +194,27 @@ class Invoice extends Component
 
     public function searchBarang()
     {
-        try {
-            $this->namaBarang = Barang::where('kode_barang', $this->kodeBarang)->first()->nama_barang;
-        } catch (Exception $e) {
-            $this->namaBarang = '';
-        }
+        $this->barangs = Barang::where('nama_barang', 'like', '%' . $this->cariBarang . '%')->get();
     }
 
     #[On('set-invoice')]
-    public function setNoInvoice($noInvoice){
+    public function setNoInvoice($noInvoice)
+    {
         $this->noInvoice = $noInvoice;
     }
 
     public function cariSuplier()
     {
         $this->supliers = Suplier::where('nama', 'like', '%' . $this->namaSuplier . '%')->get();
+    }
+
+    public function pilihBarang()
+    {
+        try{
+            $this->barang = Barang::where('kode_barang', $this->kodeBarang)->first();
+            $this->harga = $this->barang->harga_beli_dus;
+        }catch(Exception $e){
+            $this->barang = collect();
+        }
     }
 }
