@@ -12,7 +12,7 @@
                                         aria-label="Close"></button>
                                 </div>
                             @endif
-                            <h4>Selamat Datang!</h4>
+                            <h4>Selamat Datang Customer!</h4>
                             <h6 class="fw-light">Silahkan login untuk melanjutkan.</h6>
                             <form wire:submit="login" class="pt-3">
                                 <div class="form-group">
@@ -29,7 +29,7 @@
                                         <span wire:loading class="spinner-grow spinner-grow-sm"></span>
                                         SIGN IN</button>
                                     <div class="mt-2">
-                                        <a wire:navigate href="/login-customer">Atau masuk sebagai customer</a>
+                                        <a wire:navigate href="/">Atau masuk sebagai karyawan</a>
                                     </div>
                                 </div>
                             </form>
