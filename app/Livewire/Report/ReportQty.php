@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Report;
 
+use App\Models\Barang;
 use Carbon\Carbon;
 use App\Models\Report;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
+use Livewire\WithFileUploads;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -15,10 +17,13 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ReportQty extends Component
 {
+    use WithFileUploads;
+
     public $jenis = 'all';
     public $dari;
     public $sampai;
     public $report = [];
+    public $excel;
 
     public function mount()
     {
@@ -42,6 +47,34 @@ class ReportQty extends Component
 
         $report = $report->whereBetween('created_at', [Carbon::parse($this->dari)->format('Y-m-d') . " 00:00:00", Carbon::parse($this->sampai)->format('Y-m-d') . " 23:59:59"]);
         $this->report = $report;
+    }
+
+    public function importSto()
+    {
+        $this->validate([
+            'excel' => 'required'
+        ]);
+
+        $fileExstension = $this->excel->getClientOriginalExtension();
+        $allowedExt = ['xls', 'csv', 'xlsx'];
+
+        if (in_array($fileExstension, $allowedExt)) {
+            $path = $this->excel->storeAs('temp', 'uploaded_file.xlsx', 'local');
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(storage_path("app/{$path}"));
+
+            $data = $spreadsheet->getActiveSheet()->removeRow(1, 4)->toArray();
+            foreach ($data as $row) {
+                Barang::where('kode_barang', $row[0])
+                    ->update([
+                        'stock_sto' => $row[1],
+                        'stock_renteng' => $row[1]
+                    ]);
+            }
+
+          session()->flash('success', "Berhasil STO");
+        } else {
+           session()->flash('error', 'format file tidak didukung');
+        }
     }
 
     public function exportExcel()

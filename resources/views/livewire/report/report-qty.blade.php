@@ -4,9 +4,27 @@
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
+
     <div class="card">
+        <div class="card-body">
+            <p class="fs-4 fw-bold">Update STO</p>
+            <p>Untuk format excel STO bisa anda download <a href="{{ asset('excel/sto.xlsx') }}"><u
+                        class="fw-bold text-primary">disini</u></a></p>
+            <form wire:submit='importSto'>
+                <input wire:model='excel' type="file" class="form-control" required>
+                <button type="submit" class="btn btn-primary mt-2">Proses</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-2">
         <div class="card-body">
             <h4 class="card-title">Report Qty</h4>
             <p class="card-description">
@@ -51,16 +69,16 @@
 
                 </div>
                 <div class="ms-auto p-2">
-                  <div class="row">
-                    <div class="col-md-6">
-                        <label for="Dari">Dari</label>
-                        <input wire:model='dari' type="date" class="form-control">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Dari">Dari</label>
+                            <input wire:model='dari' type="date" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Sampai">Sampai</label>
+                            <input wire:model='sampai' type="date" class="form-control">
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="Sampai">Sampai</label>
-                        <input wire:model='sampai' type="date" class="form-control">
-                    </div>
-                  </div>
                 </div>
                 <div class="p-2"><button wire:click='cari' class="btn btn-md btn-inverse-primary">Cari</button></div>
             </div>
@@ -86,7 +104,7 @@
                                 <td>{{ $r->in ?? '-' }}</td>
                                 <td>{{ $r->out ?? '-' }}</td>
                                 <td>{{ $r->harga ?? '-' }}</td>
-                                
+
                             </tr>
                         @endforeach
                     </tbody>
