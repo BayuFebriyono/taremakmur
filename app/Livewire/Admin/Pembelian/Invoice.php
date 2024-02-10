@@ -9,6 +9,7 @@ use App\Models\Report;
 use App\Models\Suplier;
 use Exception;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -22,6 +23,7 @@ class Invoice extends Component
     public $remarkId = '';
     public $supliers = [];
     public $namaSuplier = '';
+    public $noInvoice = '';
     
 
     public $namaBarang;
@@ -71,8 +73,10 @@ class Invoice extends Component
         ]);
 
         if ($this->dataPembelian->count() > 0) {
-            $no = HeaderPembelian::where('suplier_id', $this->suplierId)->get()->count();
-            $noInvoice = $no + 1 . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
+            $no = HeaderPembelian::where('suplier_id', $this->suplierId)->latest()->first() ?? 0;
+            $arrno = explode('/', $no->no_invoice);
+            $no = $arrno[0];
+            $noInvoice = (int)$no + 1 . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
             HeaderPembelian::create([
                 'user_id' => auth()->user()->id,
                 'suplier_id' => $this->suplierId,
@@ -90,18 +94,19 @@ class Invoice extends Component
             // looping update ke database
             $confirmedBarang->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
-                $barang->update([
-                    'stock_renteng' => $barang->stock_renteng + ($item['qty'] * $barang->jumlah_renteng)
-                ]);
+                // $barang->update([
+                //     'stock_renteng' => $barang->stock_renteng + ($item['qty'] * $barang->jumlah_renteng)
+                // ]);
                 DetailPembelian::create($item);
-                Report::create([
-                    'kode_barang' => $item['kode_barang'],
-                    'in' => $item['qty'] * $barang->jumlah_renteng,
-                    'harga' => $item['harga'],
-                    'stock' => $barang->stock_sto
-                ]);
+                // Report::create([
+                //     'kode_barang' => $item['kode_barang'],
+                //     'in' => $item['qty'] * $barang->jumlah_renteng,
+                //     'harga' => $item['harga'],
+                //     'stock' => $barang->stock_sto
+                // ]);
             });
-            session()->flash('success', "Berhasil dibuat dengan no invoice {$noInvoice}");
+            session()->flash('success-top', "Berhasil dibuat dengan no invoice {$noInvoice}");
+            $this->showForm = false;
             $this->dataPembelian = collect();
         } else {
             session()->flash('error', 'Tambahkan barang terlebih dulu');
@@ -185,6 +190,11 @@ class Invoice extends Component
         } catch (Exception $e) {
             $this->namaBarang = '';
         }
+    }
+
+    #[On('set-invoice')]
+    public function setNoInvoice($noInvoice){
+        $this->noInvoice = $noInvoice;
     }
 
     public function cariSuplier()

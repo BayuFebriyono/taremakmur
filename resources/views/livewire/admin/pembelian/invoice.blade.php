@@ -1,4 +1,10 @@
 <div class="container">
+    @if (session('success-top'))
+        <div class="alert alert-primary alert-dismissible fade show mt-4" role="alert">
+            {{ session('success-top') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     @if (!$showForm)
         {{-- Cari Invoice --}}
@@ -9,7 +15,8 @@
                 <form class="mt-2" wire:submit='cariInvoice'>
                     <div class="row">
                         <div class="col-md-10">
-                            <input wire:model='noInvoice' type="text" class="form-control" placeholder="Masukkan No Invoice Yang Sudah Ada">
+                            <input wire:model='noInvoice' type="text" class="form-control"
+                                placeholder="Masukkan No Invoice Yang Sudah Ada">
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-inverse-primary">Cari</button>
@@ -19,6 +26,11 @@
                 <button wire:click='add' type="button" class="btn btn-md btn-inverse-success">Atau buat invoice
                     baru</button>
             </div>
+        </div>
+
+        {{-- Card Waiting --}}
+        <div class="mt-3">
+            <livewire:admin.pembelian.waiting-confirm />
         </div>
     @else
         {{-- Form Pembelian --}}
@@ -102,7 +114,8 @@
                         @enderror
                     </div>
                     <div class="p-2">
-                        <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm" ></span>Simpan
+                        <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span
+                                wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
                             Invoice</button>
                     </div>
                 </div>
