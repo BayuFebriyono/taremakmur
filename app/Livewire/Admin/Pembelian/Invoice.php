@@ -22,6 +22,7 @@ class Invoice extends Component
     public $remarkId = '';
     public $supliers = [];
     public $namaSuplier = '';
+    
 
     public $namaBarang;
     public $kodeBarang;
@@ -90,7 +91,7 @@ class Invoice extends Component
             $confirmedBarang->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
                 $barang->update([
-                    'stock_renteng' => $barang->stock_renteng + ($item['qty'] * $barang->jumlah_renteng )
+                    'stock_renteng' => $barang->stock_renteng + ($item['qty'] * $barang->jumlah_renteng)
                 ]);
                 DetailPembelian::create($item);
                 Report::create([

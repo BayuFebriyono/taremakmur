@@ -218,12 +218,8 @@
                             <th scope="col">Kode Barang</th>
                             <th scope="col">Nama Barang</th>
                             <th scope="col">Min Pack</th>
-                            <th scope="col">Kredit Dus</th>
-                            <th scope="col">Kredit Pack</th>
-                            <th scope="col">Kredit Pcs</th>
                             <th scope="col">Cash Dus</th>
                             <th scope="col">Cash Pack</th>
-                            <th scope="col">Cash Pcs</th>
                             <th scope="col">Diskon</th>
                             <th scope="col">Aktif</th>
                             <th scope="col">Aksi</th>
@@ -237,12 +233,8 @@
                                 <td>{{ $barang->kode_barang }}</td>
                                 <td>{{ $barang->nama_barang }}</td>
                                 <td>{{ $barang->jumlah_renteng }}</td>
-                                <td>{{ formatRupiah($barang->kredit_dus) }}</td>
-                                <td>{{ formatRupiah($barang->kredit_pack) }}</td>
-                                <td>{{ formatRupiah($barang->kredit_pcs) }}</td>
                                 <td>{{ formatRupiah($barang->cash_dus) }}</td>
                                 <td>{{ formatRupiah($barang->cash_pack) }}</td>
-                                <td>{{ formatRupiah($barang->cash_pcs) }}</td>
                                 <td>{{ formatRupiah($barang->diskon) }}</td>
                                 <td>
                                     @if ($barang->aktif)
