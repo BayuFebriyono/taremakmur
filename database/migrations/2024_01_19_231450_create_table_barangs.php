@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('stock_renteng')->default(0);
             $table->integer('cash_dus')->nullable();
             $table->integer('cash_pack')->nullable();
+            $table->integer('kredit_dus')->nullable();
+            $table->integer('kredit_pack')->nullable();
             $table->integer('harga_beli_dus')->nullable();
             $table->integer('harga_beli_pack')->nullable();
             $table->double('diskon')->nullable();

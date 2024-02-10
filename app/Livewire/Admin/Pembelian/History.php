@@ -23,6 +23,7 @@ class History extends Component
     {
         $pembelians = HeaderPembelian::with(['user', 'suplier'])
             ->where('no_invoice', 'like' , '%' . $this->search .'%')
+            ->where('status', 'CONFIRMED')
             ->latest()->paginate($this->perPage);
         return view('livewire.admin.pembelian.history', [
             'pembelians' => $pembelians

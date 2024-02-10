@@ -47,8 +47,10 @@ class BarangExcel extends Component
                     'cash_pack' => $row[4],
                     'harga_beli_dus' => $row[5],
                     'harga_beli_pack' => $row[6],
-                    'diskon' => $row[7],
-                    'jumlah_renteng' => $row[8]
+                    'kredit_dus' => $row[7],
+                    'kredit_pack' => $row[8],
+                    'diskon' => $row[9],
+                    'jumlah_renteng' => $row[10]
                 ]);
             }
 

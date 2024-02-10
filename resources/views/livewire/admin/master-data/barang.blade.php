@@ -67,12 +67,24 @@
 
                         <div class="row my-4">
                             <div class="col-md-6">
-                                <label for="kreditDus" class="form-label">Harga Beli Dus</label>
+                                <label for="kreditDus" class="form-label">Kredit Dus</label>
+                                <input wire:model='kreditDus' type="number" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="kreditPack" class="form-label">Kredit Pack</label>
+                                <input wire:model='kreditPack' type="number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-6">
+                                <label for="beliDus" class="form-label">Harga Beli Dus</label>
                                 <input wire:model='hargaBeliDus' type="number" class="form-control">
                             </div>
 
                             <div class="col-md-6">
-                                <label for="kreditPack" class="form-label">Harga Beli Pcs</label>
+                                <label for="BeliPcs" class="form-label">Harga Beli Pcs</label>
                                 <input wire:model='hargaBeliPack' type="number" class="form-control">
                             </div>
                         </div>
@@ -210,6 +222,8 @@
                             <th scope="col">Min Pack</th>
                             <th scope="col">Cash Dus</th>
                             <th scope="col">Cash Pack</th>
+                            <th scope="col">Kredit Dus</th>
+                            <th scope="col">Kredit Pack</th>
                             <th scope="col">Diskon</th>
                             <th scope="col">Aktif</th>
                             <th scope="col">Aksi</th>
@@ -225,6 +239,8 @@
                                 <td>{{ $barang->jumlah_renteng }}</td>
                                 <td>{{ formatRupiah($barang->cash_dus) }}</td>
                                 <td>{{ formatRupiah($barang->cash_pack) }}</td>
+                                <td>{{ formatRupiah($barang->kredit_dus) }}</td>
+                                <td>{{ formatRupiah($barang->kredit_pack) }}</td>
                                 <td>{{ formatRupiah($barang->diskon) }}</td>
                                 <td>
                                     @if ($barang->aktif)

@@ -30,6 +30,8 @@ class Barang extends Component
     public $cashDus = 0;
     public $cashPack = 0;
     public $diskon = 0;
+    public $kreditDus = 0;
+    public $kreditPack = 0;
     public $jumlahRenteng = '';
 
     // utils property
@@ -66,6 +68,8 @@ class Barang extends Component
         $this->hargaBeliPack = $barang->kredit_pack;
         $this->cashDus = $barang->cash_dus;
         $this->cashPack = $barang->cash_pack;
+        $this->kreditDus = $barang->kredit_dus;
+        $this->kreditPack = $barang->kredit_pack;
         $this->diskon = $barang->diskon;
         $this->barangId = $barang->id;
         $this->jumlahRenteng = $barang->jumlah_renteng;
@@ -89,6 +93,8 @@ class Barang extends Component
             'harga_beli_pack' => $this->hargaBeliPack,
             'cash_dus' => $this->cashDus,
             'cash_pack' => $this->cashPack,
+            'kredit_dus' => $this->kreditDus,
+            'kredit_pack' => $this->kreditPack,
             'diskon' => $this->diskon,
             'jumlah_renteng' => $this->jumlahRenteng
         ]);
@@ -112,6 +118,8 @@ class Barang extends Component
             'harga_beli_pack' => $this->hargaBeliPack,
             'cash_dus' => $this->cashDus,
             'cash_pack' => $this->cashPack,
+            'kredit_dus' => $this->kreditDus,
+            'kredit_pack' => $this->kreditPack,
             'diskon' => $this->diskon,
             'jumlah_renteng' => $this->jumlahRenteng
         ]);
