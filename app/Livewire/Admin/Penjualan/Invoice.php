@@ -228,6 +228,7 @@ class Invoice extends Component
     {
         if ($this->jenis == 'dus') {
             $jumlah = (int)$this->barang->jumlah_renteng * (int)$this->qty;
+    
             if ($this->barang->stock_renteng < $jumlah) return false;
             return true;
         } else {
@@ -258,9 +259,10 @@ class Invoice extends Component
         $this->isEdit = true;
     }
     #[On('cancel-edit')]
-    public function cancelInvoice()
+    public function cancelInvoice($message = '', $type = 'success')
     {
         $this->isEdit = false;
+        if($message) session()->flash($type,$message);
     }
 
     private function generateNota()
