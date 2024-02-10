@@ -22,6 +22,7 @@ class History extends Component
     {
         $penjualans = HeaderPenjualan::with(['user', 'customer'])
             ->where('no_invoice', 'like', '%' . $this->search . '%')
+            ->where('status', 'CONFIRMED')
             ->latest()->paginate($this->perPage);
         return view('livewire.admin.penjualan.history', [
             'penjualans' => $penjualans

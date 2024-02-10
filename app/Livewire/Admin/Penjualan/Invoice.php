@@ -26,6 +26,8 @@ class Invoice extends Component
     public $jenis = 'dus';
     public $dataPenjualan;
     public $namaCustomer = '';
+    public $barangs = [];
+    public $namaBarang = '';
 
     public $kodeBarang;
     public $hargaSatuan = 0;
@@ -40,15 +42,12 @@ class Invoice extends Component
     {
         $this->dataPenjualan = collect();
         $this->customers = Customer::all();
+        $this->barangs = Barang::all();
     }
 
     public function render()
     {
-        if ($this->barang) {
-            $this->hargaSatuan = $this->jenis == 'dus' ? $this->barang->cash_dus : $this->barang->cash_pack;
-            $this->harga = ((int)$this->hargaSatuan * (int)$this->qty) - (int)$this->diskon;
-            if ($this->harga < 0) $this->harga = 0;
-        }
+
         return view('livewire.admin.penjualan.invoice');
     }
 
@@ -142,6 +141,7 @@ class Invoice extends Component
     {
         try {
             $this->barang = Barang::where('kode_barang', $this->kodeBarang)->first();
+            $this->hargaSatuan = $this->jenis == 'dus' ? $this->barang->cash_dus : $this->barang->cash_pack;
         } catch (Exception $e) {
             $this->barang = collect();
         }
@@ -230,6 +230,17 @@ class Invoice extends Component
             if ($this->barang->stock_renteng < $this->qty) return false;
             return true;
         }
+    }
+
+    public function searchBarang()
+    {
+        $this->barangs = Barang::where('nama_barang', 'like', '%' . $this->namaBarang . '%')->get();
+    }
+
+    public function hitungHarga()
+    {
+        $this->harga = ((int)$this->hargaSatuan * (int)$this->qty) - (int)$this->diskon;
+        if ($this->harga < 0) $this->harga = 0;
     }
 
     private function generateNota()

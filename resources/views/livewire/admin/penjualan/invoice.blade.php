@@ -25,6 +25,10 @@
                     baru</button>
             </div>
         </div>
+
+        <div class="mt-2">
+            <livewire:admin.penjualan.waiting-confirm />
+        </div>
     @else
         {{-- Form Pembelian --}}
         <div class="card mt-3">
@@ -35,9 +39,17 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="kodeBarang" class="form-label">Kode Barang</label>
-                            <input wire:model='kodeBarang' wire:change='cariBarang' type="text" class="form-control"
-                                placeholder="Masukkan kode barang" required>
-                            <p class="fw-bold mt-1">Nama Barang : {{ $barang->nama_barang ?? '' }}</p>
+                            <input wire:model='namaBarang' wire:change='searchBarang' type="text"
+                                class="form-control" placeholder="Cari nama barang" required>
+                            <select wire:change='cariBarang' wire:model.change='kodeBarang' class="form-select mt-1"
+                                required>
+                                <option value="">---Pilih Barang---</option>
+                                @foreach ($barangs as $barang)
+                                    <option wire:key='{{ $barang->id }}' value="{{ $barang->kode_barang }}">
+                                        {{ $barang->kode_barang }} - {{ $barang->nama_barang }}</option>
+                                @endforeach
+                            </select>
+                           
                         </div>
 
                         <div class="col-md-6">
@@ -50,7 +62,7 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="qty" class="form-label">Quantity</label>
-                            <input wire:model.change='qty' type="number" id="qty" class="form-control"
+                            <input wire:change='hitungHarga' wire:model.change='qty' type="number" id="qty" class="form-control"
                                 placeholder="masukkan quantity" required>
                         </div>
 
@@ -77,6 +89,10 @@
                             <div class="d-flex">
                                 <p class="fw-bold">Harga : {{ formatRupiah($hargaSatuan) }}</p>
                                 <p class="fw-bold ms-4">Total Harga : {{ formatRupiah($harga) }} </p>
+                            </div>
+                            <div>
+                                <label class="form-label">Atau masukkan harga secara manual</label>
+                                <input wire:model.change='harga' type="number" class="form-control">
                             </div>
                         </div>
 
