@@ -23,7 +23,7 @@
                         <option value="50">50</option>
                         <option value="100">100</option>
                         <option value="200">200</option>
-                        {{-- <option value="{{ $pembelians->count() }}">All</option> --}}
+                        <option value="{{ $penjualans->count() }}">All</option>
                     </select>
                 </div>
                 <div class="ms-auto p-2">
@@ -43,30 +43,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($pembelians as $pembelian)
-                            <tr wire:key='{{ $pembelian->id }}'>
+                        @foreach ($penjualans as $penjualan)
+                            <tr wire:key='{{ $penjualan->id }}'>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $pembelian->no_invoice }}</td>
-                                <td>{{ $pembelian->user->username }}</td>
-                                <td>{{ $pembelian->suplier->nama }}</td>
-                                <td>{{ Carbon\Carbon::parse($pembelian->created_at)->isoFormat('D MMM YYYY') }}</td>
+                                <td>{{ $penjualan->no_invoice }}</td>
+                                <td>{{ $penjualan->user->username }}</td>
+                                <td>{{ $penjualan->customer->nama }}</td>
+                                <td>{{ Carbon\Carbon::parse($penjualan->created_at)->isoFormat('D MMM YYYY') }}</td>
                                 <td>
-                                    <button wire:click='generateNota("{{ $pembelian->no_invoice }}")' type="button"
+                                    <button wire:click='generateNota("{{ $penjualan->no_invoice }}")' type="button"
                                         class="btn btn-sm btn-info"><span
                                             class="mdi mdi-printer-outline"></span></button>
-                                    <button wire:click='setInvoice("{{ $pembelian->no_invoice }}")' type="button" class="btn btn-sm btn-success"><span
+                                    <button wire:click='setInvoice("{{ $penjualan->no_invoice }}")' type="button" class="btn btn-sm btn-success"><span
                                             class="mdi mdi-eye-outline"></span></button>
                                     <button wire:confirm='Apakah anda yakin ingin menghapus?'
-                                        wire:click='delete("{{ $pembelian->no_invoice }}")' type="button"
+                                        wire:click='delete("{{ $penjualan->no_invoice }}")' type="button"
                                         class="btn btn-sm btn-danger"><span class="mdi mdi-trash-can"></span></button>
                                 </td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="mt-2">
-                {{-- {{ $pembelians->links(data: ['scrollTo' => false]) }} --}}
+                {{ $penjualans->links(data: ['scrollTo' => false]) }}
             </div>
         </div>
     </div>

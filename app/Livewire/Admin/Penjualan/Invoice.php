@@ -11,6 +11,7 @@ use Livewire\Attributes\Title;
 use App\Models\DetailPenjualan;
 use App\Models\HeaderPenjualan;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('Penjualan')]
@@ -28,6 +29,7 @@ class Invoice extends Component
     public $namaCustomer = '';
     public $barangs = [];
     public $namaBarang = '';
+    public $noInvoice = '';
 
     public $kodeBarang;
     public $hargaSatuan = 0;
@@ -95,7 +97,7 @@ class Invoice extends Component
                 'user_id' => auth()->user()->id,
                 'customer_id' => $this->customerId,
                 'no_invoice' => $noInvoice,
-                'status' => 'CONFIRMED'
+                'status' => 'WAITING'
             ]);
             // menata collection sebelum looping
             $confirmedBarang = $this->dataPenjualan->where('status', 'CONFIRMED')
@@ -107,31 +109,32 @@ class Invoice extends Component
                 });
             $confirmedBarang->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
-                if ($this->jenis == 'dus') {
-                    $barang->update([
-                        'stock_renteng' => $barang->stock_renteng - ($item['qty'] * $barang->jumlah_renteng)
-                    ]);
-                    Report::create([
-                        'kode_barang' => $item['kode_barang'],
-                        'out' => $item['qty'] * $barang->jumlah_renteng,
-                        'harga' => $item['harga'],
-                        'stock' => $barang->stock_sto
-                    ]);
-                } else {
-                    $barang->update([
-                        'stock_renteng' => $barang->stock_renteng - ($item['qty'])
-                    ]);
-                    Report::create([
-                        'kode_barang' => $item['kode_barang'],
-                        'out' => $item['qty'],
-                        'harga' => $item['harga'],
-                        'stock' => $barang->stock_sto
-                    ]);
-                }
+                // if ($this->jenis == 'dus') {
+                //     $barang->update([
+                //         'stock_renteng' => $barang->stock_renteng - ($item['qty'] * $barang->jumlah_renteng)
+                //     ]);
+                //     Report::create([
+                //         'kode_barang' => $item['kode_barang'],
+                //         'out' => $item['qty'] * $barang->jumlah_renteng,
+                //         'harga' => $item['harga'],
+                //         'stock' => $barang->stock_sto
+                //     ]);
+                // } else {
+                //     $barang->update([
+                //         'stock_renteng' => $barang->stock_renteng - ($item['qty'])
+                //     ]);
+                //     Report::create([
+                //         'kode_barang' => $item['kode_barang'],
+                //         'out' => $item['qty'],
+                //         'harga' => $item['harga'],
+                //         'stock' => $barang->stock_sto
+                //     ]);
+                // }
                 DetailPenjualan::create($item);
             });
-            session()->flash('success', "Berhasil dibuat dengan no invoice {$noInvoice}");
+            session()->flash('success-top', "Berhasil dibuat dengan no invoice {$noInvoice}");
             $this->dataPenjualan = collect();
+            $this->showForm = false;
         } else {
             session()->flash('error', 'Tambahkan barang terlebih dulu');
         }
@@ -243,10 +246,16 @@ class Invoice extends Component
         if ($this->harga < 0) $this->harga = 0;
     }
 
+    #[On('set-invoice')]
+    public function setInvoice($noInvoice)
+    {
+        $this->noInvoice = $noInvoice;
+    }
+
     private function generateNota()
     {
         // String awal
-        $stringAwal = HeaderPenjualan::select('no_invoice')->latest()->first()->no_invoice;
+        $stringAwal = HeaderPenjualan::select('no_invoice')->latest()->first()->no_invoice ?? 'P0000000';
 
         // Mengekstrak nomor dari string
         $nomor = intval(substr($stringAwal, 1)); // Mengabaikan huruf 'P'

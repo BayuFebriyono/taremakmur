@@ -4,6 +4,11 @@
             {{ session('error-top') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    @elseif (session('success-top'))
+        <div class="alert alert-primary alert-dismissible fade show mt-4" role="alert">
+            {{ session('success-top') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
     @if (!$showForm)
         {{-- Cari Invoice --}}
@@ -14,7 +19,7 @@
                 <form class="mt-2">
                     <div class="row">
                         <div class="col-md-10">
-                            <input type="text" class="form-control" placeholder="Masukkan No Invoice Yang Sudah Ada">
+                            <input wire:model='noInvoice' type="text" class="form-control" placeholder="Masukkan No Invoice Yang Sudah Ada">
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-inverse-primary">Cari</button>
@@ -49,7 +54,7 @@
                                         {{ $barang->kode_barang }} - {{ $barang->nama_barang }}</option>
                                 @endforeach
                             </select>
-                           
+
                         </div>
 
                         <div class="col-md-6">
@@ -62,8 +67,8 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="qty" class="form-label">Quantity</label>
-                            <input wire:change='hitungHarga' wire:model.change='qty' type="number" id="qty" class="form-control"
-                                placeholder="masukkan quantity" required>
+                            <input wire:change='hitungHarga' wire:model.change='qty' type="number" id="qty"
+                                class="form-control" placeholder="masukkan quantity" required>
                         </div>
 
                         <div class="col-md-6">

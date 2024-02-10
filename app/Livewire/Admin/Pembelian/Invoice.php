@@ -83,9 +83,13 @@ class Invoice extends Component
         ]);
 
         if ($this->dataPembelian->count() > 0) {
-            $no = HeaderPembelian::where('suplier_id', $this->suplierId)->latest()->first() ?? 0;
-            $arrno = explode('/', $no->no_invoice);
-            $no = $arrno[0];
+            try {
+                $no = HeaderPembelian::where('suplier_id', $this->suplierId)->latest()->first() ?? 0;
+                $arrno = explode('/', $no->no_invoice);
+                $no = $arrno[0];
+            } catch (Exception $e) {
+                $no = 0;
+            }
             $noInvoice = (int)$no + 1 . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
             HeaderPembelian::create([
                 'user_id' => auth()->user()->id,
@@ -225,7 +229,7 @@ class Invoice extends Component
     }
 
     #[On('cancel-edit')]
-    public function cancelEdit($message = '', $type ='success')
+    public function cancelEdit($message = '', $type = 'success')
     {
         $this->isEdit = false;
         if ($message) session()->flash($type, $message);
