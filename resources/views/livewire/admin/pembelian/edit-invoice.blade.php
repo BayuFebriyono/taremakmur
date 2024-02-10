@@ -22,6 +22,9 @@
                     <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span
                             wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
                         Invoice</button>
+                    <button wire:click='simpan' class="btn btn-ms btn-inverse-danger" type="button"> <span
+                            wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>
+                        Cancel</button>
                 </div>
                
             </div>
