@@ -14,12 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\Job::create([
-            'level' => 'admin'
-        ]);
+       
 
         \App\Models\User::create([
-           'job_id' => \App\Models\Job::first()->id,
            'username' => 'administrator',
            'password' => bcrypt('admin123')
         ]);

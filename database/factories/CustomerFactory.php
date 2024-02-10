@@ -21,7 +21,8 @@ class CustomerFactory extends Factory
     {
         return [
             'nama' => $this->faker->name(),
-            'alamat' => $this->faker->address()
+            'alamat' => $this->faker->address(),
+            'password' => bcrypt('password')
         ];
     }
 }

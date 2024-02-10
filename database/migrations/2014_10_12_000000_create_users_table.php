@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('job_id');
             $table->string('username');;
             $table->string('password');
+            $table->string('level')->default('admin');
             $table->rememberToken();
             $table->timestamps();
         });
