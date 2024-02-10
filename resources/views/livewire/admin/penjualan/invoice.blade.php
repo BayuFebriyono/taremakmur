@@ -16,10 +16,11 @@
             <div class="card-body">
                 <p class="fs-5 fw-bold">Masukkan No Invoice anda</p>
                 <p class="text-muted">Menu dibawah ini dugunakan untuk mencari no invoice yang sudah ada</p>
-                <form class="mt-2">
+                <form wire:submit='cariInvoice' class="mt-2">
                     <div class="row">
                         <div class="col-md-10">
-                            <input wire:model='noInvoice' type="text" class="form-control" placeholder="Masukkan No Invoice Yang Sudah Ada">
+                            <input  wire:model='noInvoice' type="text" class="form-control"
+                                placeholder="Masukkan No Invoice Yang Sudah Ada" required>
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-inverse-primary">Cari</button>
@@ -32,7 +33,11 @@
         </div>
 
         <div class="mt-2">
-            <livewire:admin.penjualan.waiting-confirm />
+            @if (!$isEdit)
+                <livewire:admin.penjualan.waiting-confirm />
+            @else
+                <livewire:admin.penjualan.edit-invoice :noInvoice="$noInvoice"/>
+            @endif
         </div>
     @else
         {{-- Form Pembelian --}}

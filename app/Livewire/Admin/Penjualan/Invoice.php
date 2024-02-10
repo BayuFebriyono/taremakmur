@@ -30,6 +30,7 @@ class Invoice extends Component
     public $barangs = [];
     public $namaBarang = '';
     public $noInvoice = '';
+    public $isEdit = false;
 
     public $kodeBarang;
     public $hargaSatuan = 0;
@@ -250,6 +251,16 @@ class Invoice extends Component
     public function setInvoice($noInvoice)
     {
         $this->noInvoice = $noInvoice;
+    }
+
+    public function cariInvoice()
+    {
+        $this->isEdit = true;
+    }
+    #[On('cancel-edit')]
+    public function cancelInvoice()
+    {
+        $this->isEdit = false;
     }
 
     private function generateNota()
