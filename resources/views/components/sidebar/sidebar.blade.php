@@ -7,74 +7,83 @@
             </a>
         </li> --}}
 
+        @if (auth()->user()->level == 'super_admin')
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#master-data" aria-expanded="false"
+                    aria-controls="master-data">
+                    <i class="men1u-icon mdi mdi-database-check"></i>
+                    <span class="menu-title">Master Data</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="master-data">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/customer">Customer</a></li>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">Suplier</a></li>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/barang">Barang</a></li>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/users">User</a></li>
+                    </ul>
+                </div>
+            </li>
+        @endif
 
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#master-data" aria-expanded="false"
-                aria-controls="master-data">
-                <i class="men1u-icon mdi mdi-database-check"></i>
-                <span class="menu-title">Master Data</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="master-data">
-                <ul class="nav flex-column sub-menu">
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/customer">Customer</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">Suplier</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/barang">Barang</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/users">User</a></li>
-                </ul>
-            </div>
-        </li>
+        @if (auth()->user()->level == 'super_admin' || auth()->user()->level == 'admin')
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPembelian" aria-expanded="false"
+                    aria-controls="transaksiPembelian">
+                    <i class="men1u-icon mdi mdi-basket-fill"></i>
+                    <span class="menu-title">Pembelian</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="transaksiPembelian">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian-invoice">Invoice</a>
+                        </li>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian-history">Riwayat</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPenjualan" aria-expanded="false"
+                    aria-controls="transaksiPenjualan">
+                    <i class="men1u-icon mdi mdi-cart-arrow-right"></i>
+                    <span class="menu-title">Penjualan</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="transaksiPenjualan">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-invoice">Invoice</a>
+                        </li>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/persetujuan">Perlu
+                                Persetujuan</a></li>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-history">Riwayat</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+        @endif
+
+        @if (auth()->user()->level == 'super_admin')
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#report" aria-expanded="false"
+                    aria-controls="report">
+                    <i class="men1u-icon mdi mdi-chart-bar"></i>
+                    <span class="menu-title">Report</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="report">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/report">Report Qty</a></li>
+
+                    </ul>
+                </div>
+            </li>
+        @endif
 
 
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPembelian" aria-expanded="false"
-                aria-controls="transaksiPembelian">
-                <i class="men1u-icon mdi mdi-basket-fill"></i>
-                <span class="menu-title">Pembelian</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="transaksiPembelian">
-                <ul class="nav flex-column sub-menu">
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian-invoice">Invoice</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/pembelian-history">Riwayat</a></li>
-                  
-                </ul>
-            </div>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPenjualan" aria-expanded="false"
-                aria-controls="transaksiPenjualan">
-                <i class="men1u-icon mdi mdi-cart-arrow-right"></i>
-                <span class="menu-title">Penjualan</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="transaksiPenjualan">
-                <ul class="nav flex-column sub-menu">
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-invoice">Invoice</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/persetujuan">Perlu Persetujuan</a></li>
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-history">Riwayat</a></li>
-                  
-                </ul>
-            </div>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#report" aria-expanded="false"
-                aria-controls="report">
-                <i class="men1u-icon mdi mdi-chart-bar"></i>
-                <span class="menu-title">Report</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="report">
-                <ul class="nav flex-column sub-menu">
-                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/report">Report Qty</a></li>
-                  
-                </ul>
-            </div>
-        </li>
-
-       
 
         <livewire:auth.logout />
 

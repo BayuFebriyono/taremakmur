@@ -37,22 +37,26 @@ Route::middleware('role:super_admin')->group(function () {
     Route::get('/users', User::class);
     Route::get('/suplier', Suplier::class);
     Route::get('/barang', Barang::class);
+
+    Route::get('/report', ReportQty::class);
+});
+
+// Route Admin and Super Admin
+Route::middleware('role:admin,super_admin')->group(function () {
     Route::get('/pembelian-invoice', Invoice::class);
     Route::get('/pembelian-history', History::class);
     Route::get('/penjualan-invoice', PenjualanInvoice::class);
     Route::get('/penjualan-history', PenjualanHistory::class);
     Route::get('/persetujuan', CustomerOrder::class);
-
-    Route::get('/report', ReportQty::class);
 });
 
 // customer
-Route::middleware('customer')->group(function (){
+Route::middleware('customer')->group(function () {
     Route::get('/customer-order', Order::class);
     Route::get('/ganti-password', GantiPassword::class);
     Route::get('/my-order', MyOrder::class);
 });
 
-Route::get('/tes', function(){
+Route::get('/tes', function () {
     return uniqid();
 });
