@@ -16,8 +16,8 @@
                             <h6 class="fw-light">Silahkan login untuk melanjutkan.</h6>
                             <form wire:submit="login" class="pt-3">
                                 <div class="form-group">
-                                    <input wire:model="username" type="text" class="form-control form-control-lg"
-                                        id="exampleInputEmail1" placeholder="Username">
+                                    <input wire:model="name" type="text" class="form-control form-control-lg"
+                                        id="exampleInputEmail1" placeholder="Nama">
                                 </div>
                                 <div class="form-group">
                                     <input wire:model="password" type="password" class="form-control form-control-lg"
