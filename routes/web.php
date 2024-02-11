@@ -31,7 +31,7 @@ Route::get('/', Login::class)->name('login');
 Route::get('/login-customer', LoginCustomer::class);
 
 // admin
-Route::middleware('auth')->group(function () {
+Route::middleware('role:super_admin')->group(function () {
     Route::get('/customer', Customer::class);
     Route::get('/suplier', Suplier::class);
     Route::get('/barang', Barang::class);
