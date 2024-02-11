@@ -8,9 +8,9 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Pembelian Oleh Customer</h4>
+            <h4 class="card-title">Order Saya</h4>
             <p class="card-description">
-                Semua data pembelian yang dilakukan customer akan tampil disini
+                Semua pembelian anda akan tampil disini
             </p>
 
             <div class="d-flex align-items-center">
@@ -38,7 +38,7 @@
                             <th>No Invoice</th>
                             <th>Customer</th>
                             <th>Tanggal</th>
-                            <th>Aksi</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,12 +49,11 @@
                                 <td>{{ $penjualan->customer->nama }}</td>
                                 <td>{{ Carbon\Carbon::parse($penjualan->created_at)->isoFormat('D MMM YYYY') }}</td>
                                 <td>
-                                    <button wire:click='generateNota("{{ $penjualan->no_invoice }}")' type="button"
-                                        class="btn btn-sm btn-info"><span
-                                            class="mdi mdi-printer-outline"></span></button>
-                                    <button wire:confirm='Apakah anda yakin ingin menghapus?'
-                                        wire:click='delete("{{ $penjualan->no_invoice }}")' type="button"
-                                        class="btn btn-sm btn-danger"><span class="mdi mdi-trash-can"></span></button>
+                                    @if ($penjualan->status == 'CUSTOMER')
+                                        <label class="badge badge-warning">On Progress</label>
+                                    @else
+                                        <label class="badge badge-success">Disetujui</label>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

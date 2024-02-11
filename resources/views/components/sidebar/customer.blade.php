@@ -8,6 +8,13 @@
         </li>
 
         <li class="nav-item">
+            <a wire:navigate class="nav-link" href="/my-order">
+                <i class="mdi mdi-basket-check-outline"></i>
+                <span class="menu-title">My Order</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a wire:navigate class="nav-link" href="/ganti-password">
                 <i class="mdi mdi-key-chain"></i>
                 <span class="menu-title">Ganti Password</span>
