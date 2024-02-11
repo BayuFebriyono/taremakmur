@@ -9,6 +9,7 @@ use App\Livewire\Admin\Penjualan\History as PenjualanHistory;
 use App\Livewire\Admin\Penjualan\Invoice as PenjualanInvoice;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\LoginCustomer;
+use App\Livewire\Customer\Order;
 use App\Livewire\Report\ReportQty;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Login::class)->name('login');
 Route::get('/login-customer', LoginCustomer::class);
 
+// admin
 Route::middleware('auth')->group(function () {
     Route::get('/customer', Customer::class);
     Route::get('/suplier', Suplier::class);
@@ -36,6 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/penjualan-history', PenjualanHistory::class);
 
     Route::get('/report', ReportQty::class);
+});
+
+// customer
+Route::middleware('customer')->group(function (){
+    Route::get('/customer-order', Order::class);
 });
 
 Route::get('/tes', function(){

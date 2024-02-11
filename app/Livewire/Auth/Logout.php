@@ -23,6 +23,7 @@ class Logout extends Component
 
     public function logout(){
         Auth::logout();
+        Auth::guard('customer')->logout();
         return $this->redirect('/', true);
     }
 }

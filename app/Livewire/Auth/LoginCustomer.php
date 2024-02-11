@@ -23,7 +23,7 @@ class LoginCustomer extends Component
 
         Auth::logout();
         if(Auth::guard('customer')->attempt(['nama' => $this->name, 'password' => $this->password])){
-            return $this->redirect('/customer-page', true);
+            return $this->redirect('/customer-order', true);
         }else{
             session()->flash('error', 'Nama atau password salah');
             return $this->redirect('/login-customer', true);
