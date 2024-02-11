@@ -1,4 +1,15 @@
 <div>
+    @if (session('error-top'))
+        <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+            {{ session('error-top') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif (session('success-top'))
+        <div class="alert alert-primary alert-dismissible fade show mt-4" role="alert">
+            {{ session('success-top') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="card">
         <div class="card-body">
             <p class="fs-5 fw-bold">Form Pembelian Barang</p>
@@ -43,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                   
+
                             <div class="col-6">
                                 <div class="ms-3">
                                     <div class="form-check">
@@ -94,7 +105,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <button wire:click='store' type="submit" class="btn btn-md btn-inverse-primary">Submit</button>
+                <button wire:click='addBarang' type="submit" class="btn btn-md btn-inverse-primary">Submit</button>
 
             </div>
         </div>
@@ -107,45 +118,37 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>Aksi</th>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Qty</th>
-                    <th>Aktual</th>
                     <th>Harga Satuan</th>
                     <th>Harga</th>
                     <th>Diskon</th>
-                    <th>Remarks</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach ($dataPenjualan as $data)
+                @foreach ($dataPenjualan as $data)
                     <tr wire:key='{{ $data['id'] }}'>
                         <td>{{ $loop->iteration }}</td>
+                        <td wire:confirm='Apakah yakin ingin anda hapus?' wire:click='hapus("{{ $data['id'] }}")'>
+                            <span role="button" class="btn btn-sm btn-danger"><i
+                                    class="mdi mdi-trash-can"></i></span>
+                        </td>
                         <td>{{ $data['kode_barang'] }}</td>
                         <td>{{ $data['nama_barang'] }}</td>
                         <td>{{ $data['qty'] . ' ' . $data['jenis'] }}</td>
-                        <td wire:click='showAktual("{{ $data['id'] }}")' class="text-primary"
-                            role="button"><u>{{ $data['aktual'] }}</u></td>
                         <td>{{ formatRupiah($data['harga_satuan']) }}</td>
                         <td>{{ formatRupiah($data['harga']) }}</td>
                         <td>{{ $data['diskon'] }}</td>
-                        <td wire:click='showRemark("{{ $data['id'] }}")' role="button"
-                            class="text-primary"><u>{{ $data['remark'] ?? '-' }}</u></td>
-                        <td>
-                            @if ($data['status'] == 'WAITING')
-                                <span wire:click='confirmed("{{ $data['id'] }}")' role="button"
-                                    class="btn btn-sm btn-warning"><i
-                                        class="mdi mdi-check-outline"></i></span>
-                            @elseif ($data['status'] == 'CONFIRMED')
-                                <span wire:click='waiting("{{ $data['id'] }}")' role="button"
-                                    class="btn btn-sm btn-success"><i
-                                        class="mdi mdi-check-outline"></i></span>
-                            @endif
-                        </td>
+
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="mt-3">
+        <button type="button" class="btn btn-md btn-inverse-primary">Simpan Pesanan</button>
+        <button type="button" class="btn btn-md btn-inverse-danger">Batalkan Pesanan</button>
     </div>
 </div>
