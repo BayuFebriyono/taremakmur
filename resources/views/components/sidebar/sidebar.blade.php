@@ -20,6 +20,7 @@
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/customer">Customer</a></li>
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/suplier">Suplier</a></li>
                     <li  class="nav-item"> <a wire:navigate class="nav-link" href="/barang">Barang</a></li>
+                    <li  class="nav-item"> <a wire:navigate class="nav-link" href="/users">User</a></li>
                 </ul>
             </div>
         </li>

@@ -3,6 +3,7 @@
 use App\Livewire\Admin\MasterData\Barang;
 use App\Livewire\Admin\MasterData\Customer;
 use App\Livewire\Admin\MasterData\Suplier;
+use App\Livewire\Admin\MasterData\User;
 use App\Livewire\Admin\Pembelian\History;
 use App\Livewire\Admin\Pembelian\Invoice;
 use App\Livewire\Admin\Penjualan\CustomerOrder;
@@ -30,9 +31,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Login::class)->name('login');
 Route::get('/login-customer', LoginCustomer::class);
 
-// admin
+// Super admin
 Route::middleware('role:super_admin')->group(function () {
     Route::get('/customer', Customer::class);
+    Route::get('/users', User::class);
     Route::get('/suplier', Suplier::class);
     Route::get('/barang', Barang::class);
     Route::get('/pembelian-invoice', Invoice::class);
