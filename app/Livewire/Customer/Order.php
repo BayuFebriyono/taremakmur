@@ -2,11 +2,15 @@
 
 namespace App\Livewire\Customer;
 
-use App\Models\Barang;
 use Exception;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
+use App\Models\Barang;
 use Livewire\Component;
+use Livewire\Attributes\Title;
+use App\Models\DetailPenjualan;
+use App\Models\HeaderPenjualan;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 
 #[Layout('components.layouts.customer')]
 #[Title('Order Page')]
@@ -53,16 +57,45 @@ class Order extends Component
                 'harga' => $this->harga,
                 'diskon' => $this->barang->diskon ?? 0,
                 'remark' => null,
-                'status' => 'CUSTOMER'
+                'status' => 'CONFIRMED'
             ]);
         } else {
             session()->flash('error-top', 'stok tidak mencukupi silahkan hubungi admin');
         }
     }
 
+    public function simpan()
+    {
+        $noInvoice = $this->generateNota();
+        HeaderPenjualan::create([
+            'user_id' => User::first()->id,
+            'customer_id' => Auth::guard('customer')->user()->id,
+            'no_invoice' => $noInvoice,
+            'status' => 'CUSTOMER'
+        ]);
+        // menata collection sebelum looping
+        $confirmedBarang = $this->dataPenjualan->where('status', 'CONFIRMED')
+            ->map(function ($item) use ($noInvoice) {
+                unset($item['id']);
+                unset($item['nama_barang']);
+                $item['no_invoice'] = $noInvoice;
+                return $item;
+            });
+        $confirmedBarang->each(function ($item) {
+            DetailPenjualan::create($item);
+        });
+        session()->flash('success-top', "Berhasil dibuat dengan no invoice {$noInvoice}");
+        $this->dataPenjualan = collect();
+    }
+
+    public function cancel()
+    {
+        $this->dataPenjualan = collect();
+    }
+
     public function hapus($id)
     {
-        $this->dataPenjualan = $this->dataPenjualan->reject(function ($item) use($id){
+        $this->dataPenjualan = $this->dataPenjualan->reject(function ($item) use ($id) {
             return $item['id'] == $id;
         });
     }
@@ -105,5 +138,24 @@ class Order extends Component
             if ($this->barang->stock_renteng < $this->qty) return false;
             return true;
         }
+    }
+
+    private function generateNota()
+    {
+        // String awal
+        $stringAwal = HeaderPenjualan::select('no_invoice')->latest()->first()->no_invoice ?? 'P0000000';
+
+        // Mengekstrak nomor dari string
+        $nomor = intval(substr($stringAwal, 1)); // Mengabaikan huruf 'P'
+
+        // Menambahkan 1 ke nomor
+        $nomorBaru = $nomor + 1;
+
+        // Memformat nomor baru dengan 7 digit
+        $nomorFormat = sprintf('%07d', $nomorBaru);
+
+        // Menyusun kembali string dengan huruf 'P' dan nomor yang diformat
+        $stringBaru = "P" . $nomorFormat;
+        return $stringBaru;
     }
 }

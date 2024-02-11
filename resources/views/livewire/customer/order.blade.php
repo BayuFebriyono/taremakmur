@@ -147,8 +147,9 @@
             </tbody>
         </table>
     </div>
+    <p class="fw-bold">Total : {{ formatRupiah($dataPenjualan->sum('harga')) }}</p>
     <div class="mt-3">
-        <button type="button" class="btn btn-md btn-inverse-primary">Simpan Pesanan</button>
-        <button type="button" class="btn btn-md btn-inverse-danger">Batalkan Pesanan</button>
+        <button wire:click='simpan' type="button" class="btn btn-md btn-inverse-primary">  <span wire:target='simpan' wire:loading class="spinner-grow spinner-grow-sm"></span>Simpan Pesanan</button>
+        <button wire:click='cancel' type="button" class="btn btn-md btn-inverse-danger">Batalkan Pesanan</button>
     </div>
 </div>
