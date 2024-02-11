@@ -9,6 +9,7 @@ use App\Livewire\Admin\Penjualan\History as PenjualanHistory;
 use App\Livewire\Admin\Penjualan\Invoice as PenjualanInvoice;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\LoginCustomer;
+use App\Livewire\Customer\GantiPassword;
 use App\Livewire\Customer\Order;
 use App\Livewire\Report\ReportQty;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
 // customer
 Route::middleware('customer')->group(function (){
     Route::get('/customer-order', Order::class);
+    Route::get('/ganti-password', GantiPassword::class);
 });
 
 Route::get('/tes', function(){

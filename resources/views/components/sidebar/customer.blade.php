@@ -8,7 +8,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/">
+            <a wire:navigate class="nav-link" href="/ganti-password">
                 <i class="mdi mdi-key-chain"></i>
                 <span class="menu-title">Ganti Password</span>
             </a>

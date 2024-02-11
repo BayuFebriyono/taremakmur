@@ -92,7 +92,7 @@
                                     <input class="form-check-input" type="radio" id="Renteng" value="renteng"
                                         wire:model.change='jenis'>
                                     <label class="form-check-label" for="Renteng">
-                                        Renteng
+                                        Pack
                                     </label>
                                 </div>
                             </div>
