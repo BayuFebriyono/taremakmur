@@ -27,6 +27,7 @@ class Customer extends Component
 
     public $nama = '';
     public $alamat = '';
+    public $password = '';
     public $excel = false;
 
     public function render()
@@ -50,7 +51,8 @@ class Customer extends Component
 
         ModelsCustomer::create([
             'nama' => $this->nama,
-            'alamat' => $this->alamat
+            'alamat' => $this->alamat,
+            'password' => bcrypt($this->password)
         ]);
 
         session()->flash('success', 'Data berhasil ditambahkan');
@@ -79,11 +81,13 @@ class Customer extends Component
 
     public function update()
     {
+        $data = [
+            'nama' => $this->nama,
+            'alamat' => $this->alamat,
+        ];
+        if($this->password) $data['password'] = bcrypt($this->password);
         ModelsCustomer::find($this->customerId)
-            ->update([
-                'nama' => $this->nama,
-                'alamat' => $this->alamat
-            ]);
+            ->update($data);
 
         session()->flash('success', 'Data berhasil diubah');
         $this->resetFields();
@@ -96,6 +100,7 @@ class Customer extends Component
         $this->nama = '';
         $this->alamat = '';
         $this->modalStatus = '';
+        $this->password = '';
         $this->customerId = null;
     }
 

@@ -41,7 +41,8 @@ class CustomerExcel extends Component
             foreach ($data as $row) {
                 Customer::create([
                     'nama' => $row[0],
-                    'alamat' => $row[1]
+                    'alamat' => $row[1],
+                    'password' => bcrypt('password')
                 ]);
             }
 

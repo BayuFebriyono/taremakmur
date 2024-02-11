@@ -25,6 +25,12 @@
                     </div>
 
                     <div class="my-2">
+                        <label for="Password" class="form-label">Password</label>
+                        <input wire:model="password" type="password" class="form-control"
+                            placeholder="Masukkan Password Pelanggan" required>
+                    </div>
+
+                    <div class="my-2">
                         <label for="Alamat" class="form-label">Alamat</label>
                         <textarea wire:model="alamat" class="form-control" rows="3" placeholder="Masukkan alamat...." required></textarea>
                     </div>
@@ -46,6 +52,13 @@
                         <label for="Nama" class="form-label">Nama</label>
                         <input wire:model="nama" type="text" class="form-control"
                             placeholder="Masukkan Nama Pelanggan" required>
+                    </div>
+
+                    <div class="my-2">
+                        <label for="Password" class="form-label">Password</label>
+                        <input wire:model="password" type="password" class="form-control"
+                            placeholder="Masukkan Password Pelanggan">
+                            <p class="fw-bold">Kosongkan jika tidak ingin merubah password</p>
                     </div>
 
                     <div class="my-2">
