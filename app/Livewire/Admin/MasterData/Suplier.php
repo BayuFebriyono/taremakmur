@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Admin\MasterData;
 
-use App\Models\Suplier as ModelsSuplier;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Layout;
+use App\Models\Suplier as ModelsSuplier;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('Master Data Suplier')]
@@ -15,6 +17,7 @@ class Suplier extends Component
 {
     use WithPagination;
     public $search = '';
+    public $dataExcel;
 
     public $modalStatus = '';
     public $nama = '';
@@ -32,6 +35,7 @@ class Suplier extends Component
             ->orWhere('nama_barang', 'like', '%' . $this->search . '%')
             ->orWhere('suplier', 'like', '%' . $this->search . '%')
             ->paginate(10);
+        $this->dataExcel = $supliers->items();
 
         return view('livewire.admin.master-data.suplier', [
             'supliers' => $supliers
@@ -110,15 +114,90 @@ class Suplier extends Component
         $this->suplierId = null;
     }
 
-    public function importExcel(){
+    public function importExcel()
+    {
         $this->excel = true;
     }
 
     #[On('cancelExcelSuplier')]
-    public function cancelExcel($message = ''){
+    public function cancelExcel($message = '')
+    {
         $this->excel = false;
-        if($message){
+        if ($message) {
             session()->flash('success', $message);
         }
+    }
+
+    public function exportExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true], // Set font nya jadi bold
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+
+        $sheet->setCellValue('A3', 'NAMA');
+        $sheet->setCellValue('B3', 'NAMA BARANG');
+        $sheet->setCellValue('C3', 'SUPLIER');
+        $sheet->setCellValue('D3', 'SATUAN');
+        $sheet->setCellValue('E3', 'UNIT');
+
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+
+        $row = 4;
+        foreach ($this->dataExcel as $data) {
+            $sheet->setCellValue("A{$row}", $data->nama);
+            $sheet->setCellValue("B{$row}", $data->nama_barang);
+            $sheet->setCellValue("C{$row}", $data->suplier);
+            $sheet->setCellValue("D{$row}", $data->satuan);
+            $sheet->setCellValue("E{$row}", $data->unit);
+
+            $sheet->getStyle("A{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("B{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("C{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("D{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("E{$row}")->applyFromArray($style_row);
+            $row++;
+        }
+
+        $sheet->setTitle("Export Suplier");
+        $fileName = "Export_Suplier.xlsx";
+
+        $path = public_path($fileName);
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->streamDownload(function () use ($path) {
+            echo file_get_contents($path);
+        }, $fileName);
     }
 }
