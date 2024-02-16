@@ -18,6 +18,7 @@ class Suplier extends Component
     use WithPagination;
     public $search = '';
     public $dataExcel;
+    public $perPage = 10;
 
     public $modalStatus = '';
     public $nama = '';
@@ -34,7 +35,7 @@ class Suplier extends Component
         $supliers = ModelsSuplier::where('nama', 'like', '%' . $this->search . '%')
             ->orWhere('nama_barang', 'like', '%' . $this->search . '%')
             ->orWhere('suplier', 'like', '%' . $this->search . '%')
-            ->paginate(10);
+            ->paginate($this->perPage);
         $this->dataExcel = $supliers->items();
 
         return view('livewire.admin.master-data.suplier', [

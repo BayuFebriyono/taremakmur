@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="row my-4">
 
                             <div class="col-md-6">
@@ -96,7 +96,8 @@
 
                         <div class="my-4 col-md-6">
                             <label for="Jumlah Renteng">Min Pack</label>
-                            <input wire:model='jumlahRenteng' type="number" class="form-control"  placeholder="Jumlah renteng dalam satu dus" required>
+                            <input wire:model='jumlahRenteng' type="number" class="form-control"
+                                placeholder="Jumlah renteng dalam satu dus" required>
                         </div>
 
 
@@ -149,7 +150,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="row my-4">
 
                             <div class="col-md-6">
@@ -194,7 +195,8 @@
 
                         <div class="my-4 col-md-6">
                             <label for="Jumlah Renteng">Min Pack</label>
-                            <input wire:model='jumlahRenteng' type="number" class="form-control"  placeholder="Jumlah renteng dalam satu dus" required>
+                            <input wire:model='jumlahRenteng' type="number" class="form-control"
+                                placeholder="Jumlah renteng dalam satu dus" required>
                         </div>
 
 
@@ -213,7 +215,27 @@
             Data Barang
         </div>
         <div class="card-body">
-            <input wire:model.live='search' type="text" class="form-control" placeholder="Cari nama barang...">
+            <div class="d-flex align-items-center">
+                <p class="p-2">Tampilkan</p>
+                <div class="p-2">
+                    <select class="form-select" wire:model.change='perPage'>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="{{ $barangs->count() }}">All</option>
+                    </select>
+                </div>
+                <div class="ms-auto p-2">
+                    <input wire:model.live="search" type="text" class="form-control" placeholder="Cari...">
+                </div>
+                <div class=" p-2">
+                    <button wire:click='exportExcel' class="btn btn-inverse-success btn-md"> <span wire:loading
+                            wire:target='exportExcel' class="spinner-grow spinner-grow-sm"></span>Export</button>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

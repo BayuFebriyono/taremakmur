@@ -2,14 +2,16 @@
 
 namespace App\Livewire\Admin\MasterData;
 
-use App\Models\Barang as ModelsBarang;
-use App\Models\Suplier as ModelsSuplier;
+use Livewire\Component;
+use Livewire\Attributes\On;
+use Livewire\WithPagination;
+use Livewire\Attributes\Title;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Title;
-use Livewire\Component;
-use Livewire\WithPagination;
+use App\Models\Barang as ModelsBarang;
+use App\Models\Suplier as ModelsSuplier;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('Master Data Barang')]
@@ -20,6 +22,8 @@ class Barang extends Component
 
     public $supliers;
     public $searchSuplier = '';
+    public $perPage = 10;
+    public $dataExcel;
 
     // Properti Model
     public $kodeBarang;
@@ -137,7 +141,9 @@ class Barang extends Component
     public function render()
     {
         $barangs = ModelsBarang::where('nama_barang', 'like', '%' . $this->search . '%')
-            ->paginate(10);
+            ->with('suplier')
+            ->paginate($this->perPage);
+        $this->dataExcel = $barangs->items();
         return view('livewire.admin.master-data.barang', [
             'barangs' => $barangs,
         ]);
@@ -180,5 +186,95 @@ class Barang extends Component
         if ($message) {
             session()->flash('success', $message);
         }
+    }
+
+    public function exportExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true], // Set font nya jadi bold
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+
+        $sheet->setCellValue('A3', 'SUPLIER');
+        $sheet->setCellValue('B3', 'KODE BARANG');
+        $sheet->setCellValue('C3', 'NAMA BARANG');
+        $sheet->setCellValue('D3', 'MIN PACK');
+        $sheet->setCellValue('E3', 'CASH DUS');
+        $sheet->setCellValue('F3', 'CASH PACK');
+        $sheet->setCellValue('G3', 'KREDIT DUS');
+        $sheet->setCellValue('H3', 'KREDIT PACK');
+        $sheet->setCellValue('I3', 'DISKON');
+
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
+        $sheet->getStyle('H3')->applyFromArray($style_col);
+        $sheet->getStyle('I3')->applyFromArray($style_col);
+
+
+        $row = 4;
+        foreach ($this->dataExcel as $data) {
+            $sheet->setCellValue("A{$row}", $data->suplier->nama);
+            $sheet->setCellValue("B{$row}", $data->kode_barang);
+            $sheet->setCellValue("C{$row}", $data->nama_barang);
+            $sheet->setCellValue("D{$row}", $data->jumlah_renteng);
+            $sheet->setCellValue("E{$row}", $data->cash_dus);
+            $sheet->setCellValue("F{$row}", $data->cash_pack);
+            $sheet->setCellValue("G{$row}", $data->kredit_dus);
+            $sheet->setCellValue("H{$row}", $data->kredit_pack);
+            $sheet->setCellValue("I{$row}", $data->diskon);
+
+            $sheet->getStyle("A{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("B{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("C{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("D{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("E{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("F{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("G{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("H{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("I{$row}")->applyFromArray($style_row);
+            $row++;
+        }
+
+        $sheet->setTitle("Export Barang");
+        $fileName = "Export_Barang.xlsx";
+
+        $path = public_path($fileName);
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->streamDownload(function () use ($path) {
+            echo file_get_contents($path);
+        }, $fileName);
     }
 }
