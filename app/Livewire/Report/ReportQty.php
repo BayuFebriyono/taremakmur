@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Report;
 
-use App\Models\Barang;
 use Carbon\Carbon;
+use App\Models\Barang;
 use App\Models\Report;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
-use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -37,15 +38,30 @@ class ReportQty extends Component
 
     public function cari()
     {
-        $report = Report::all();
-
-        if ($this->jenis == 'in') {
-            $report = $report->whereNotNull('in');
-        } elseif ($this->jenis == 'out') {
-            $report = $report->whereNotNull('out');
+        $dari = Carbon::parse($this->dari)->subDays(1)->isoFormat('Y-M-D');
+        $sampai = Carbon::parse($this->sampai)->addDays(1)->isoFormat('Y-M-D');
+     
+        $barangs = Barang::all();
+        $report = collect();
+        foreach ($barangs as $barang) {
+            $report->push([
+                'id' => uniqid(),
+                'kode_barang' => $barang->kode_barang,
+                'stock' => $barang->stock_sto,
+                'in' => DB::table('reports')
+                    ->where('kode_barang', $barang->kode_barang)
+                    ->whereBetween('created_at', [$dari, $sampai])
+                    ->sum('in'),
+                'out' =>  DB::table('reports')
+                    ->where('kode_barang', $barang->kode_barang)
+                    ->whereBetween('created_at', [$dari, $sampai])
+                    ->sum('out'),
+                'harga' =>  DB::table('reports')
+                    ->where('kode_barang', $barang->kode_barang)
+                    ->whereBetween('created_at', [$dari, $sampai])
+                    ->sum('harga'),
+            ]);
         }
-
-        $report = $report->whereBetween('created_at', [Carbon::parse($this->dari)->format('Y-m-d') . " 00:00:00", Carbon::parse($this->sampai)->format('Y-m-d') . " 23:59:59"]);
         $this->report = $report;
     }
 
@@ -71,9 +87,9 @@ class ReportQty extends Component
                     ]);
             }
 
-          session()->flash('success', "Berhasil STO");
+            session()->flash('success', "Berhasil STO");
         } else {
-           session()->flash('error', 'format file tidak didukung');
+            session()->flash('error', 'format file tidak didukung');
         }
     }
 
@@ -125,11 +141,11 @@ class ReportQty extends Component
 
         $row = 4;
         foreach ($this->report as $data) {
-            $sheet->setCellValue('A' . $row, $data->kode_barang);
-            $sheet->setCellValue('B' . $row, $data->stock);
-            $sheet->setCellValue('C' . $row, $data->in ?? '-');
-            $sheet->setCellValue('D' . $row, $data->out ?? '-');
-            $sheet->setCellValue('E' . $row, $data->harga);
+            $sheet->setCellValue('A' . $row, $data['kode_barang']);
+            $sheet->setCellValue('B' . $row, $data['stock']);
+            $sheet->setCellValue('C' . $row, $data['in'] ?? '-');
+            $sheet->setCellValue('D' . $row, $data['out'] ?? '-');
+            $sheet->setCellValue('E' . $row, $data['harga']);
 
             $sheet->getStyle('A' . $row)->applyFromArray($style_row);
             $sheet->getStyle('B' . $row)->applyFromArray($style_row);

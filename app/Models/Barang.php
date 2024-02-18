@@ -15,7 +15,13 @@ class Barang extends Model
     protected $guarded = ['id'];
     public $incrementing = 'false';
 
-    public function suplier(){
+    public function suplier()
+    {
         return $this->belongsTo(Suplier::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'kode_barang', 'kode_barang');
     }
 }

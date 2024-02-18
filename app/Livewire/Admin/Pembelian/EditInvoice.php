@@ -108,7 +108,7 @@ class EditInvoice extends Component
                 'no_invoice' => $this->noInvoice,
                 'kode_barang' => $item['kode_barang'],
                 'in' => $item['aktual'] * $barang->jumlah_renteng,
-                'harga' => $item['harga'],
+                'harga' => 0,
                 'stock' => $barang->stock_sto
             ]);
         });

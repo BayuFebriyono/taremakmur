@@ -35,7 +35,7 @@
 
                 <div class="p-2">
                     <p class="fw-bold">Filter</p>
-                    <div class="row ms-3">
+                    {{-- <div class="row ms-3">
                         <div class="col-md-4">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" id="all" wire:model.change='jenis'
@@ -63,7 +63,7 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
 
@@ -80,9 +80,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-2"><button wire:click='cari' class="btn btn-md btn-inverse-primary">Cari</button></div>
+                <div class="p-2"><button wire:click='cari' class="btn btn-md btn-inverse-primary">  <span wire:target='cari' wire:loading class="spinner-grow spinner-grow-sm"></span> Show</button></div>
             </div>
-            <button wire:click='exportExcel' class="btn btn-md btn-inverse-warning mt-2">Export Excel</button>
+            <button wire:click='exportExcel' class="btn btn-md btn-inverse-warning mt-2"><span wire:target='exportExcel' wire:loading class="spinner-grow spinner-grow-sm"></span> Export Excel</button>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -97,13 +97,13 @@
                     </thead>
                     <tbody>
                         @foreach ($report as $r)
-                            <tr wire:key='{{ $r->id }}'>
+                            <tr wire:key='{{ $r['id'] }}'>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $r->kode_barang }}</td>
-                                <td>{{ $r->stock }}</td>
-                                <td>{{ $r->in ?? '-' }}</td>
-                                <td>{{ $r->out ?? '-' }}</td>
-                                <td>{{ $r->harga ?? '-' }}</td>
+                                <td>{{ $r['kode_barang'] }}</td>
+                                <td>{{ $r['stock'] }}</td>
+                                <td>{{ $r['in'] ?? '-' }}</td>
+                                <td>{{ $r['out'] ?? '-' }}</td>
+                                <td>{{ $r['harga'] ?? '-' }}</td>
 
                             </tr>
                         @endforeach
