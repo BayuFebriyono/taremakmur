@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('no_invoice');
             $table->string('kode_barang');
             $table->integer('stock');
             $table->integer('in')->nullable();

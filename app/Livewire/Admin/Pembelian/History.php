@@ -2,15 +2,17 @@
 
 namespace App\Livewire\Admin\Pembelian;
 
+use Dompdf\Dompdf;
+use App\Models\Barang;
+use App\Models\Report;
+use Livewire\Component;
+use Livewire\Attributes\On;
+use Livewire\WithPagination;
+use Livewire\Attributes\Title;
 use App\Models\DetailPembelian;
 use App\Models\HeaderPembelian;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Dompdf\Dompdf;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Title;
-use Livewire\Component;
-use Livewire\WithPagination;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('History Pembelian')]
@@ -48,8 +50,18 @@ class History extends Component
 
     public function delete($noInvoice)
     {
-        DetailPembelian::where('no_invoice', $noInvoice)->delete();
         HeaderPembelian::where('no_invoice', $noInvoice)->delete();
+        $detail = DetailPembelian::where('no_invoice', $noInvoice)->get();
+        $detail->each(function ($item) {
+
+            // update stock
+            $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+            $barang->update([
+                'stock_renteng' => $barang->stock_renteng - ($item['aktual'] * $barang->jumlah_renteng)
+            ]);
+        });
+        DetailPembelian::where('no_invoice', $noInvoice)->delete();
+        Report::where('no_invoice', $noInvoice)->delete();
 
         session()->flash('success', 'Data berhasil dihapus');
     }

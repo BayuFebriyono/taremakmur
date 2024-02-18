@@ -105,6 +105,7 @@ class EditInvoice extends Component
                 'stock_renteng' => $barang->stock_renteng + ($item['aktual'] * $barang->jumlah_renteng)
             ]);
             Report::create([
+                'no_invoice' => $this->noInvoice,
                 'kode_barang' => $item['kode_barang'],
                 'in' => $item['aktual'] * $barang->jumlah_renteng,
                 'harga' => $item['harga'],

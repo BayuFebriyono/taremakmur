@@ -3,14 +3,16 @@
 namespace App\Livewire\Admin\Penjualan;
 
 use Dompdf\Dompdf;
+use App\Models\Barang;
+use App\Models\Report;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
 use App\Models\DetailPenjualan;
 use App\Models\HeaderPenjualan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('History Penjualan')]
@@ -41,15 +43,30 @@ class History extends Component
     }
 
     #[On('cancel-edit')]
-    public function cancel(){
+    public function cancel()
+    {
         $this->noInvoice = null;
         $this->isEdit = false;
     }
 
     public function delete($noInvoice)
     {
-        DetailPenjualan::where('no_invoice', $noInvoice)->delete();
         HeaderPenjualan::where('no_invoice', $noInvoice)->delete();
+        $detail = DetailPenjualan::where('no_invoice', $noInvoice)->get();
+        $detail->each(function ($item) {
+            $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+            if ($item['jenis'] == 'dus') {
+                $barang->update([
+                    'stock_renteng' => $barang->stock_renteng + ($item['aktual'] * $barang->jumlah_renteng)
+                ]);
+            } else {
+                $barang->update([
+                    'stock_renteng' => $barang->stock_renteng + ($item['aktual'])
+                ]);
+            }
+        });
+        Report::where('no_invoice', $noInvoice)->delete();
+        DetailPenjualan::where('no_invoice', $noInvoice)->delete();
         session()->flash('success', 'Data berhasil dihapus');
     }
 
