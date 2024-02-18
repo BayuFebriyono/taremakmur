@@ -19,6 +19,7 @@ class Customer extends Component
 
     public $perPage = 10;
     public $dataExcel;
+    public $jumlahData;
 
     public $active = 'customer';
     public $search = '';
@@ -29,6 +30,11 @@ class Customer extends Component
     public $alamat = '';
     public $password = '';
     public $excel = false;
+
+    public function mount()
+    {
+        $this->jumlahData = ModelsCustomer::all()->count();
+    }
 
     public function render()
     {
@@ -85,7 +91,7 @@ class Customer extends Component
             'nama' => $this->nama,
             'alamat' => $this->alamat,
         ];
-        if($this->password) $data['password'] = bcrypt($this->password);
+        if ($this->password) $data['password'] = bcrypt($this->password);
         ModelsCustomer::find($this->customerId)
             ->update($data);
 

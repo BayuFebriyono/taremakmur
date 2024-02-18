@@ -19,6 +19,7 @@ class Suplier extends Component
     public $search = '';
     public $dataExcel;
     public $perPage = 10;
+    public $jumlahData;
 
     public $modalStatus = '';
     public $nama = '';
@@ -29,6 +30,11 @@ class Suplier extends Component
     public $suplierId = null;
 
     public $excel = false;
+
+    public function mount()
+    {
+        $this->jumlahData = ModelsSuplier::all()->count();
+    }
 
     public function render()
     {

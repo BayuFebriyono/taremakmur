@@ -22,7 +22,8 @@ class Barang extends Component
 
     public $supliers;
     public $searchSuplier = '';
-    public $perPage = 10;
+    public $perPage;
+    public $jumlahData;
     public $dataExcel;
 
     // Properti Model
@@ -48,6 +49,8 @@ class Barang extends Component
     {
         $this->supliers = ModelsSuplier::all();
         $this->kodeBarang = uniqid();
+        $this->jumlahData = ModelsBarang::all()->count();
+        $this->perPage = 10;
     }
 
     public function updateSelectedSuplier()
