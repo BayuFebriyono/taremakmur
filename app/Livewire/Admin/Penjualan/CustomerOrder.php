@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Penjualan;
 
 use App\Models\Barang;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use App\Models\DetailPenjualan;
 use App\Models\HeaderPenjualan;
@@ -16,6 +17,8 @@ class CustomerOrder extends Component
 {
     public $perPage = 10;
     public $search = '';
+    public $noInvoice;
+    public $isEdit = false;
 
     public function render()
     {
@@ -24,6 +27,19 @@ class CustomerOrder extends Component
             ->where('status', 'CUSTOMER')
             ->latest()->paginate($this->perPage);
         return view('livewire.admin.penjualan.customer-order', ['penjualans' => $penjualans]);
+    }
+
+    public function showDetail($noInvoice)
+    {
+        $this->noInvoice = $noInvoice;
+        $this->isEdit = true;
+    }
+
+    #[On('cancel-edit')]
+    public function cancel()
+    {
+        $this->noInvoice = null;
+        $this->isEdit = false;
     }
 
     public function delete($noInvoice)
