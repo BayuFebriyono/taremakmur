@@ -6,15 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    {{-- <style>
-       *{
-        font-size: 6px;
-        margin: 0px;
-      
-       }
-       @page{
-        size: 80mm;
-       } --}}
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
     </style>
 </head>
 
@@ -24,25 +20,25 @@
     <table style="width: 100%; border-collapse: collapse; border: none rgb(0, 0, 0);">
         <tbody>
             <tr>
-                <td style="width: 50%; border: none rgb(0, 0, 0);">{{ $data->no_invoice }}</td>
-                <td style="width: 50%; border: none rgb(0, 0, 0);">{{ carbon\Carbon::parse($data->created_at)->isoFormat('D MMM YYY') }}</td>
+                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">{{ $data->no_invoice }}</td>
+                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">{{ carbon\Carbon::parse($data->created_at)->isoFormat('D MMM YYY') }}</td>
             </tr>
             <tr>
-                <td style="width: 50%; border: none rgb(0, 0, 0);">Suplier</td>
-                <td style="width: 50%; border: none rgb(0, 0, 0);">{{ $data->suplier->nama }}</td>
+                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">Suplier</td>
+                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">{{ $data->suplier->nama }}</td>
             </tr>
         </tbody>
     </table>
     <p style="text-align: center;">--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
     @foreach ($data->detail_pembelian as $detail)     
-    <p> {{ $loop->iteration }}) {{ $detail->barang->nama_barang }}</p>
+    <p style="font-size: 13px; margin-left: 0px;"> {{ $loop->iteration }}) {{ $detail->barang->nama_barang }}</p>
     <table style="width: 100%;">
         <tbody>
             <tr>
-                <td style="width: 25.0000%;">{{ $detail->aktual }} Dus</td>
+                <td style="width: 25.0000%; font-size: 11px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{ $detail->aktual }} Dus</td>
                 {{-- <td style="width: 25.0000%;">Harga Satuan</td> --}}
-                <td style="width: 25.0000%;">{{ formatRupiah($detail->diskon) }}</td>
-                <td style="width: 25.0000%;">{{ formatRupiah($detail->harga) }}</td>
+                <td style="width: 25.0000%; font-size: 11px;" >{{ formatRupiah($detail->diskon) }}</td>
+                <td style="width: 25.0000%; font-size: 11px;">{{ formatRupiah($detail->harga) }}</td>
             </tr>
         </tbody>
     </table>
