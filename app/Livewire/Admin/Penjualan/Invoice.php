@@ -110,27 +110,15 @@ class Invoice extends Component
                 });
             $confirmedBarang->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
-                // if ($this->jenis == 'dus') {
-                //     $barang->update([
-                //         'stock_renteng' => $barang->stock_renteng - ($item['qty'] * $barang->jumlah_renteng)
-                //     ]);
-                //     Report::create([
-                //         'kode_barang' => $item['kode_barang'],
-                //         'out' => $item['qty'] * $barang->jumlah_renteng,
-                //         'harga' => $item['harga'],
-                //         'stock' => $barang->stock_sto
-                //     ]);
-                // } else {
-                //     $barang->update([
-                //         'stock_renteng' => $barang->stock_renteng - ($item['qty'])
-                //     ]);
-                //     Report::create([
-                //         'kode_barang' => $item['kode_barang'],
-                //         'out' => $item['qty'],
-                //         'harga' => $item['harga'],
-                //         'stock' => $barang->stock_sto
-                //     ]);
-                // }
+                if ($this->jenis == 'dus') {
+                    $barang->update([
+                        'stock_bayangan' => $barang->stock_bayangan - ($item['qty'] * $barang->jumlah_renteng)
+                    ]);
+                } else {
+                    $barang->update([
+                        'stock_bayangan' => $barang->stock_bayangan - ($item['qty'])
+                    ]);
+                }
                 DetailPenjualan::create($item);
             });
             session()->flash('success-top', "Berhasil dibuat dengan no invoice {$noInvoice}");
@@ -229,10 +217,10 @@ class Invoice extends Component
         if ($this->jenis == 'dus') {
             $jumlah = (int)$this->barang->jumlah_renteng * (int)$this->qty;
     
-            if ($this->barang->stock_renteng < $jumlah) return false;
+            if ($this->barang->stock_bayangan < $jumlah) return false;
             return true;
         } else {
-            if ($this->barang->stock_renteng < $this->qty) return false;
+            if ($this->barang->stock_bayangan < $this->qty) return false;
             return true;
         }
     }

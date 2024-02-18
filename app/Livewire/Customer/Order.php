@@ -83,6 +83,17 @@ class Order extends Component
             });
         $confirmedBarang->each(function ($item) {
             DetailPenjualan::create($item);
+            // update stok bayangan
+            $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+            if ($item['jenis'] == 'dus') {
+                $barang->update([
+                    'stock_bayangan' => $barang->stock_bayangan - ($item['aktual'] * $barang->jumlah_renteng)
+                ]);
+            } else {
+                $barang->update([
+                    'stock_bayangan' => $barang->stock_bayangan - ($item['aktual'])
+                ]);
+            }
         });
         session()->flash('success-top', "Berhasil dibuat dengan no invoice {$noInvoice}");
         $this->dataPenjualan = collect();
@@ -132,10 +143,10 @@ class Order extends Component
         if ($this->jenisPembelian == 'dus') {
             $jumlah = (int)$this->barang->jumlah_renteng * (int)$this->qty;
 
-            if ($this->barang->stock_renteng < $jumlah) return false;
+            if ($this->barang->stock_bayangan < $jumlah) return false;
             return true;
         } else {
-            if ($this->barang->stock_renteng < $this->qty) return false;
+            if ($this->barang->stock_bayangan < $this->qty) return false;
             return true;
         }
     }

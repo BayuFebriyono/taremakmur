@@ -83,7 +83,8 @@ class ReportQty extends Component
                 Barang::where('kode_barang', $row[0])
                     ->update([
                         'stock_sto' => $row[1],
-                        'stock_renteng' => $row[1]
+                        'stock_renteng' => $row[1],
+                        'stock_bayangan' => $row[1],
                     ]);
             }
 

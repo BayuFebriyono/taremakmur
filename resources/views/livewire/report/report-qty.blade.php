@@ -19,7 +19,10 @@
                         class="fw-bold text-primary">disini</u></a></p>
             <form wire:submit='importSto'>
                 <input wire:model='excel' type="file" class="form-control" required>
-                <button type="submit" class="btn btn-primary mt-2">Proses</button>
+                <div wire:loading wire:target='excel'>
+                    <p class="text-success fw-bold">Uploading...</p>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2"><span wire:target='importSto' wire:loading class="spinner-grow spinner-grow-sm"></span>Proses</button>
             </form>
         </div>
     </div>

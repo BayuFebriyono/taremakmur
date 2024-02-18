@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Penjualan;
 
 use Dompdf\Dompdf;
+use App\Models\Barang;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\DetailPenjualan;
@@ -68,12 +69,26 @@ class WaitingConfirm extends Component
 
     public function delete($noInvoice)
     {
-        DetailPenjualan::where('no_invoice', $noInvoice)->delete();
+        $detail = DetailPenjualan::where('no_invoice', $noInvoice)->get();
+        $detail->each(function ($item) {
+            $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+            if ($item['jenis'] == 'dus') {
+                $barang->update([
+                    'stock_bayangan' => $barang->stock_bayangan + ($item['aktual'] * $barang->jumlah_renteng),
+                ]);
+            } else {
+                $barang->update([
+                    'stock_bayangan' => $barang->stock_bayangan + ($item['aktual']),
+                ]);
+            }
+        });
         HeaderPenjualan::where('no_invoice', $noInvoice)->delete();
+        DetailPenjualan::where('no_invoice', $noInvoice)->delete();
+        session()->flash('success', 'Data berhasil dihapus');
     }
 
     public function setInvoice($noInvoice)
     {
-        $this->dispatch('set-invoice', noInvoice : $noInvoice)->to(Invoice::class);
+        $this->dispatch('set-invoice', noInvoice: $noInvoice)->to(Invoice::class);
     }
 }
