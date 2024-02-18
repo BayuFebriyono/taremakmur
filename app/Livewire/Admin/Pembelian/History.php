@@ -7,6 +7,7 @@ use App\Models\HeaderPembelian;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,16 +19,31 @@ class History extends Component
     use WithPagination;
     public $perPage = 10;
     public $search = '';
+    public $isEdit = false;
+    public $noInvoice;
 
     public function render()
     {
         $pembelians = HeaderPembelian::with(['user', 'suplier'])
-            ->where('no_invoice', 'like' , '%' . $this->search .'%')
+            ->where('no_invoice', 'like', '%' . $this->search . '%')
             ->where('status', 'CONFIRMED')
             ->latest()->paginate($this->perPage);
         return view('livewire.admin.pembelian.history', [
             'pembelians' => $pembelians
         ]);
+    }
+
+    #[On('cancel-edit')]
+    public function cancel()
+    {
+        $this->noInvoice = null;
+        $this->isEdit = false;
+    }
+
+    public function showDetail($noInvoice)
+    {
+        $this->noInvoice = $noInvoice;
+        $this->isEdit = true;
     }
 
     public function delete($noInvoice)
@@ -87,6 +103,5 @@ class History extends Component
             fn () => print($pdf),
             'nota.pdf'
         );
-
     }
 }

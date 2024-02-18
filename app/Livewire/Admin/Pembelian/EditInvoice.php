@@ -16,9 +16,11 @@ class EditInvoice extends Component
 
     public $remark;
     public $aktual;
+    public $state;
 
     public function mount($noInvoice)
     {
+    
         $this->noInvoice = $noInvoice;
     }
 
@@ -83,7 +85,7 @@ class EditInvoice extends Component
 
     public function cancel()
     {
-        $this->dispatch('cancel-edit')->to(Invoice::class);
+        $this->dispatch('cancel-edit');
     }
 
     public function simpan()
@@ -94,6 +96,7 @@ class EditInvoice extends Component
         $detail = DetailPembelian::where('no_invoice', $this->noInvoice)
             ->where('status', 'CONFIRMED')
             ->get();
+
         $detail->each(function ($item) {
 
             // update stock

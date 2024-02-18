@@ -252,6 +252,7 @@ class Invoice extends Component
     public function setInvoice($noInvoice)
     {
         $this->noInvoice = $noInvoice;
+        $this->isEdit = true;
     }
 
     public function cariInvoice()

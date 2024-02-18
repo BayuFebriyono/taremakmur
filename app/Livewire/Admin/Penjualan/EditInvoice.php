@@ -110,6 +110,6 @@ class EditInvoice extends Component
 
     public function cancel()
     {
-        $this->dispatch('cancel-edit')->to(Invoice::class);
+        $this->dispatch('cancel-edit');
     }
 }

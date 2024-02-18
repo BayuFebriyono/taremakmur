@@ -10,6 +10,7 @@ use App\Models\DetailPenjualan;
 use App\Models\HeaderPenjualan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 
 #[Layout('components.layouts.sidebar')]
 #[Title('History Penjualan')]
@@ -19,6 +20,9 @@ class History extends Component
 
     public $perPage = 10;
     public $search = '';
+    public $noInvoice;
+    public $isEdit = false;
+
     public function render()
     {
         $penjualans = HeaderPenjualan::with(['user', 'customer'])
@@ -28,6 +32,18 @@ class History extends Component
         return view('livewire.admin.penjualan.history', [
             'penjualans' => $penjualans
         ]);
+    }
+
+    public function showDetail($noInvoice)
+    {
+        $this->noInvoice = $noInvoice;
+        $this->isEdit = true;
+    }
+
+    #[On('cancel-edit')]
+    public function cancel(){
+        $this->noInvoice = null;
+        $this->isEdit = false;
     }
 
     public function delete($noInvoice)
