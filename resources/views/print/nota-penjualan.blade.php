@@ -11,6 +11,7 @@
             margin: 0px;
             padding: 0px;
         }
+        @page { margin: 0px; }
     </style>
 </head>
 
@@ -24,12 +25,12 @@
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">{{ $data->no_invoice }}</td>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">
-                    {{ carbon\Carbon::parse($data->created_at)->isoFormat('D MMM YYY') }}</td>
+                    {{ carbon\Carbon::parse($data->created_at)->isoFormat('D MMM YYYY') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">Customer</td>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">
-                    {{ $data->customer->nama }}</td>
+                    {{ $data->customer->nama }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </tbody>
     </table>
@@ -42,11 +43,11 @@
             <tbody>
                 <tr>
                     <td style="width: 25.0000%; font-size: 11px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp;{{ $detail->aktual }} </td>
+                        &nbsp;{{ $detail->aktual }} {{ $detail->jenis=='dus' ? 'Dos' : 'Pack' }} </td>
 
                     <td style="width: 25.0000%; font-size: 11px;">{{ formatRupiah($detail->harga_satuan) }}</td>
                     <td style="width: 25.0000%; font-size: 11px;">{{ formatRupiah($detail->diskon) }}</td>
-                    <td style="width: 25.0000%; font-size: 11px;">{{ formatRupiah($detail->harga) }}</td>
+                    <td style="width: 25.0000%; font-size: 11px;">{{ formatRupiah($detail->harga) }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 </tr>
             </tbody>
         </table>
@@ -60,12 +61,12 @@
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0);">Total</td>
                 <td style="width: 50%; border: none rgb(0, 0, 0);">
-                    <div style="text-align: right;">{{ formatRupiah($data->detail_penjualan->sum('harga')) }}</div>
+                    <div style="text-align: right;">{{ formatRupiah($data->detail_penjualan->sum('harga')) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 </td>
             </tr>
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0);">Pembayaran</td>
-                <td style="text-align: right; width: 50%; border: none rgb(0, 0, 0);">Tunai</td>
+                <td style="text-align: right; width: 50%; border: none rgb(0, 0, 0);">Tunai&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </tbody>
     </table>

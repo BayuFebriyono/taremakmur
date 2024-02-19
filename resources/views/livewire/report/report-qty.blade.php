@@ -92,10 +92,11 @@
                         <tr>
                             <th>#</th>
                             <th>Kode Barang</th>
-                            <th>Stok</th>
+                            <th>Stok STO</th>
                             <th>IN</th>
                             <th>Out</th>
                             <th>Harga</th>
+                            <th>Stock</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,6 +108,7 @@
                                 <td>{{ $r['in'] ?? '-' }}</td>
                                 <td>{{ $r['out'] ?? '-' }}</td>
                                 <td>{{ $r['harga'] ?? '-' }}</td>
+                                <td>{{ $r['stock_barang'] ?? '-' }}</td>
 
                             </tr>
                         @endforeach

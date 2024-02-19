@@ -60,6 +60,7 @@ class ReportQty extends Component
                     ->where('kode_barang', $barang->kode_barang)
                     ->whereBetween('created_at', [$dari, $sampai])
                     ->sum('harga'),
+                'stock_barang' => $barang->stock_renteng,
             ]);
         }
         $this->report = $report;

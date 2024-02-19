@@ -54,7 +54,7 @@
                 </a>
                 <div class="collapse" id="transaksiPenjualan">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-invoice">Invoice</a>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-invoice">Nota Penjualan</a>
                         </li>
                         <li class="nav-item"> <a wire:navigate class="nav-link" href="/persetujuan">Perlu
                                 Persetujuan</a></li>

@@ -236,30 +236,30 @@
                             wire:target='exportExcel' class="spinner-grow spinner-grow-sm"></span>Export</button>
                 </div>
             </div>
-            <div class="table-responsive">
+            {{-- <div class="table-responsive"> --}}
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Suplier</th>
-                            <th scope="col">Kode Barang</th>
-                            <th scope="col">Nama Barang</th>
-                            <th scope="col">Min Pack</th>
-                            <th scope="col">Cash Dus</th>
-                            <th scope="col">Cash Pack</th>
-                            <th scope="col">Kredit Dus</th>
-                            <th scope="col">Kredit Pack</th>
-                            <th scope="col">Diskon</th>
-                            <th scope="col">Aktif</th>
-                            <th scope="col">Aksi</th>
+                            <th style="width: 7%;">#</th>
+                            <th style="width: 1px;">Suplier</th>
+                            {{-- <th style="width: 7%;">Kode Barang</th> --}}
+                            <th style="width: 7%;">Nama Barang</th>
+                            <th style="width: 7%;">Min Pack</th>
+                            <th style="width: 7%;">Cash Dus</th>
+                            <th style="width: 7%;">Cash Pack</th>
+                            <th style="width: 7%;">Kredit Dus</th>
+                            <th style="width: 7%;">Kredit Pack</th>
+                            <th style="width: 7%;">Diskon</th>
+                            <th style="width: 7%;">Aktif</th>
+                            <th style="width: 7%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($barangs as $barang)
                             <tr wire:key="{{ $barang->id }}">
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $barang->suplier->nama }}</td>
-                                <td>{{ $barang->kode_barang }}</td>
+                                <td style="width: 1px;">{{ $barang->suplier->nama }}</td>
+                                {{-- <td>{{ $barang->kode_barang }}</td> --}}
                                 <td>{{ $barang->nama_barang }}</td>
                                 <td>{{ $barang->jumlah_renteng }}</td>
                                 <td>{{ formatRupiah($barang->cash_dus) }}</td>
@@ -288,7 +288,7 @@
                     </tbody>
                 </table>
                 {{ $barangs->links(data: ['scrollTo' => false]) }}
-            </div>
+            {{-- </div> --}}
         </div>
     </div>
 </div>
