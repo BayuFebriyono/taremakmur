@@ -80,6 +80,7 @@ class Invoice extends Component
                 'remark' => null,
                 'status' => 'WAITING'
             ]);
+            $this->qty = 0;
         } else {
             session()->flash('error-top', 'stok tidak mencukupi');
         }
