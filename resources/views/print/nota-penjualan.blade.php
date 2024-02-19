@@ -14,7 +14,7 @@
 
         @page {
             margin: 0px;
-            margin-right: 0.5cm;
+            margin-right: 1.5cm;
         }
     </style>
 </head>
@@ -47,12 +47,12 @@
         <table style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 25.0000%; font-size: 11px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         &nbsp;{{ $detail->aktual }} {{ $detail->jenis == 'dus' ? 'Dos' : 'Pack' }} </td>
 
-                    <td style="width: 25.0000%; font-size: 11px;">{{ formatRupiah($detail->harga_satuan) }}</td>
-                    <td style="width: 25.0000%; font-size: 11px;">{{ formatRupiah($detail->diskon) }}</td>
-                    <td style="width: 25.0000%; font-size: 11px;">
+                    <td style="width: 25.0000%; font-size: 13px;">{{ formatRupiah($detail->harga_satuan) }}</td>
+                    <td style="width: 25.0000%; font-size: 13px;">{{ formatRupiah($detail->diskon) }}</td>
+                    <td style="width: 25.0000%; font-size: 13px;">
                         {{ formatRupiah($detail->harga) }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 </tr>
             </tbody>
@@ -80,6 +80,11 @@
         </tbody>
     </table>
     <p>Keterangan :<br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 </body>
 
 </html>

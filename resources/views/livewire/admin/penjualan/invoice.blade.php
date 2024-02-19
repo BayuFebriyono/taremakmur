@@ -64,7 +64,7 @@
 
                         <div class="col-md-6">
                             <label for="Diskon" class="form-label">Diskon</label>
-                            <input wire:model.change='diskon' type="number" class="form-control"
+                            <input wire:change='hitungHarga' wire:model.change='diskon' type="number" class="form-control"
                                 placeholder="Masukkan diskon" required>
                         </div>
                     </div>
