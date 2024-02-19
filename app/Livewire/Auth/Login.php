@@ -23,7 +23,7 @@ class Login extends Component
         ]);
 
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
-            if (Auth::user()->level == 'admin')  return $this->redirect('/pembelian-invoice', true);
+            if (Auth::user()->level == 'admin')  return $this->redirect('/penjualan-invoice', true);
             return $this->redirect('/customer', true);
         } else {
             session()->flash('error', 'Username atau Password Salah');
