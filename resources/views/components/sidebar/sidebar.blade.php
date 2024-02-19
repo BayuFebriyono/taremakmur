@@ -24,9 +24,7 @@
                     </ul>
                 </div>
             </li>
-        @endif
 
-        @if (auth()->user()->level == 'super_admin' || auth()->user()->level == 'admin')
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPembelian" aria-expanded="false"
                     aria-controls="transaksiPembelian">
@@ -44,6 +42,15 @@
                     </ul>
                 </div>
             </li>
+        @endif
+
+        @if (auth()->user()->level == 'super_admin' || auth()->user()->level == 'admin')
+            <li class="nav-item">
+                <a wire:navigate class="nav-link" href="/stock-barang">
+                    <i class="mdi mdi-archive-check menu-icon"></i>
+                    <span class="menu-title">Stok Barang</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPenjualan" aria-expanded="false"
@@ -54,7 +61,8 @@
                 </a>
                 <div class="collapse" id="transaksiPenjualan">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-invoice">Nota Penjualan</a>
+                        <li class="nav-item"> <a wire:navigate class="nav-link" href="/penjualan-invoice">Nota
+                                Penjualan</a>
                         </li>
                         <li class="nav-item"> <a wire:navigate class="nav-link" href="/persetujuan">Perlu
                                 Persetujuan</a></li>

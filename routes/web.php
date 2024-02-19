@@ -9,6 +9,7 @@ use App\Livewire\Admin\Pembelian\Invoice;
 use App\Livewire\Admin\Penjualan\CustomerOrder;
 use App\Livewire\Admin\Penjualan\History as PenjualanHistory;
 use App\Livewire\Admin\Penjualan\Invoice as PenjualanInvoice;
+use App\Livewire\Admin\StockBarang;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\LoginCustomer;
 use App\Livewire\Customer\GantiPassword;
@@ -48,6 +49,7 @@ Route::middleware('role:admin,super_admin')->group(function () {
     Route::get('/penjualan-invoice', PenjualanInvoice::class);
     Route::get('/penjualan-history', PenjualanHistory::class);
     Route::get('/persetujuan', CustomerOrder::class);
+    Route::get('/stock-barang', StockBarang::class);
 });
 
 // customer

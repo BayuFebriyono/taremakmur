@@ -237,7 +237,7 @@
                 </div>
             </div>
             {{-- <div class="table-responsive"> --}}
-                <table class="table table-striped">
+                <table class="w-auto table table-striped table=fixed">
                     <thead>
                         <tr>
                             <th style="width: 7%;">#</th>
