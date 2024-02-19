@@ -84,10 +84,10 @@
                             <p class="text-muted">{{ $barang->stock_bayangan }} Pack</p>
                         </div>
                         <div class="col-6">
-                            <p class="text-muted">{{ $barang->cash_dus }} Cash Dus</p>
-                            <p class="text-muted">{{ $barang->cash_pack }} Cash Pack</p>
-                            <p class="text-muted">{{ $barang->kredit_dus }} Kredit Dus</p>
-                            <p class="text-muted">{{ $barang->kredit_pack }} Kredit Pack</p>
+                            <p class="text-muted">{{ formatRupiah($barang->cash_dus) }} Cash Dus</p>
+                            <p class="text-muted">{{ formatRupiah($barang->cash_pack) }} Cash Pack</p>
+                            <p class="text-muted">{{ formatRupiah($barang->kredit_dus) }} Kredit Dus</p>
+                            <p class="text-muted">{{ formatRupiah($barang->kredit_pack) }} Kredit Pack</p>
                         </div>
                         <hr>
                     @endforeach
