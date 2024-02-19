@@ -233,6 +233,8 @@ class Barang extends Component
         $sheet->setCellValue('G3', 'KREDIT DUS');
         $sheet->setCellValue('H3', 'KREDIT PACK');
         $sheet->setCellValue('I3', 'DISKON');
+        $sheet->setCellValue('J3', 'HARGA BELI DUS');
+        $sheet->setCellValue('K3', 'HARGA BELI PACK');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -243,6 +245,8 @@ class Barang extends Component
         $sheet->getStyle('G3')->applyFromArray($style_col);
         $sheet->getStyle('H3')->applyFromArray($style_col);
         $sheet->getStyle('I3')->applyFromArray($style_col);
+        $sheet->getStyle('J3')->applyFromArray($style_col);
+        $sheet->getStyle('K3')->applyFromArray($style_col);
 
 
         $row = 4;
@@ -256,6 +260,8 @@ class Barang extends Component
             $sheet->setCellValue("G{$row}", $data->kredit_dus);
             $sheet->setCellValue("H{$row}", $data->kredit_pack);
             $sheet->setCellValue("I{$row}", $data->diskon);
+            $sheet->setCellValue("J{$row}", $data->harga_beli_dus);
+            $sheet->setCellValue("K{$row}", $data->harga_beli_pack);
 
             $sheet->getStyle("A{$row}")->applyFromArray($style_row);
             $sheet->getStyle("B{$row}")->applyFromArray($style_row);
@@ -266,6 +272,8 @@ class Barang extends Component
             $sheet->getStyle("G{$row}")->applyFromArray($style_row);
             $sheet->getStyle("H{$row}")->applyFromArray($style_row);
             $sheet->getStyle("I{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("J{$row}")->applyFromArray($style_row);
+            $sheet->getStyle("K{$row}")->applyFromArray($style_row);
             $row++;
         }
 
