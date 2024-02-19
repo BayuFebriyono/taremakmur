@@ -21,8 +21,6 @@ class Invoice extends Component
     public $showForm = false;
     public $customers = [];
     public $customerId;
-    public $aktualId = '';
-    public $remarkId = '';
     public $barang;
     public $jenis = 'dus';
     public $dataPenjualan;
@@ -37,8 +35,7 @@ class Invoice extends Component
     public $harga = 0;
     public $qty = 0;
     public $diskon = 0;
-    public $remark;
-    public $aktual;
+
 
 
     public function mount()
@@ -57,6 +54,13 @@ class Invoice extends Component
     public function add()
     {
         $this->showForm = true;
+    }
+    public function hapus($id)
+    {
+      
+        $this->dataPenjualan = $this->dataPenjualan->reject(function ($item) use ($id) {
+            return $item['id'] == $id;
+        });
     }
 
     public function store()
@@ -78,7 +82,7 @@ class Invoice extends Component
                 'harga' => $this->harga,
                 'diskon' => $this->diskon,
                 'remark' => null,
-                'status' => 'WAITING'
+                'status' => 'CONFIRMED'
             ]);
             $this->qty = 0;
         } else {
@@ -168,46 +172,6 @@ class Invoice extends Component
         });
     }
 
-    public function showAktual($id)
-    {
-        $this->aktualId = $id;
-    }
-
-    public function updateAktual()
-    {
-        $this->dataPenjualan->transform(function ($item, $key) {
-            if ($item['id'] === $this->aktualId) $item['aktual'] = $this->aktual;
-            return $item;
-        });
-
-        $this->aktualId = '';
-    }
-
-    public function cancelAktual()
-    {
-        $this->aktualId = '';
-    }
-
-    public function showRemark($id)
-    {
-        $this->remarkId = $id;
-    }
-
-    public function updateRemark()
-    {
-        $this->dataPenjualan->transform(function ($item, $key) {
-            if ($item['id'] === $this->remarkId) $item['remark'] = $this->remark;
-            return $item;
-        });
-
-        $this->remarkId = '';
-    }
-
-    public function cancelRemark()
-    {
-        $this->remarkId = '';
-    }
-
     public function searchCustomer()
     {
         $this->customers = Customer::where('nama', 'like', '%' . $this->namaCustomer . '%')->get();
@@ -217,7 +181,7 @@ class Invoice extends Component
     {
         if ($this->jenis == 'dus') {
             $jumlah = (int)$this->barang->jumlah_renteng * (int)$this->qty;
-    
+
             if ($this->barang->stock_bayangan < $jumlah) return false;
             return true;
         } else {
@@ -252,7 +216,7 @@ class Invoice extends Component
     public function cancelInvoice($message = '', $type = 'success')
     {
         $this->isEdit = false;
-        if($message) session()->flash($type,$message);
+        if ($message) session()->flash($type, $message);
     }
 
     private function generateNota()
