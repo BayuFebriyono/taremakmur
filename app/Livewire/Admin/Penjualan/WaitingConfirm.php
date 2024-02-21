@@ -26,7 +26,7 @@ class WaitingConfirm extends Component
 
     public function generateNota($no_invoice)
     {
-        $data = HeaderPenjualan::where('no_invoice', $no_invoice)->with('detail_penjualan.barang')->first();
+        $data = HeaderPenjualan::where('no_invoice', $no_invoice)->with(['detail_penjualan.barang', 'user'])->first();
         $pdf = new Dompdf();
 
         $options = $pdf->getOptions();

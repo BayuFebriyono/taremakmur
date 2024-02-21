@@ -56,12 +56,15 @@
                                         <button wire:click='generateNota("{{ $penjualan->no_invoice }}")' type="button"
                                             class="btn btn-sm btn-info"><span
                                                 class="mdi mdi-printer-outline"></span></button>
-                                        <button wire:click='showDetail("{{ $penjualan->no_invoice }}")' type="button" class="btn btn-sm btn-success"><span
+                                        <button wire:click='showDetail("{{ $penjualan->no_invoice }}")' type="button"
+                                            class="btn btn-sm btn-success"><span
                                                 class="mdi mdi-eye-outline"></span></button>
-                                        <button wire:confirm='Apakah anda yakin ingin menghapus?'
-                                            wire:click='delete("{{ $penjualan->no_invoice }}")' type="button"
-                                            class="btn btn-sm btn-danger"><span
-                                                class="mdi mdi-trash-can"></span></button>
+                                        @if (auth()->user()->level == 'super_admin')
+                                            <button wire:confirm='Apakah anda yakin ingin menghapus?'
+                                                wire:click='delete("{{ $penjualan->no_invoice }}")' type="button"
+                                                class="btn btn-sm btn-danger"><span
+                                                    class="mdi mdi-trash-can"></span></button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

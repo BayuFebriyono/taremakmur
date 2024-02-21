@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('user_id');
             $table->foreignUuid('customer_id');
             $table->string('no_invoice');
+            $table->string('keterangan')->nullable();
             $table->string('status')->default('WAITING');
             $table->timestamps();
         });

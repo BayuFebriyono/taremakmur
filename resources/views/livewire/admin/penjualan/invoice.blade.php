@@ -107,10 +107,6 @@
                                 <p class="fw-bold">Harga : {{ formatRupiah($hargaSatuan) }}</p>
                                 <p class="fw-bold ms-4">Total Harga : {{ formatRupiah($harga) }} </p>
                             </div>
-                            <div>
-                                <label class="form-label">Atau masukkan harga secara manual</label>
-                                <input wire:model.change='harga' type="number" class="form-control">
-                            </div>
                         </div>
 
 
@@ -144,7 +140,7 @@
                 <h4 class="card-title">Data konfirmasi pembelian</h4>
                 <p class="my-2 text-muted">Data ini temporary tidak akan masuk ke database selama belum di save
                 </p>
-                <div class=">
+                <div class="">
                     <label for="customer" class="form-label">Pilih Customer</label>
                     {{-- <input wire:model='namaCustomer' wire:change='searchCustomer' type="text"
                         class="form-control mb-2" placeholder="Cari customer...">
@@ -163,6 +159,9 @@
                     @error($customerId)
                         <p class="text-danger">Pilih Customer Dulu</p>
                     @enderror
+
+                    <label class="form-label mt-3">Keterangan</label>
+                    <textarea wire:model='keterangan' rows="3" class="form-control"></textarea>
                 </div>
                 <div class="p-2">
                     <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span

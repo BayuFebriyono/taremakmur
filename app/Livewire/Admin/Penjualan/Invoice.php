@@ -35,6 +35,7 @@ class Invoice extends Component
     public $harga = 0;
     public $qty = 0;
     public $diskon = 0;
+    public $keterangan = '';
 
 
 
@@ -108,6 +109,7 @@ class Invoice extends Component
                 'user_id' => auth()->user()->id,
                 'customer_id' => $this->customerId,
                 'no_invoice' => $noInvoice,
+                'keterangan' => $this->keterangan,
                 'status' => 'WAITING'
             ]);
             // menata collection sebelum looping
@@ -134,6 +136,7 @@ class Invoice extends Component
             session()->flash('success-top', "Berhasil dibuat dengan no invoice {$noInvoice}");
             $this->dataPenjualan = collect();
             $this->showForm = false;
+            $this->keterangan = '';
         } else {
             session()->flash('error', 'Tambahkan barang terlebih dulu');
         }

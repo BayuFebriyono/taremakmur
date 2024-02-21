@@ -1,4 +1,11 @@
 <div>
+    <style>
+     .oneliner {
+        word-wrap: break-word;
+        max-width: 100%; /* Ubah max-width sesuai kebutuhan */
+        overflow: auto; /* Atau gunakan overflow: hidden; */
+    }
+    </style>
     <button wire:click='addData' class="btn btn-primary">Tambahkan Data</button>
     <button wire:click='importExcel' class="btn btn-success"><i class="mdi mdi-file-excel"></i>&nbsp;Import Excel</button>
     @if (session('success'))
@@ -237,57 +244,57 @@
                 </div>
             </div>
             {{-- <div class="table-responsive"> --}}
-                <table class="w-auto table table-striped table=fixed">
-                    <thead>
-                        <tr>
-                            <th style="width: 7%;">#</th>
-                            <th style="width: 1px;">Suplier</th>
-                            {{-- <th style="width: 7%;">Kode Barang</th> --}}
-                            <th style="width: 7%;">Nama Barang</th>
-                            <th style="width: 7%;">Min Pack</th>
-                            <th style="width: 7%;">Cash Dus</th>
-                            <th style="width: 7%;">Cash Pack</th>
-                            <th style="width: 7%;">Kredit Dus</th>
-                            <th style="width: 7%;">Kredit Pack</th>
-                            <th style="width: 7%;">Diskon</th>
-                            <th style="width: 7%;">Aktif</th>
-                            <th style="width: 7%;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($barangs as $barang)
-                            <tr wire:key="{{ $barang->id }}">
-                                <td>{{ $loop->iteration }}</td>
-                                <td style="width: 1px;">{{ $barang->suplier->nama }}</td>
-                                {{-- <td>{{ $barang->kode_barang }}</td> --}}
-                                <td>{{ $barang->nama_barang }}</td>
-                                <td>{{ $barang->jumlah_renteng }}</td>
-                                <td>{{ formatRupiah($barang->cash_dus) }}</td>
-                                <td>{{ formatRupiah($barang->cash_pack) }}</td>
-                                <td>{{ formatRupiah($barang->kredit_dus) }}</td>
-                                <td>{{ formatRupiah($barang->kredit_pack) }}</td>
-                                <td>{{ formatRupiah($barang->diskon) }}</td>
-                                <td>
-                                    @if ($barang->aktif)
-                                        <span wire:click='nonAktif("{{ $barang->id }}")' role="button"
-                                            class="btn btn-success"><i class="mdi mdi-eye-outline"></i></span>
-                                    @else
-                                        <span wire:click='aktif("{{ $barang->id }}")' role="button"
-                                            class="btn btn-danger"><i class="mdi mdi-eye-closed"></i></span>
-                                    @endif
-                                </td>
-                                <td><button wire:click="edit('{{ $barang->id }}')"
-                                        class="btn btn-warning d-inline"><i class="mdi mdi-pen"></i></button>
-                                    <button wire:click="delete('{{ $barang->id }}')"
-                                        wire:confirm="Apakah anda yakin ingin menghapus?"
-                                        class="btn btn-danger d-inline"><i class="mdi mdi-trash-can"></i></button>
-                                </td>
+            <table class="table table-striped table-bordered" style="table-layout: fixed; width:100%;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Suplier</th>
+                        {{-- 7%;">Kode Barang</th> --}}
+                        <th>Nama Barang</th>
+                        <th>Min Pack</th>
+                        <th>Cash Dus</th>
+                        <th>Cash Pack</th>
+                        <th>Kredit Dus</th>
+                        <th>Kredit Pack</th>
+                        <th>Diskon</th>
+                        <th>Aktif</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($barangs as $barang)
+                        <tr wire:key="{{ $barang->id }}">
+                            <td>{{ $loop->iteration }}</td>
+                            <td class="oneliner">{{ $barang->suplier->nama }}</td>
+                            {{-- <td>{{ $barang->kode_barang }}</td> --}}
+                            <td class="oneliner">{{ $barang->nama_barang }}</td>
+                            <td class="oneliner">{{ $barang->jumlah_renteng }}</td>
+                            <td class="oneliner">{{ formatRupiah($barang->cash_dus) }}</td>
+                            <td class="oneliner">{{ formatRupiah($barang->cash_pack) }}</td>
+                            <td class="oneliner">{{ formatRupiah($barang->kredit_dus) }}</td>
+                            <td class="oneliner">{{ formatRupiah($barang->kredit_pack) }}</td>
+                            <td class="oneliner">{{ formatRupiah($barang->diskon) }}</td>
+                            <td>
+                                @if ($barang->aktif)
+                                    <span wire:click='nonAktif("{{ $barang->id }}")' role="button"
+                                        class="btn btn-sm btn-success"><i class="mdi mdi-eye-outline"></i></span>
+                                @else
+                                    <span wire:click='aktif("{{ $barang->id }}")' role="button"
+                                        class="btn btn-sm btn-danger"><i class="mdi mdi-eye-closed"></i></span>
+                                @endif
+                            </td>
+                            <td><button wire:click="edit('{{ $barang->id }}')"
+                                    class="btn btn-sm btn-warning d-inline"><i class="mdi mdi-pen"></i></button>
+                                <button wire:click="delete('{{ $barang->id }}')"
+                                    wire:confirm="Apakah anda yakin ingin menghapus?"
+                                    class="btn btn-danger btn-sm d-inline"><i class="mdi mdi-trash-can"></i></button>
+                            </td>
 
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{ $barangs->links(data: ['scrollTo' => false]) }}
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $barangs->links(data: ['scrollTo' => false]) }}
             {{-- </div> --}}
         </div>
     </div>
