@@ -49,7 +49,7 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="kodeBarang" class="form-label">Kode Barang</label>
-                            <input wire:model='namaBarang' wire:change='searchBarang' type="text"
+                            {{-- <input wire:model='namaBarang' wire:change='searchBarang' type="text"
                                 class="form-control" placeholder="Cari nama barang" required>
                             <select wire:change='cariBarang' wire:model.change='kodeBarang' class="form-select mt-1"
                                 required>
@@ -58,7 +58,14 @@
                                     <option wire:key='{{ $barang->id }}' value="{{ $barang->kode_barang }}">
                                         {{ $barang->kode_barang }} - {{ $barang->nama_barang }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+
+                            <input type="text" wire:model='namaBarang' wire:change='searchBarang' class="form-control" list="barangList" placeholder="Cari Barang">
+                            <datalist id="barangList">
+                                @foreach ($barangs as $barang)
+                                    <option wire:key='{{ $barang->id }}' value="{{ $barang->nama_barang }}">
+                                @endforeach
+                            </datalist>
 
                         </div>
 
@@ -81,7 +88,7 @@
                             <div class="ms-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="Dus" value="dus"
-                                        wire:model.change='jenis'>
+                                        wire:model.change='jenis' wire:change='cariBarang'>
                                     <label class="form-check-label" for="Dus">
                                         Dus
                                     </label>
@@ -90,7 +97,7 @@
                             <div class="ms-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="Renteng" value="renteng"
-                                        wire:model.change='jenis'>
+                                        wire:model.change='jenis' wire:change='cariBarang'>
                                     <label class="form-check-label" for="Renteng">
                                         Pack
                                     </label>
@@ -139,14 +146,20 @@
                 </p>
                 <div class=">
                     <label for="customer" class="form-label">Pilih Customer</label>
-                    <input wire:model='namaCustomer' wire:change='searchCustomer' type="text"
+                    {{-- <input wire:model='namaCustomer' wire:change='searchCustomer' type="text"
                         class="form-control mb-2" placeholder="Cari customer...">
-                    <select wire:model.change='customerId' class="form-select" required>
+                    <select wire:model.change='customerId' class="form-select" id="dselect-example" required>
                         <option value="">---Pilih customer---</option>
                         @foreach ($customers as $customer)
                             <option value="{{ $customer->id }}">{{ $customer->nama }}</option>
                         @endforeach
-                    </select>
+                    </select> --}}
+                    <input type="text" wire:model='namaCustomer' wire:change='searchCustomer' class="form-control" list="exampleList" placeholder="Cari Customer">
+                    <datalist id="exampleList">
+                        @foreach ($customers as $customer)
+                            <option wire:key='{{ $customer->id }}' value="{{ $customer->nama }}">
+                        @endforeach
+                    </datalist>
                     @error($customerId)
                         <p class="text-danger">Pilih Customer Dulu</p>
                     @enderror
@@ -159,24 +172,27 @@
 
 
 
-    
+
 
                 <div class="mt-3">
                     @foreach ($dataPenjualan as $data)
                         <div wire:key='{{ $data['id'] }}' class="row">
                             <div class="col-6">
                                 <p class="fw-bold">{{ $data['nama_barang'] }}</p>
-                                <p class="text-muted">{{ $data['qty'] }} {{ $data['jenis'] == 'dus' ? 'Dos' : 'Pack' }} @ {{ formatRupiah($data['harga_satuan']) }}</p>
+                                <p class="text-muted">{{ $data['qty'] }}
+                                    {{ $data['jenis'] == 'dus' ? 'Dos' : 'Pack' }} @
+                                    {{ formatRupiah($data['harga_satuan']) }}</p>
                             </div>
 
                             <div class="col-6">
                                 <p class="fw-bold">{{ formatRupiah($data['harga']) }}</p>
                                 <div>
-                                    <span wire:click='hapus("{{ $data['id'] }}")' wire:confirm='Apakah anda yakin ingin menghapus?' role="button" class="btn btn-sm btn-danger"><i
-                                            class="mdi mdi-trash-can"></i></span>
+                                    <span wire:click='hapus("{{ $data['id'] }}")'
+                                        wire:confirm='Apakah anda yakin ingin menghapus?' role="button"
+                                        class="btn btn-sm btn-danger"><i class="mdi mdi-trash-can"></i></span>
                                 </div>
                             </div>
-                          
+
                         </div>
                         <hr>
                     @endforeach
@@ -185,3 +201,6 @@
         </div>
     @endif
 </div>
+
+@push('script')
+@endpush

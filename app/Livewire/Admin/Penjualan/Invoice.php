@@ -54,10 +54,11 @@ class Invoice extends Component
     public function add()
     {
         $this->showForm = true;
+        $this->dispatch('init-dselect');
     }
     public function hapus($id)
     {
-      
+
         $this->dataPenjualan = $this->dataPenjualan->reject(function ($item) use ($id) {
             return $item['id'] == $id;
         });
@@ -85,6 +86,10 @@ class Invoice extends Component
                 'status' => 'CONFIRMED'
             ]);
             $this->qty = 0;
+            $this->diskon = 0;
+            $this->namaBarang = '';
+            $this->barang = collect();
+            $this->cariBarang();
         } else {
             session()->flash('error-top', 'stok tidak mencukupi');
         }
@@ -141,6 +146,7 @@ class Invoice extends Component
             $this->hargaSatuan = $this->jenis == 'dus' ? $this->barang->cash_dus : $this->barang->cash_pack;
         } catch (Exception $e) {
             $this->barang = collect();
+            $this->hargaSatuan = 0;
         }
     }
     public function cancel()
@@ -174,7 +180,8 @@ class Invoice extends Component
 
     public function searchCustomer()
     {
-        $this->customers = Customer::where('nama', 'like', '%' . $this->namaCustomer . '%')->get();
+        // $this->customers = Customer::where('nama', 'like', '%' . $this->namaCustomer . '%')->get();
+        $this->customerId = Customer::where('nama', $this->namaCustomer)->first()->id;
     }
 
     private function cekStock(): bool
@@ -192,7 +199,14 @@ class Invoice extends Component
 
     public function searchBarang()
     {
-        $this->barangs = Barang::where('nama_barang', 'like', '%' . $this->namaBarang . '%')->get();
+        // $this->barangs = Barang::where('nama_barang', 'like', '%' . $this->namaBarang . '%')->get();
+        try {
+            $this->kodeBarang = Barang::where('nama_barang', $this->namaBarang)->first()->kode_barang;
+        } catch (Exception $e) {
+            $this->kodeBarang = '';
+        }
+
+        $this->cariBarang();
     }
 
     public function hitungHarga()
