@@ -92,7 +92,9 @@ class Invoice extends Component
             $this->barang = collect();
             $this->cariBarang();
         } else {
-            session()->flash('error-top', 'stok tidak mencukupi');
+            $stock = Barang::where('kode_barang', $this->kodeBarang)->first();
+            $dus = $stock->stock_bayangan / $stock->jumlah_renteng;
+            session()->flash('error-top', "stok tidak mencukupi {$stock->stock_bayangan} Pack dan {$dus} Dus");
         }
     }
 

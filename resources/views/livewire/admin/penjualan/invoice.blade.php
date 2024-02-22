@@ -1,4 +1,4 @@
-<div class="container">
+<div style="margin-inline: 0px;">
     @if (session('error-top'))
         <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
             {{ session('error-top') }}
@@ -41,7 +41,7 @@
         </div>
     @else
         {{-- Form Pembelian --}}
-        <div class="card mt-3">
+        <div class=" mt-3">
             <div class="card-body">
                 <p class="fs-5 fw-bold">Form Pembelian Barang</p>
                 <div>
@@ -135,7 +135,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <div class="card mt-2">
+        <div class=" mt-2">
             <div class="card-body">
                 <h4 class="card-title">Data konfirmasi pembelian</h4>
                 <p class="my-2 text-muted">Data ini temporary tidak akan masuk ke database selama belum di save
@@ -174,6 +174,7 @@
 
 
                 <div class="mt-3">
+                    <p class="fw-bold text-center mb-4">Total {{ formatRupiah($dataPenjualan->sum('harga')) }} | Diskon {{ formatRupiah($dataPenjualan->sum('diskon')) }}</p>
                     @foreach ($dataPenjualan as $data)
                         <div wire:key='{{ $data['id'] }}' class="row">
                             <div class="col-6">
