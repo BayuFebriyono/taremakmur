@@ -1,12 +1,16 @@
 <div style="margin-inline: 0px;">
     @if (session('error-top'))
         <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
-            {{ session('error-top') }}
+            <p class="fw-bold fs-4">
+                {{ session('error-top') }}
+            </p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @elseif (session('success-top'))
         <div class="alert alert-primary alert-dismissible fade show mt-4" role="alert">
-            {{ session('success-top') }}
+            <p class="fw-bold fs-4">
+                {{ session('success-top') }}
+            </p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -60,7 +64,8 @@
                                 @endforeach
                             </select> --}}
 
-                            <input type="text" wire:model='namaBarang' wire:change='searchBarang' class="form-control" list="barangList" placeholder="Cari Barang">
+                            <input type="text" wire:model='namaBarang' wire:change='searchBarang'
+                                class="form-control" list="barangList" placeholder="Cari Barang">
                             <datalist id="barangList">
                                 @foreach ($barangs as $barang)
                                     <option wire:key='{{ $barang->id }}' value="{{ $barang->nama_barang }}">
@@ -150,7 +155,8 @@
                             <option value="{{ $customer->id }}">{{ $customer->nama }}</option>
                         @endforeach
                     </select> --}}
-                    <input type="text" wire:model='namaCustomer' wire:change='searchCustomer' class="form-control" list="exampleList" placeholder="Cari Customer">
+                    <input type="text" wire:model='namaCustomer' wire:change='searchCustomer'
+                        class="form-control" list="exampleList" placeholder="Cari Customer">
                     <datalist id="exampleList">
                         @foreach ($customers as $customer)
                             <option wire:key='{{ $customer->id }}' value="{{ $customer->nama }}">
@@ -163,18 +169,9 @@
                     <label class="form-label mt-3">Keterangan</label>
                     <textarea wire:model='keterangan' rows="3" class="form-control"></textarea>
                 </div>
-                <div class="p-2">
-                    <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span
-                            wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
-                        Invoice</button>
-                </div>
-
-
-
-
-
                 <div class="mt-3">
-                    <p class="fw-bold text-center mb-4">Total {{ formatRupiah($dataPenjualan->sum('harga')) }} | Diskon {{ formatRupiah($dataPenjualan->sum('diskon')) }}</p>
+                    <p class="fw-bold text-center mb-4">Total {{ formatRupiah($dataPenjualan->sum('harga')) }} |
+                        Diskon {{ formatRupiah($dataPenjualan->sum('diskon')) }}</p>
                     @foreach ($dataPenjualan as $data)
                         <div wire:key='{{ $data['id'] }}' class="row">
                             <div class="col-6">
@@ -196,6 +193,37 @@
                         </div>
                         <hr>
                     @endforeach
+
+                    <div class="row">
+                        <p class="fw-bold">Pilih Jenis Pembayaran</p>
+                        <div class="col-6">
+                            <div class="ms-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="Dus" value="kredit">
+                                    <label class="form-check-label fs-3" for="Dus">
+                                        Kredit
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="ms-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="Renteng" value="tunai">
+                                    <label class="form-check-label fs-3" for="Renteng">
+                                        Tunai
+                                    </label>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+
+
+                    <div class="p-2">
+                        <button wire:click='simpan' class="btn btn-ms btn-inverse-success fs-2" type="button"> <span
+                                wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
+                            Invoice</button>
+                    </div>
                 </div>
             </div>
         </div>
