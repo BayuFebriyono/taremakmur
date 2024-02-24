@@ -66,6 +66,11 @@ class History extends Component
         session()->flash('success', 'Data berhasil dihapus');
     }
 
+    public function lunas($noInvoice)
+    {
+        HeaderPembelian::where('no_invoice', $noInvoice)->update(['lunas' => true]);
+    }
+
     public function generateNota($no_invoice)
     {
         $data = HeaderPembelian::where('no_invoice', $no_invoice)->with('detail_pembelian')->first();
@@ -111,6 +116,7 @@ class History extends Component
         $docHeight = $GLOBALS['bodyHeight'] + 100;
 
         $pdf = Pdf::loadView('print.nota-pembelian', ['data' => $data])->setPaper([0, 0, 226.772, $docHeight])->output();
+        HeaderPembelian::where('no_invoice', $no_invoice)->update(['sudah_cetak' => true]);
         return response()->streamDownload(
             fn () => print($pdf),
             'nota.pdf'

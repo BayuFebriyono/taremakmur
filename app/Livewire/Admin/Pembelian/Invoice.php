@@ -28,6 +28,8 @@ class Invoice extends Component
     public $cariBarang = '';
     public $barang;
     public $isEdit = false;
+    public $jenis_pembayaran = 'kredit';
+    public $uangMuka = 0;
 
 
     public $namaBarang;
@@ -95,7 +97,9 @@ class Invoice extends Component
             HeaderPembelian::create([
                 'user_id' => auth()->user()->id,
                 'suplier_id' => $this->suplierId,
-                'no_invoice' => $noInvoice
+                'no_invoice' => $noInvoice,
+                'jenis_pembayaran' => $this->jenis_pembayaran,
+                'uang_muka' => $this->jenis_pembayaran == 'kredit' ? $this->uangMuka : null
             ]);
 
             // Menata collection sebelum di looping
@@ -223,6 +227,7 @@ class Invoice extends Component
         } catch (Exception $e) {
             $this->barang = collect();
         }
+        $this->setHarga();
     }
 
     public function cariInvoice()
@@ -235,5 +240,10 @@ class Invoice extends Component
     {
         $this->isEdit = false;
         if ($message) session()->flash($type, $message);
+    }
+
+    public function setHarga()
+    {
+        $this->harga = ((int)$this->barang->harga_beli_dus * (int)$this->qty) - (int)$this->diskon;
     }
 }
