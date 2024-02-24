@@ -7,3 +7,11 @@ if (!function_exists('formatRupiah')) {
         return $rupiah;
     }
 }
+
+if (!function_exists('formatAngka')) {
+    function formatAngka($angka)
+    {
+        $rupiah = number_format($angka, 0, ',', '.');
+        return $rupiah;
+    }
+}

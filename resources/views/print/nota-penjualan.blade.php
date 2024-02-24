@@ -14,7 +14,7 @@
 
         @page {
             margin: 0px;
-            margin-right: 1.5cm;
+            margin-right: 2cm;
         }
     </style>
 </head>
@@ -29,13 +29,13 @@
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">{{ $data->no_invoice }}</td>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">
-                    {{ carbon\Carbon::parse($data->created_at)->isoFormat('D MMM YYYY') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ carbon\Carbon::parse($data->created_at)->isoFormat('D MMM YYYY') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
             </tr>
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">Customer</td>
                 <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">
-                    {{ $data->customer->nama }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    {{ $data->customer->nama }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </tbody>
     </table>
@@ -50,10 +50,10 @@
                     <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         &nbsp;{{ $detail->aktual }} {{ $detail->jenis == 'dus' ? 'Dos' : 'Pack' }} </td>
 
-                    <td style="width: 25.0000%; font-size: 13px;">{{ formatRupiah($detail->harga_satuan) }}</td>
-                    <td style="width: 25.0000%; font-size: 13px;">{{ formatRupiah($detail->diskon) }}</td>
+                    <td style="width: 25.0000%; font-size: 13px;">@ {{ formatAngka($detail->harga_satuan) }}</td>
+                    <td style="width: 25.0000%; font-size: 13px;">{{ formatAngka($detail->diskon) }}</td>
                     <td style="width: 25.0000%; font-size: 13px;">
-                        {{ formatRupiah($detail->harga) }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        {{ formatAngka($detail->harga) }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 </tr>
             </tbody>
         </table>
@@ -91,6 +91,14 @@
     </table>
     <p>Keterangan :
     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- {{ $data->keterangan }}</p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <br>
     <br>
     <br>
