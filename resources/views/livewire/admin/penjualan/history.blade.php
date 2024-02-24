@@ -42,18 +42,29 @@
                                 <th>Suplier</th>
                                 <th>Tanggal Order</th>
                                 <th>Tanggal Jatuh Tempo</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($penjualans as $penjualan)
-                                <tr @class([ 'table-danger' => $penjualan->sudah_cetak == 0]) wire:key='{{ $penjualan->id }}'>
+                                <tr @class(['table-danger' => $penjualan->sudah_cetak == 0]) wire:key='{{ $penjualan->id }}'>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $penjualan->no_invoice }}</td>
                                     <td>{{ $penjualan->user->username }}</td>
                                     <td>{{ $penjualan->customer->nama }}</td>
                                     <td>{{ Carbon\Carbon::parse($penjualan->created_at)->isoFormat('D MMM YYYY') }}</td>
-                                    <td>{{$penjualan->jatuh_tempo ? Carbon\Carbon::parse($penjualan->jatuh_tempo)->isoFormat('D MMM YYYY') : '-' }}</td>
+                                    <td>{{ $penjualan->jatuh_tempo ? Carbon\Carbon::parse($penjualan->jatuh_tempo)->isoFormat('D MMM YYYY') : '-' }}
+                                    </td>
+                                    <td>
+                                        @if ($penjualan->lunas)
+                                            <span class="badge rounded-pill bg-success">Lunas</span>
+                                        @else
+                                            <span class="badge rounded-pill bg-danger">Belum Lunas</span>
+                                        @endif
+                                    </td>
+
+
                                     <td>
                                         <button wire:click='generateNota("{{ $penjualan->no_invoice }}")' type="button"
                                             class="btn btn-sm btn-info"><span
@@ -66,6 +77,10 @@
                                                 wire:click='delete("{{ $penjualan->no_invoice }}")' type="button"
                                                 class="btn btn-sm btn-danger"><span
                                                     class="mdi mdi-trash-can"></span></button>
+                                            <button wire:confirm='Apakah anda yakin ingin melunaskan?'
+                                                wire:click='lunas("{{ $penjualan->no_invoice }}")' type="button"
+                                                class="btn btn-sm btn-warning"><span
+                                                    class="mdi mdi-currency-usd"></span></button>
                                         @endif
                                     </td>
                                 </tr>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('uang_muka')->nullable();
             $table->date('jatuh_tempo')->nullable();
             $table->boolean('sudah_cetak')->default(false);
+            $table->boolean('lunas')->default(false);
             $table->string('status')->default('WAITING');
             $table->timestamps();
         });

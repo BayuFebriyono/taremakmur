@@ -117,6 +117,7 @@ class Invoice extends Component
                 'keterangan' => $this->keterangan,
                 'jenis_pembayaran' => $this->jenis_pembayaran,
                 'uang_muka' => $this->jenis_pembayaran == 'kredit' ? $this->uangMuka : null,
+                'lunas' => $this->jenis_pembayaran == 'kredit' ? false : true,
                 'status' => 'WAITING'
             ]);
             // menata collection sebelum looping

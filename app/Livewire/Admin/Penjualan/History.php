@@ -72,10 +72,17 @@ class History extends Component
         session()->flash('success', 'Data berhasil dihapus');
     }
 
+    public function lunas($noInvoice)
+    {
+        HeaderPenjualan::where('no_invoice', $noInvoice)->update([
+            'lunas' => true
+        ]);
+    }
+
     public function generateNota($no_invoice)
     {
         $data = HeaderPenjualan::where('no_invoice', $no_invoice)->with(['detail_penjualan.barang', 'user'])->first();
-    
+
         $pdf = new Dompdf();
 
         $options = $pdf->getOptions();
