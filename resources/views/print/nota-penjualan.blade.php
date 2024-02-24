@@ -77,7 +77,7 @@
                 <tr>
                     <td style="width: 50%; border: none rgb(0, 0, 0);">Jatuh Tempo</td>
                     <td style="width: 50%; border: none rgb(0, 0, 0);">
-                        <div style="text-align: right;">
+                        <div style="text-align: right; font-size: 13px;">
                             {{ carbon\Carbon::parse($data->jatuh_tempo)->isoFormat('D MMM YYYY') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
