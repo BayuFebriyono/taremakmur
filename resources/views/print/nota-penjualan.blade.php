@@ -104,6 +104,19 @@
     <br>
     <br>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <p style="text-align: center;">Sales : {{ $data->user->username ?? '-' }}</p>
 </body>
 
