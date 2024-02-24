@@ -51,7 +51,7 @@
                         &nbsp;{{ $detail->aktual }} {{ $detail->jenis == 'dus' ? 'Dos' : 'Pack' }} </td>
 
                     <td style="width: 25.0000%; font-size: 13px;">@ {{ formatAngka($detail->harga_satuan) }}</td>
-                    <td style="width: 25.0000%; font-size: 13px;">{{ formatAngka($detail->diskon) }}</td>
+                    <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp;{{ formatAngka($detail->diskon) }}</td>
                     <td style="width: 25.0000%; font-size: 13px;">
                         {{ formatAngka($detail->harga) }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 </tr>
