@@ -18,16 +18,15 @@
                     <h4 class="card-title">Data konfirmasi pembelian</h4>
                     <p class="my-2 text-muted">Data ini temporary tidak akan masuk ke database selama belum di save
                     </p>
-                    <button wire:click='confirmAll' class="btn btn-md btn-inverse-warning">Confirm All</button>
-                    <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span wire:loading
-                            wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
-                        Invoice</button>
+                    @if (auth()->user()->level == 'super_admin')
+                        <button wire:click='confirmAll' class="btn btn-md btn-inverse-warning">Confirm All</button>
+                        <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span
+                                wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
+                            Invoice</button>
+                    @endif
                     <button wire:click='cancel' class="btn btn-md btn-inverse-danger">Cancel</button>
                 </div>
-
-
             </div>
-
             {{-- Aktual --}}
             @if ($aktualId)
                 <div class="row my-3">
@@ -73,31 +72,31 @@
                     </thead>
                     <tbody>
                         @foreach ($dataPenjualan->detail_penjualan as $data)
-                          <tr wire:key='{{ $data->id }}'>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $data->kode_barang}}</td>
-                              <td>{{ $data->barang->nama_barang }}</td>
-                              <td>{{ $data->qty . ' ' . $data->jenis }}</td>
-                              <td wire:click='showAktual("{{ $data->id }}")' class="text-primary"
-                                  role="button"><u>{{ $data->aktual }}</u></td>
-                              <td>{{ formatRupiah($data->harga_satuan) }}</td>
-                              <td>{{ formatRupiah($data->harga) }}</td>
-                              <td>{{ formatRupiah($data->diskon) }}</td>
-                              <td wire:click='showRemark("{{ $data->id }}")' role="button"
-                                  class="text-primary"><u>{{ $data->remark ?? '-' }}</u></td>
-                              <td>
-                                  @if ($data->status == 'WAITING')
-                                      <span wire:click='confirmed("{{ $data->id }}")' role="button"
-                                          class="btn btn-sm btn-warning"><i
-                                              class="mdi mdi-check-outline"></i></span>
-                                  @elseif ($data->status == 'CONFIRMED')
-                                      <span wire:click='waiting("{{ $data->id }}")' role="button"
-                                          class="btn btn-sm btn-success"><i
-                                              class="mdi mdi-check-outline"></i></span>
-                                  @endif
-                              </td>
-                          </tr>
-                      @endforeach
+                            <tr wire:key='{{ $data->id }}'>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $data->kode_barang }}</td>
+                                <td>{{ $data->barang->nama_barang }}</td>
+                                <td>{{ $data->qty . ' ' . $data->jenis }}</td>
+                                <td wire:click='showAktual("{{ $data->id }}")' class="text-primary" role="button">
+                                    <u>{{ $data->aktual }}</u>
+                                </td>
+                                <td>{{ formatRupiah($data->harga_satuan) }}</td>
+                                <td>{{ formatRupiah($data->harga) }}</td>
+                                <td>{{ formatRupiah($data->diskon) }}</td>
+                                <td wire:click='showRemark("{{ $data->id }}")' role="button" class="text-primary">
+                                    <u>{{ $data->remark ?? '-' }}</u>
+                                </td>
+                                <td>
+                                    @if ($data->status == 'WAITING')
+                                        <span wire:click='confirmed("{{ $data->id }}")' role="button"
+                                            class="btn btn-sm btn-warning"><i class="mdi mdi-check-outline"></i></span>
+                                    @elseif ($data->status == 'CONFIRMED')
+                                        <span wire:click='waiting("{{ $data->id }}")' role="button"
+                                            class="btn btn-sm btn-success"><i class="mdi mdi-check-outline"></i></span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
