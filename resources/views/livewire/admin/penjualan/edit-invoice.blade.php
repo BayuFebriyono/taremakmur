@@ -24,9 +24,12 @@
                         Invoice</button>
                     <button wire:click='cancel' class="btn btn-md btn-inverse-danger">Cancel</button>
                 </div>
-
-
             </div>
+
+            @if ($dataPenjualan->jenis_pembayaran == 'kredit')
+                <label class="form-label">Tanggal Jatuh Tempo</label>
+                <input wire:model='jatuhTempo' type="date" class="form-control">
+            @endif
 
             {{-- Aktual --}}
             @if ($aktualId)
@@ -73,31 +76,29 @@
                     </thead>
                     <tbody>
                         @foreach ($dataPenjualan->detail_penjualan as $data)
-                          <tr wire:key='{{ $data->id }}'>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $data->kode_barang}}</td>
-                              <td>{{ $data->barang->nama_barang }}</td>
-                              <td>{{ $data->qty . ' ' . $data->jenis }}</td>
-                              <td wire:click='showAktual("{{ $data->id }}")' class="text-primary"
-                                  role="button"><u>{{ $data->aktual }}</u></td>
-                              <td>{{ formatRupiah($data->harga_satuan) }}</td>
-                              <td>{{ formatRupiah($data->harga) }}</td>
-                              <td>{{ formatRupiah($data->diskon) }}</td>
-                              <td wire:click='showRemark("{{ $data->id }}")' role="button"
-                                  class="text-primary"><u>{{ $data->remark ?? '-' }}</u></td>
-                              <td>
-                                  @if ($data->status == 'WAITING')
-                                      <span wire:click='confirmed("{{ $data->id }}")' role="button"
-                                          class="btn btn-sm btn-warning"><i
-                                              class="mdi mdi-check-outline"></i></span>
-                                  @elseif ($data->status == 'CONFIRMED')
-                                      <span wire:click='waiting("{{ $data->id }}")' role="button"
-                                          class="btn btn-sm btn-success"><i
-                                              class="mdi mdi-check-outline"></i></span>
-                                  @endif
-                              </td>
-                          </tr>
-                      @endforeach
+                            <tr wire:key='{{ $data->id }}'>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $data->kode_barang }}</td>
+                                <td>{{ $data->barang->nama_barang }}</td>
+                                <td>{{ $data->qty . ' ' . $data->jenis }}</td>
+                                <td wire:click='showAktual("{{ $data->id }}")' class="text-primary" role="button">
+                                    <u>{{ $data->aktual }}</u></td>
+                                <td>{{ formatRupiah($data->harga_satuan) }}</td>
+                                <td>{{ formatRupiah($data->harga) }}</td>
+                                <td>{{ formatRupiah($data->diskon) }}</td>
+                                <td wire:click='showRemark("{{ $data->id }}")' role="button" class="text-primary">
+                                    <u>{{ $data->remark ?? '-' }}</u></td>
+                                <td>
+                                    @if ($data->status == 'WAITING')
+                                        <span wire:click='confirmed("{{ $data->id }}")' role="button"
+                                            class="btn btn-sm btn-warning"><i class="mdi mdi-check-outline"></i></span>
+                                    @elseif ($data->status == 'CONFIRMED')
+                                        <span wire:click='waiting("{{ $data->id }}")' role="button"
+                                            class="btn btn-sm btn-success"><i class="mdi mdi-check-outline"></i></span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

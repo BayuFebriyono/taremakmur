@@ -199,8 +199,9 @@
                         <div class="col-6">
                             <div class="ms-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="Dus" value="kredit">
-                                    <label class="form-check-label fs-3" for="Dus">
+                                    <input wire:model.change='jenis_pembayaran' class="form-check-input"
+                                        type="radio" id="Kredit" value="kredit">
+                                    <label class="form-check-label fs-3" for="Kredit">
                                         Kredit
                                     </label>
                                 </div>
@@ -209,13 +210,21 @@
                         <div class="col-6">
                             <div class="ms-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="Renteng" value="tunai">
-                                    <label class="form-check-label fs-3" for="Renteng">
+                                    <input wire:model.change='jenis_pembayaran' class="form-check-input"
+                                        type="radio" id="Tunai" value="tunai">
+                                    <label class="form-check-label fs-3" for="Tunai">
                                         Tunai
                                     </label>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
+
+                        @if ($jenis_pembayaran == 'kredit')
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Uang Muka</label>
+                                <input wire:model='uangMuka' type="number" class="form-control">
+                            </div>
+                        @endif
                     </div>
 
 

@@ -17,6 +17,10 @@ return new class extends Migration
             $table->foreignUuid('customer_id');
             $table->string('no_invoice');
             $table->string('keterangan')->nullable();
+            $table->string('jenis_pembayaran')->default('tunai');
+            $table->integer('uang_muka')->nullable();
+            $table->date('jatuh_tempo')->nullable();
+            $table->boolean('sudah_cetak')->default(false);
             $table->string('status')->default('WAITING');
             $table->timestamps();
         });

@@ -15,6 +15,7 @@ class EditInvoice extends Component
     public $noInvoice;
     public $aktual = '';
     public $remark = '';
+    public $jatuhTempo = null;
 
     public function mount($noInvoice)
     {
@@ -90,8 +91,10 @@ class EditInvoice extends Component
         });
 
         HeaderPenjualan::where('no_invoice', $this->noInvoice)->update([
-            'status' => 'CONFIRMED'
+            'status' => 'CONFIRMED',
+            'jatuh_tempo' => $this->jatuhTempo
         ]);
+        $this->jatuhTempo = null;
         $this->dispatch('cancel-edit', message : 'Berhasil dikonfirmasi', type: 'success-top')->to(Invoice::class);
     }
 

@@ -40,18 +40,20 @@
                                 <th>No Invoice</th>
                                 <th>Admin</th>
                                 <th>Suplier</th>
-                                <th>Tanggal</th>
+                                <th>Tanggal Order</th>
+                                <th>Tanggal Jatuh Tempo</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($penjualans as $penjualan)
-                                <tr wire:key='{{ $penjualan->id }}'>
+                                <tr @class([ 'table-danger' => $penjualan->sudah_cetak == 0]) wire:key='{{ $penjualan->id }}'>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $penjualan->no_invoice }}</td>
                                     <td>{{ $penjualan->user->username }}</td>
                                     <td>{{ $penjualan->customer->nama }}</td>
                                     <td>{{ Carbon\Carbon::parse($penjualan->created_at)->isoFormat('D MMM YYYY') }}</td>
+                                    <td>{{$penjualan->jatuh_tempo ? Carbon\Carbon::parse($penjualan->jatuh_tempo)->isoFormat('D MMM YYYY') : '-' }}</td>
                                     <td>
                                         <button wire:click='generateNota("{{ $penjualan->no_invoice }}")' type="button"
                                             class="btn btn-sm btn-info"><span

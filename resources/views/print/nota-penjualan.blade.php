@@ -72,21 +72,31 @@
                     </div>
                 </td>
             </tr>
+            @if ($data->jenis_pembayaran == 'kredit')
+                <tr>
+                    <td style="width: 50%; border: none rgb(0, 0, 0);">Jatuh Tempo</td>
+                    <td style="width: 50%; border: none rgb(0, 0, 0);">
+                        <div style="text-align: right;">
+                            {{carbon\Carbon::parse($data->jatuh_tempo)->isoFormat('D MMM YYYY')  }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0);">Pembayaran</td>
                 <td style="text-align: right; width: 50%; border: none rgb(0, 0, 0);">
-                    Tunai&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    {{ $data->jenis_pembayaran }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </tbody>
     </table>
     <p>Keterangan :
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- {{ $data->keterangan }}</p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p style="text-align: center;">Sales : {{ $data->user->username ?? '-' }}</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- {{ $data->keterangan }}</p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p style="text-align: center;">Sales : {{ $data->user->username ?? '-' }}</p>
 </body>
 
 </html>

@@ -75,6 +75,7 @@ class History extends Component
     public function generateNota($no_invoice)
     {
         $data = HeaderPenjualan::where('no_invoice', $no_invoice)->with(['detail_penjualan.barang', 'user'])->first();
+    
         $pdf = new Dompdf();
 
         $options = $pdf->getOptions();
@@ -109,6 +110,7 @@ class History extends Component
         unset($pdf);
         $docHeight = $GLOBALS['bodyHeight'] + 100;
         $pdf = Pdf::loadView('print.nota-penjualan', ['data' => $data])->setPaper([0, 0, 226.772, $docHeight])->output();
+        HeaderPenjualan::where('no_invoice', $no_invoice)->update(['sudah_cetak' => true]);
         return response()->streamDownload(
             fn () => print($pdf),
             'nota_penjualan.pdf'

@@ -30,12 +30,15 @@ class Invoice extends Component
     public $noInvoice = '';
     public $isEdit = false;
 
+
     public $kodeBarang;
     public $hargaSatuan = 0;
     public $harga = 0;
     public $qty = 0;
     public $diskon = 0;
     public $keterangan = '';
+    public $jenis_pembayaran = 'tunai';
+    public $uangMuka = 0;
 
 
 
@@ -112,6 +115,8 @@ class Invoice extends Component
                 'customer_id' => $this->customerId,
                 'no_invoice' => $noInvoice,
                 'keterangan' => $this->keterangan,
+                'jenis_pembayaran' => $this->jenis_pembayaran,
+                'uang_muka' => $this->jenis_pembayaran == 'kredit' ? $this->uangMuka : null,
                 'status' => 'WAITING'
             ]);
             // menata collection sebelum looping
