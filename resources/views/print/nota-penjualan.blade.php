@@ -51,7 +51,8 @@
                         &nbsp;{{ $detail->aktual }} {{ $detail->jenis == 'dus' ? 'Dos' : 'Pack' }} </td>
 
                     <td style="width: 25.0000%; font-size: 13px;">@ {{ formatAngka($detail->harga_satuan) }}</td>
-                    <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp;{{ formatAngka($detail->diskon) }}</td>
+                    <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp;{{ formatAngka($detail->diskon) }}
+                    </td>
                     <td style="width: 25.0000%; font-size: 13px;">
                         {{ formatAngka($detail->harga) }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 </tr>
@@ -77,7 +78,7 @@
                     <td style="width: 50%; border: none rgb(0, 0, 0);">Jatuh Tempo</td>
                     <td style="width: 50%; border: none rgb(0, 0, 0);">
                         <div style="text-align: right;">
-                            {{carbon\Carbon::parse($data->jatuh_tempo)->isoFormat('D MMM YYYY')  }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ carbon\Carbon::parse($data->jatuh_tempo)->isoFormat('D MMM YYYY') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                 </tr>
@@ -85,7 +86,7 @@
             <tr>
                 <td style="width: 50%; border: none rgb(0, 0, 0);">Pembayaran</td>
                 <td style="text-align: right; width: 50%; border: none rgb(0, 0, 0);">
-                    {{ $data->jenis_pembayaran }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    {{ strtoupper($data->jenis_pembayaran) }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </tbody>
     </table>
@@ -104,7 +105,7 @@
     <br>
     <br>
     <br>
-    
+
     <p style="text-align: center;">Sales : {{ $data->user->username ?? '-' }}</p>
 </body>
 
