@@ -27,14 +27,14 @@
     <table style="width: 100%; border-collapse: collapse; border: none rgb(0, 0, 0);">
         <tbody>
             <tr>
-                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">{{ $data->no_invoice }}</td>
-                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">
+                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 13px;">{{ $data->no_invoice }}</td>
+                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 13px; text-align: right;">
                     {{ carbon\Carbon::parse($data->created_at)->isoFormat('D MMM YYYY') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
             </tr>
             <tr>
-                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px;">Customer</td>
-                <td style="width: 50%; border: none rgb(0, 0, 0); font-size: 11px; text-align: right;">
+                <td style="width: 30%; border: none rgb(0, 0, 0); font-size: 13px;">Customer</td>
+                <td style="width: 80%; border: none rgb(0, 0, 0); font-size: 13px; ">
                     {{ $data->customer->nama }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
         </tbody>
