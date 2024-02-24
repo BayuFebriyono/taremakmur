@@ -9,6 +9,13 @@
 
         @if (auth()->user()->level == 'super_admin')
             <li class="nav-item">
+                <a wire:navigate class="nav-link" href="/dashboard">
+                    <i class="mdi mdi-speedometer menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#master-data" aria-expanded="false"
                     aria-controls="master-data">
                     <i class="men1u-icon mdi mdi-database-check"></i>
