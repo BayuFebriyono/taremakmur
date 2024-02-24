@@ -15,12 +15,15 @@ class Dashboard extends Component
     public function render()
     {
         $pembelian = HeaderPembelian::with(['suplier', 'detail_pembelian'])->where('lunas', false)
+            ->where('status', 'CONFIRMED')
             ->latest()->get();
         $penjualan = HeaderPenjualan::with(['customer', 'detail_penjualan'])->where('lunas', false)
+            ->where('status', 'CONFIRMED')
             ->latest()->get();
         $jatuhTempo = HeaderPenjualan::with(['customer', 'detail_penjualan'])
             ->whereDate('jatuh_tempo', '<', now()->toDateString())
             ->where('lunas', false)
+            ->where('status', 'CONFIRMED')
             ->latest()->get();
         return view('livewire.admin.dashboard', [
             'pembelians' => $pembelian,
