@@ -107,6 +107,11 @@
                                 placeholder="Jumlah renteng dalam satu dus" required>
                         </div>
 
+                        <div class="my-4 col-md-6">
+                            <label for="Jenis" class="form-label">Jenis</label>
+                            <input wire:model='jenis' type="text" class="form-control" placeholder="untuk mengurutkan nota" required>
+                        </div>
+
 
                         <button type="submit" class="btn btn-primary">Submit</button>
 
@@ -206,6 +211,11 @@
                                 placeholder="Jumlah renteng dalam satu dus" required>
                         </div>
 
+                        <div class="my-4 col-md-6">
+                            <label for="Jenis" class="form-label">Jenis</label>
+                            <input wire:model='jenis' type="text" class="form-control" placeholder="untuk mengurutkan nota" required>
+                        </div>
+
 
                         <button type="submit" class="btn btn-primary">Submit</button>
 
@@ -256,7 +266,7 @@
                         <th>Cash Pack</th>
                         <th>Kredit Dus</th>
                         <th>Kredit Pack</th>
-                        <th>Diskon</th>
+                        <th>Jenis</th>
                         <th>Aktif</th>
                         <th>Aksi</th>
                     </tr>
@@ -273,7 +283,7 @@
                             <td class="oneliner">{{ formatRupiah($barang->cash_pack) }}</td>
                             <td class="oneliner">{{ formatRupiah($barang->kredit_dus) }}</td>
                             <td class="oneliner">{{ formatRupiah($barang->kredit_pack) }}</td>
-                            <td class="oneliner">{{ formatRupiah($barang->diskon) }}</td>
+                            <td class="oneliner">{{ $barang->jenis }}</td>
                             <td>
                                 @if ($barang->aktif)
                                     <span wire:click='nonAktif("{{ $barang->id }}")' role="button"

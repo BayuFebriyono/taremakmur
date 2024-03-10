@@ -87,7 +87,8 @@ class Invoice extends Component
                 'harga' => $this->harga,
                 'diskon' => $this->diskon,
                 'remark' => null,
-                'status' => 'CONFIRMED'
+                'status' => 'CONFIRMED',
+                'jenis_barang' => Barang::where('kode_barang', $this->kodeBarang)->first()->jenis
             ]);
             $this->qty = 0;
             $this->diskon = 0;

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('no_invoice');
             $table->string('kode_barang');
+            $table->string('jenis_barang')->nullable();
             $table->string('jenis');
             $table->string('qty');
             $table->string('aktual');

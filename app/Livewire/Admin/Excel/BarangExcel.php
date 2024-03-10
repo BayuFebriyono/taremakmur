@@ -53,7 +53,8 @@ class BarangExcel extends Component
                         'kredit_dus' => $row[7],
                         'kredit_pack' => $row[8],
                         'diskon' => $row[9],
-                        'jumlah_renteng' => $row[10]
+                        'jumlah_renteng' => $row[10],
+                        'jenis' => $row[11]
                     ]);
                 } else {
                     Barang::create([
@@ -67,7 +68,8 @@ class BarangExcel extends Component
                         'kredit_dus' => $row[7],
                         'kredit_pack' => $row[8],
                         'diskon' => $row[9],
-                        'jumlah_renteng' => $row[10]
+                        'jumlah_renteng' => $row[10],
+                        'jenis' => $row[11]
                     ]);
                 }
             }

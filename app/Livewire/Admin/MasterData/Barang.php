@@ -38,6 +38,7 @@ class Barang extends Component
     public $kreditDus = 0;
     public $kreditPack = 0;
     public $jumlahRenteng = '';
+    public $jenis = '';
 
     // utils property
     public $statusModal = '';
@@ -80,6 +81,7 @@ class Barang extends Component
         $this->diskon = $barang->diskon;
         $this->barangId = $barang->id;
         $this->jumlahRenteng = $barang->jumlah_renteng;
+        $this->jenis = $barang->jenis;
     }
 
     public function update()
@@ -103,7 +105,8 @@ class Barang extends Component
             'kredit_dus' => $this->kreditDus,
             'kredit_pack' => $this->kreditPack,
             'diskon' => $this->diskon,
-            'jumlah_renteng' => $this->jumlahRenteng
+            'jumlah_renteng' => $this->jumlahRenteng,
+            'jenis' => $this->jenis
         ]);
         $this->cancel();
         session()->flash('success', 'Data telah diubah');
@@ -128,7 +131,8 @@ class Barang extends Component
             'kredit_dus' => $this->kreditDus,
             'kredit_pack' => $this->kreditPack,
             'diskon' => $this->diskon,
-            'jumlah_renteng' => $this->jumlahRenteng
+            'jumlah_renteng' => $this->jumlahRenteng,
+            'jenis' => $this->jenis
         ]);
 
         $this->cancel();
@@ -175,6 +179,7 @@ class Barang extends Component
         $this->statusModal = '';
         $this->jumlahRenteng = '';
         $this->barangId = null;
+        $this->jenis = '';
     }
 
     public function importExcel()
