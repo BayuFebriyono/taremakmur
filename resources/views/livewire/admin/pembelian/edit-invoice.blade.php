@@ -64,6 +64,9 @@
 
             <div class="table-responsive mt-5">
                 <p class=" fw-bold">Suplier : {{ $dataPembelian->suplier->nama }}</p>
+
+                <p class="fw-bold text-center mb-4">Total {{ formatRupiah($dataPembelian->detail_pembelian->sum('harga')) }} |
+                    Diskon {{ formatRupiah($dataPembelian->detail_pembelian->sum('diskon')) }}</p>
                 <table class="table table-hover">
                     <thead>
                         <tr>

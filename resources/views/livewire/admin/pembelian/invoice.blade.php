@@ -60,16 +60,16 @@
 
                         <div class="col-md-6">
                             <label for="Diskon" class="form-label">Diskon</label>
-                            <input wire:change='setHarga' wire:model='diskon' type="number" class="form-control" placeholder="Masukkan diskon"
-                                required>
+                            <input wire:change='setHarga' wire:model='diskon' type="number" class="form-control"
+                                placeholder="Masukkan diskon" required>
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="qty" class="form-label">Quantity</label>
-                            <input wire:change='setHarga' wire:model='qty' type="number" id="qty" class="form-control"
-                                placeholder="masukkan quantity dalam dus" required>
+                            <input wire:change='setHarga' wire:model='qty' type="number" id="qty"
+                                class="form-control" placeholder="masukkan quantity dalam dus" required>
                         </div>
 
                         <div class="col-md-6">
@@ -237,6 +237,9 @@
                             <input wire:model='uangMuka' type="number" class="form-control">
                         </div>
                     @endif
+
+                    <p class="fw-bold text-center mb-4">Total {{ formatRupiah($dataPembelian->sum('harga')) }} |
+                        Diskon {{ formatRupiah($dataPembelian->sum('diskon')) }}</p>
                 </div>
             </div>
         </div>

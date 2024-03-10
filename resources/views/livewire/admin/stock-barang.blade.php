@@ -82,7 +82,7 @@
                             <p class="text-muted">
                                 {{ number_format(floor($barang->stock_bayangan / $barang->jumlah_renteng), 0) }} Dus
                                 @if ($barang->stock_bayangan % $barang->jumlah_renteng != 0)
-                                    {{ $barang->stock_bayangan % $barang->jumlah_renteng . 'Pack' }}
+                                    {{ $barang->stock_bayangan % $barang->jumlah_renteng . ' Pack' }}
                                 @endif
                             </p>
                             <p class="text-muted">{{ $barang->stock_bayangan }} Pack</p>
