@@ -79,7 +79,11 @@
                     @foreach ($barangs as $barang)
                         <div class="col-6">
                             <p class="fw-bold">{{ $barang->nama_barang }}</p>
-                            <p class="text-muted">{{ $barang->stock_bayangan / $barang->jumlah_renteng }} Dus
+                            <p class="text-muted">
+                                {{ number_format(floor($barang->stock_bayangan / $barang->jumlah_renteng), 0) }} Dus
+                                @if ($barang->stock_bayangan % $barang->jumlah_renteng != 0)
+                                    {{ $barang->stock_bayangan % $barang->jumlah_renteng . 'Pack' }}
+                                @endif
                             </p>
                             <p class="text-muted">{{ $barang->stock_bayangan }} Pack</p>
                         </div>
