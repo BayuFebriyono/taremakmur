@@ -103,7 +103,8 @@ class EditInvoice extends Component
             // update stock
             $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
             $barang->update([
-                'stock_renteng' => $barang->stock_renteng + ($item['aktual'] * $barang->jumlah_renteng)
+                'stock_renteng' => $barang->stock_renteng + ($item['aktual'] * $barang->jumlah_renteng),
+                'stock_bayangan' => $barang->stock_bayangan + ($item['aktual'] * $barang->jumlah_renteng)
             ]);
             Report::create([
                 'no_invoice' => $this->noInvoice,
