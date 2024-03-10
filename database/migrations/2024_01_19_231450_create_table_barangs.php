@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('harga_beli_dus')->nullable();
             $table->integer('harga_beli_pack')->nullable();
             $table->double('diskon')->nullable();
+            $table->string('jenis')->nullable();
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

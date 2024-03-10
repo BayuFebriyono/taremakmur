@@ -78,3 +78,4 @@ class BarangExcel extends Component
         }
     }
 }
+
