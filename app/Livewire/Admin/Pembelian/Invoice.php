@@ -78,6 +78,13 @@ class Invoice extends Component
         ]);
         $this->qty = 0;
     }
+    public function hapus($id)
+    {
+
+        $this->dataPembelian = $this->dataPembelian->reject(function ($item) use ($id) {
+            return $item['id'] == $id;
+        });
+    }
 
     public function simpan()
     {

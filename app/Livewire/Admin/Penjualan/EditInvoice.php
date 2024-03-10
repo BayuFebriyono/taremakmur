@@ -63,39 +63,43 @@ class EditInvoice extends Component
         $detail = DetailPenjualan::where('no_invoice', $this->noInvoice)
             ->where('status', 'CONFIRMED')
             ->get();
-        $detail->each(function ($item) {
-            $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
-            if ($item['jenis'] == 'dus') {
-                $barang->update([
-                    'stock_renteng' => $barang->stock_renteng - ($item['aktual'] * $barang->jumlah_renteng)
-                ]);
-                Report::create([
-                    'no_invoice' => $this->noInvoice,
-                    'kode_barang' => $item['kode_barang'],
-                    'out' => $item['aktual'] * $barang->jumlah_renteng,
-                    'harga' => $item['harga'],
-                    'stock' => $barang->stock_sto
-                ]);
-            } else {
-                $barang->update([
-                    'stock_renteng' => $barang->stock_renteng - ($item['aktual'])
-                ]);
-                Report::create([
-                    'no_invoice' => $this->noInvoice,
-                    'kode_barang' => $item['kode_barang'],
-                    'out' => $item['aktual'],
-                    'harga' => $item['harga'],
-                    'stock' => $barang->stock_sto
-                ]);
-            }
-        });
+        $header = HeaderPenjualan::where('no_invoice', $this->noInvoice)->first();
+        
+        if ($header->status != 'CONFIRMED') {
+            $detail->each(function ($item) {
+                $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+                if ($item['jenis'] == 'dus') {
+                    $barang->update([
+                        'stock_renteng' => $barang->stock_renteng - ($item['aktual'] * $barang->jumlah_renteng)
+                    ]);
+                    Report::create([
+                        'no_invoice' => $this->noInvoice,
+                        'kode_barang' => $item['kode_barang'],
+                        'out' => $item['aktual'] * $barang->jumlah_renteng,
+                        'harga' => $item['harga'],
+                        'stock' => $barang->stock_sto
+                    ]);
+                } else {
+                    $barang->update([
+                        'stock_renteng' => $barang->stock_renteng - ($item['aktual'])
+                    ]);
+                    Report::create([
+                        'no_invoice' => $this->noInvoice,
+                        'kode_barang' => $item['kode_barang'],
+                        'out' => $item['aktual'],
+                        'harga' => $item['harga'],
+                        'stock' => $barang->stock_sto
+                    ]);
+                }
+            });
+        }
 
         HeaderPenjualan::where('no_invoice', $this->noInvoice)->update([
             'status' => 'CONFIRMED',
             'jatuh_tempo' => $this->jatuhTempo
         ]);
         $this->jatuhTempo = null;
-        $this->dispatch('cancel-edit', message : 'Berhasil dikonfirmasi', type: 'success-top')->to(Invoice::class);
+        $this->dispatch('cancel-edit', message: 'Berhasil dikonfirmasi', type: 'success-top')->to(Invoice::class);
     }
 
     public function cancelAktual()

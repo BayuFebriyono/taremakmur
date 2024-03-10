@@ -97,7 +97,7 @@ class Invoice extends Component
             $this->cariBarang();
         } else {
             $stock = Barang::where('kode_barang', $this->kodeBarang)->first();
-            $dus = $stock->stock_bayangan / $stock->jumlah_renteng;
+            $dus = number_format(floor($stock->stock_bayangan / $stock->jumlah_renteng), 0);
             session()->flash('error-top', "stok tidak mencukupi {$stock->stock_bayangan} Pack dan {$dus} Dus");
         }
     }

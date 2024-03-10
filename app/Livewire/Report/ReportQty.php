@@ -40,7 +40,7 @@ class ReportQty extends Component
     {
         $dari = Carbon::parse($this->dari)->subDays(1)->isoFormat('Y-M-D');
         $sampai = Carbon::parse($this->sampai)->addDays(1)->isoFormat('Y-M-D');
-     
+
         $barangs = Barang::all();
         $report = collect();
         foreach ($barangs as $barang) {
@@ -56,6 +56,10 @@ class ReportQty extends Component
                     ->where('kode_barang', $barang->kode_barang)
                     ->whereBetween('created_at', [$dari, $sampai])
                     ->sum('out'),
+                'harga_beli' =>  DB::table('reports')
+                    ->where('kode_barang', $barang->kode_barang)
+                    ->whereBetween('created_at', [$dari, $sampai])
+                    ->sum('harga_beli'),
                 'harga' =>  DB::table('reports')
                     ->where('kode_barang', $barang->kode_barang)
                     ->whereBetween('created_at', [$dari, $sampai])
@@ -134,12 +138,14 @@ class ReportQty extends Component
         $sheet->setCellValue('C3', 'IN');
         $sheet->setCellValue('D3', 'OUT');
         $sheet->setCellValue('E3', 'Harga');
+        $sheet->setCellValue('F3', 'Harga Beli');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
         $sheet->getStyle('C3')->applyFromArray($style_col);
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
 
         $row = 4;
         foreach ($this->report as $data) {
@@ -148,12 +154,14 @@ class ReportQty extends Component
             $sheet->setCellValue('C' . $row, $data['in'] ?? '-');
             $sheet->setCellValue('D' . $row, $data['out'] ?? '-');
             $sheet->setCellValue('E' . $row, $data['harga']);
+            $sheet->setCellValue('F' . $row, $data['harga_beli']);
 
             $sheet->getStyle('A' . $row)->applyFromArray($style_row);
             $sheet->getStyle('B' . $row)->applyFromArray($style_row);
             $sheet->getStyle('C' . $row)->applyFromArray($style_row);
             $sheet->getStyle('D' . $row)->applyFromArray($style_row);
             $sheet->getStyle('E' . $row)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $row)->applyFromArray($style_row);
 
             $row++;
         }

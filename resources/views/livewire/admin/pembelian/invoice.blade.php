@@ -190,6 +190,9 @@
                                     <td wire:click='showRemark("{{ $data['id'] }}")' role="button"
                                         class="text-primary"><u>{{ $data['remark'] ?? '-' }}</u></td>
                                     <td>
+                                        <span wire:click='hapus("{{ $data['id'] }}")'
+                                            wire:confirm='Apakah anda yakin ingin menghapus?' role="button"
+                                            class="btn btn-sm btn-danger"><i class="mdi mdi-trash-can"></i></span>
                                         @if ($data['status'] == 'WAITING')
                                             <span wire:click='confirmed("{{ $data['id'] }}")' role="button"
                                                 class="btn btn-sm btn-warning"><i
