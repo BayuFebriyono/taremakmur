@@ -51,7 +51,7 @@ class Invoice extends Component
 
     public function render()
     {
-
+        $this->hitungHarga();
         return view('livewire.admin.penjualan.invoice');
     }
 
@@ -71,7 +71,8 @@ class Invoice extends Component
     public function store()
     {
         $this->validate([
-            'barang' => 'required'
+            'barang' => 'required',
+            'qty' => 'required|numeric|gt:0'
         ]);
 
         // cek stock dulu

@@ -18,7 +18,7 @@
                     <h4 class="card-title">Data konfirmasi pembelian</h4>
                     <p class="my-2 text-muted">Data ini temporary tidak akan masuk ke database selama belum di save
                     </p>
-                    <button wire:click='confirmAll' class="btn btn-md btn-inverse-warning">Confirm All</button>
+                    {{-- <button wire:click='confirmAll' class="btn btn-md btn-inverse-warning">Confirm All</button> --}}
                     <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span wire:loading
                             wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
                         Invoice</button>
