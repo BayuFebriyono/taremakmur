@@ -16,6 +16,6 @@ class DetailPenjualan extends Model
 
     public function barang()
     {
-        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang')->orderBy('jenis');
+        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
     }
 }

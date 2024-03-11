@@ -37,39 +37,39 @@ class WaitingConfirm extends Component
             ->first();
 
       
-        $pdf = new Dompdf();
+        // $pdf = new Dompdf();
 
-        $options = $pdf->getOptions();
-        $pdf->setPaper(array(0, 0, 226.772, 566.929), 'portrait');
+        // $options = $pdf->getOptions();
+        // $pdf->setPaper(array(0, 0, 226.772, 566.929), 'portrait');
 
-        $options->set(array(
-            'isRemoteEnabled' => true,
-            'isHtml5ParserEnabled' => true
-        ));
-        $pdf->setOptions($options);
-        $template = view('print.nota-penjualan', ['data' => $data])->render();
+        // $options->set(array(
+        //     'isRemoteEnabled' => true,
+        //     'isHtml5ParserEnabled' => true
+        // ));
+        // $pdf->setOptions($options);
+        // $template = view('print.nota-penjualan', ['data' => $data])->render();
 
-        $pdf->loadHtml($template);
+        // $pdf->loadHtml($template);
 
-        $GLOBALS['bodyHeight'] = 0;
+        // $GLOBALS['bodyHeight'] = 0;
 
-        $pdf->setCallbacks([
-            'myCallbacks' => [
-                'event' => 'end_frame',
-                'f' => function ($frame) {
-                    $node = $frame->get_node();
+        // $pdf->setCallbacks([
+        //     'myCallbacks' => [
+        //         'event' => 'end_frame',
+        //         'f' => function ($frame) {
+        //             $node = $frame->get_node();
 
-                    if (strtolower($node->nodeName) === "body") {
-                        $padding_box = $frame->get_padding_box();
-                        $GLOBALS['bodyHeight'] += $padding_box['h'];
-                    }
-                }
-            ]
-        ]);
+        //             if (strtolower($node->nodeName) === "body") {
+        //                 $padding_box = $frame->get_padding_box();
+        //                 $GLOBALS['bodyHeight'] += $padding_box['h'];
+        //             }
+        //         }
+        //     ]
+        // ]);
 
-        $pdf->render();
-        unset($pdf);
-        $docHeight = $GLOBALS['bodyHeight'] + 100;
+        // $pdf->render();
+        // unset($pdf);
+        // $docHeight = $GLOBALS['bodyHeight'] + 100;
         $pdf = Pdf::loadView('print.nota-penjualan', ['data' => $data])->setPaper([0, 0, 226.772, 600])->output();
         return response()->streamDownload(
             fn () => print($pdf),
