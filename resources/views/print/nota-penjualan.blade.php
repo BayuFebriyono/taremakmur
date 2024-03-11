@@ -47,8 +47,7 @@
         <table style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        &nbsp;{{ $detail->aktual }} {{ $detail->jenis == 'dus' ? 'Dos' : 'Pack' }} </td>
+                    <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp;{{ $detail->aktual }} {{ $detail->jenis == 'dus' ? 'Dos' : 'Pack' }} </td>
 
                     <td style="width: 25.0000%; font-size: 13px;">@ {{ formatAngka($detail->harga_satuan) }}</td>
                     <td style="width: 25.0000%; font-size: 13px;">&nbsp; &nbsp; &nbsp;{{ formatAngka($detail->diskon) }}

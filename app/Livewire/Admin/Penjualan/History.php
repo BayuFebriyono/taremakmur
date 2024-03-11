@@ -116,7 +116,7 @@ class History extends Component
         $pdf->render();
         unset($pdf);
         $docHeight = $GLOBALS['bodyHeight'] + 100;
-        $pdf = Pdf::loadView('print.nota-penjualan', ['data' => $data])->setPaper([0, 0, 226.772, $docHeight])->output();
+        $pdf = Pdf::loadView('print.nota-penjualan', ['data' => $data])->setPaper([0, 0, 226.772, 841.89])->output();
         HeaderPenjualan::where('no_invoice', $no_invoice)->update(['sudah_cetak' => true]);
         return response()->streamDownload(
             fn () => print($pdf),

@@ -156,6 +156,7 @@ class Invoice extends Component
         try {
             $this->barang = Barang::where('kode_barang', $this->kodeBarang)->first();
             $this->hargaSatuan = $this->jenis == 'dus' ? $this->barang->cash_dus : $this->barang->cash_pack;
+            $this->hitungHarga();
         } catch (Exception $e) {
             $this->barang = collect();
             $this->hargaSatuan = 0;
