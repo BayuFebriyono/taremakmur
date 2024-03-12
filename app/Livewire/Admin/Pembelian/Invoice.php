@@ -100,7 +100,7 @@ class Invoice extends Component
             } catch (Exception $e) {
                 $no = 0;
             }
-            $noInvoice = (int)$no + 1 . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
+            $noInvoice =uniqid() . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
             HeaderPembelian::create([
                 'user_id' => auth()->user()->id,
                 'suplier_id' => $this->suplierId,
