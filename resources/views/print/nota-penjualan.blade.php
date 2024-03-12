@@ -91,6 +91,20 @@
     </table>
     <p>Keterangan :
     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- {{ $data->keterangan }}</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    <p style="color: white;" >-</p>
+    {{-- <br>
     <br>
     <br>
     <br>
@@ -102,8 +116,7 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
+    <br> --}}
 
     <p style="text-align: center;">Sales : {{ $data->user->username ?? '-' }}</p>
 </body>
