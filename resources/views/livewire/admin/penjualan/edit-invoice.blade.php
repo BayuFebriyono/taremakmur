@@ -80,7 +80,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->kode_barang }}</td>
                                 <td>{{ $data->barang->nama_barang ?? '-' }}</td>
-                                <td>{{ $data->qty . ' ' . $data->jenis == 'dus' ? 'dus' : 'Pack' }}</td>
+                                <td>{{ $data->qty  }}  {{ $data->jenis == 'dus' ? 'Dus' : 'Pack' }}</td>
                                 <td wire:click='showAktual("{{ $data->id }}")' class="text-primary" role="button">
                                     <u>{{ $data->aktual }}</u></td>
                                 <td>{{ formatRupiah($data->harga_satuan) }}</td>
