@@ -12311,7 +12311,7 @@ textarea.is-invalid.tt-hint, .select2-container--default .select2-selection--sin
   padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
   font-size: var(--bs-nav-link-font-size);
   font-weight: var(--bs-nav-link-font-weight);
-  color: var(--bs-nav-link-color);
+  color: white;
   text-decoration: none;
   background: none;
   border: 0;
@@ -28917,7 +28917,7 @@ div.tagsinput span.tag a {
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 97px);
-  background: #F4F5F7;
+  background: #34495e;
   font-family: "Manrope", sans-serif;
   font-weight: 500;
   padding: 0;
@@ -28974,7 +28974,7 @@ div.tagsinput span.tag a {
   font-size: 22px;
   line-height: 1;
   margin-right: 1rem;
-  color: #484848;
+  color: white;
 }
 .rtl .sidebar .nav .nav-item .nav-link i.menu-icon {
   margin-left: 2rem;
@@ -29008,7 +29008,7 @@ div.tagsinput span.tag a {
   transition: all 0.2s ease-in;
 }
 .sidebar .nav .nav-item .nav-link .menu-title {
-  color: inherit;
+  color: white;
   display: inline-block;
   font-size: 12px;
   line-height: 1;

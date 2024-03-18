@@ -39,9 +39,10 @@
                                 <th>#</th>
                                 <th>No Invoice</th>
                                 <th>Admin</th>
-                                <th>Suplier</th>
+                                <th>Customer</th>
                                 <th>Tanggal Order</th>
-                                <th>Tanggal Jatuh Tempo</th>
+                                <th>Jatuh Tempo</th>
+                                <th>Total</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -55,6 +56,7 @@
                                     <td>{{ $penjualan->customer->nama }}</td>
                                     <td>{{ Carbon\Carbon::parse($penjualan->created_at)->isoFormat('D MMM YYYY') }}</td>
                                     <td>{{ $penjualan->jatuh_tempo ? Carbon\Carbon::parse($penjualan->jatuh_tempo)->isoFormat('D MMM YYYY') : '-' }}
+                                    <td>{{ formatRupiah($penjualan->detail_penjualan->sum('harga')) }}</td>
                                     </td>
                                     <td>
                                         @if ($penjualan->lunas)
@@ -66,8 +68,8 @@
 
 
                                     <td>
-                                        <button wire:click='generateNota("{{ $penjualan->no_invoice }}")' type="button"
-                                            class="btn btn-sm btn-info"><span
+                                        <button wire:click='generateNota("{{ $penjualan->no_invoice }}")'
+                                            type="button" class="btn btn-sm btn-info"><span
                                                 class="mdi mdi-printer-outline"></span></button>
                                         <button wire:click='showDetail("{{ $penjualan->no_invoice }}")' type="button"
                                             class="btn btn-sm btn-success"><span

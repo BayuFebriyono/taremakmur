@@ -18,7 +18,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#master-data" aria-expanded="false"
                     aria-controls="master-data">
-                    <i class="men1u-icon mdi mdi-database-check"></i>
+                    <i class="menu-icon mdi mdi-database-check"></i>
                     <span class="menu-title">Master Data</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -35,7 +35,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPembelian" aria-expanded="false"
                     aria-controls="transaksiPembelian">
-                    <i class="men1u-icon mdi mdi-basket-fill"></i>
+                    <i class="menu-icon mdi mdi-basket-fill"></i>
                     <span class="menu-title">Pembelian</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -62,7 +62,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#transaksiPenjualan" aria-expanded="false"
                     aria-controls="transaksiPenjualan">
-                    <i class="men1u-icon mdi mdi-cart-arrow-right"></i>
+                    <i class="menu-icon mdi mdi-cart-arrow-right"></i>
                     <span class="menu-title">Penjualan</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -85,7 +85,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#report" aria-expanded="false"
                     aria-controls="report">
-                    <i class="men1u-icon mdi mdi-chart-bar"></i>
+                    <i class="menu-icon mdi mdi-chart-bar"></i>
                     <span class="menu-title">Report</span>
                     <i class="menu-arrow"></i>
                 </a>
