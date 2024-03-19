@@ -84,7 +84,7 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="qty" class="form-label">Quantity</label>
-                            <input wire:change='hitungHarga' wire:model.live='qty' type="number" id="qty"
+                            <input wire:change='hitungHarga' wire:model.live='qty' min="0" type="number" id="qty"
                                 class="form-control @error('qty') is-invalid @enderror" placeholder="masukkan quantity" required>
                                 @error('qty')
                                     <p class="text-danger">Jumlah harus lebih dari 0</p>
@@ -232,8 +232,8 @@
 
 
                     <div class="p-2">
-                        <button wire:click='simpan' class="btn btn-ms btn-inverse-success fs-2" type="button"> <span
-                                wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
+                        <button wire:loading.attr='disabled' wire:target='simpan' wire:click='simpan' class="btn btn-ms btn-inverse-success fs-2" type="button"> <span
+                                wire:loading wire:target='simpan'  class="spinner-grow spinner-grow-sm"></span>Simpan
                             Invoice</button>
                     </div>
                 </div>

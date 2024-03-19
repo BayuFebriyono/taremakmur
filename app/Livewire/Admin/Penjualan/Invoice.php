@@ -132,13 +132,13 @@ class Invoice extends Component
                 });
             $confirmedBarang->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
-                if ($this->jenis == 'dus') {
+                if ($item['jenis'] == 'dus') {
                     $barang->update([
-                        'stock_bayangan' => $barang->stock_bayangan - ($item['qty'] * $barang->jumlah_renteng)
+                        'stock_bayangan' => $barang->stock_bayangan - ($item['aktual'] * $barang->jumlah_renteng)
                     ]);
                 } else {
                     $barang->update([
-                        'stock_bayangan' => $barang->stock_bayangan - ($item['qty'])
+                        'stock_bayangan' => $barang->stock_bayangan - ($item['aktual'])
                     ]);
                 }
                 DetailPenjualan::create($item);
