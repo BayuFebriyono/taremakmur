@@ -7,7 +7,9 @@
         {{-- Penjualan --}}
         <div class="col-md-6">
             <div class="card border-primary mb-3">
-                <div class="card-header">Daftar Penjualan Belum Lunas</div>
+                <div class="card-header">Daftar Penjualan Belum Lunas
+                    <p class="fs-4 mt-1 fw-bold">Total Semua : {{ formatRupiah($hargaPenjualan) }}</p>
+                </div>
                 <div class="card-body text-primary">
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -49,7 +51,9 @@
         {{-- Pembelian --}}
         <div class="col-md-6">
             <div class="card border-primary mb-3">
-                <div class="card-header">Daftar Pembelian Belum Lunas</div>
+                <div class="card-header">Daftar Pembelian Belum Lunas
+                    <p class="fs-4 mt-1 fw-bold">Total Semua : {{ formatRupiah($hargaPembelian) }}</p>
+                </div>
                 <div class="card-body text-primary">
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -92,7 +96,9 @@
 
     <div class="mt-4">
         <div class="card border-primary mb-3">
-            <div class="card-header">Daftar Penjualan Lewat Jatuh Tempo</div>
+            <div class="card-header">Daftar Penjualan Lewat Jatuh Tempo
+                <p class="fs-4 mt-1 fw-bold">Total Semua : {{ formatRupiah($hargaJatuhTempo) }}</p>
+            </div>
             <div class="card-body text-primary">
                 <div class="table-responsive">
                     <table class="table table-striped">
