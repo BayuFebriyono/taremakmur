@@ -39,6 +39,16 @@ class BarangExcel extends Component
             foreach ($data as $row) {
                 $suplier = Suplier::select('id')->where('nama', $row[0])->first();
 
+                if(!$suplier){
+                    $suplier = Suplier::create([
+                        'nama' => $row[0],
+                        'nama_barang' => '-',
+                        'suplier' => $row[0],
+                        'satuan' => 'pcs',
+                        'unit' => '1'
+                    ]);
+                }
+
                 $barang = Barang::where('kode_barang', $row[1])->first();
 
                 if ($barang) {
