@@ -16,10 +16,14 @@ class EditInvoice extends Component
     public $aktual = '';
     public $remark = '';
     public $jatuhTempo = null;
+    public $jenisPembayaran = "";
 
     public function mount($noInvoice)
     {
         $this->noInvoice = $noInvoice;
+        $header = HeaderPenjualan::where('no_invoice', $noInvoice)->first();
+        $this->jatuhTempo = $header->jatuh_tempo;
+        $this->jenisPembayaran = $header->jenis_pembayaran;
     }
 
     public function render()
@@ -58,13 +62,34 @@ class EditInvoice extends Component
 
     public function simpan()
     {
-        DetailPenjualan::where('no_invoice', $this->noInvoice)
-            ->where('status', 'WAITING')->delete();
+        $deletedDetail =  DetailPenjualan::where('no_invoice', $this->noInvoice)
+            ->where('status', 'WAITING')->get();
+
+        if ($deletedDetail->count()) {
+            // kembalikan stok bayangan untuk barang yang dicancel
+            $deletedDetail->each(function ($item) {
+                $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
+                if ($item['jenis'] == 'dus') {
+                    $barang->update([
+                        'stock_bayangan' => $barang->stock_renteng + ($item['aktual'] * $barang->jumlah_renteng)
+                    ]);
+                } else {
+                    $barang->update([
+                        'stock_bayangan' => $barang->stock_renteng + ($item['aktual'])
+                    ]);
+                }
+            });
+
+            // Hapus Barang dari detail order
+            $deletedDetail->delete();
+        }
+
+
         $detail = DetailPenjualan::where('no_invoice', $this->noInvoice)
             ->where('status', 'CONFIRMED')
             ->get();
         $header = HeaderPenjualan::where('no_invoice', $this->noInvoice)->first();
-        
+
         if ($header->status != 'CONFIRMED') {
             $detail->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
@@ -96,7 +121,8 @@ class EditInvoice extends Component
 
         HeaderPenjualan::where('no_invoice', $this->noInvoice)->update([
             'status' => 'CONFIRMED',
-            'jatuh_tempo' => $this->jatuhTempo
+            'jatuh_tempo' => $this->jatuhTempo,
+            'jenis_pembayaran' => $this->jenisPembayaran
         ]);
         $this->jatuhTempo = null;
         $this->dispatch('cancel-edit', message: 'Berhasil dikonfirmasi', type: 'success-top')->to(Invoice::class);

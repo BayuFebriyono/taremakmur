@@ -31,6 +31,41 @@
                 <input wire:model='jatuhTempo' type="date" class="form-control">
             @endif
 
+
+            {{-- Jenis Pembayaran --}}
+            <div class="row mt-4">
+                <p class="fw-bold">Pilih Jenis Pembayaran</p>
+                <div class="col-6">
+                    <div class="ms-3">
+                        <div class="form-check">
+                            <input wire:model.change='jenisPembayaran' class="form-check-input"
+                                type="radio" id="Kredit" value="kredit">
+                            <label class="form-check-label" for="Kredit">
+                                Kredit
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="ms-3">
+                        <div class="form-check">
+                            <input wire:model.change='jenisPembayaran' class="form-check-input"
+                                type="radio" id="Tunai" value="tunai">
+                            <label class="form-check-label" for="Tunai">
+                                Tunai
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                @if ($jenisPembayaran == 'kredit')
+                    <div class="col-12 mt-2">
+                        <label class="form-label">Uang Muka</label>
+                        <input wire:model='uangMuka' type="number" class="form-control">
+                    </div>
+                @endif
+            </div>
+
             {{-- Aktual --}}
             @if ($aktualId)
                 <div class="row my-3">
