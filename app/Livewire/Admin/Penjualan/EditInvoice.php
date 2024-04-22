@@ -39,6 +39,18 @@ class EditInvoice extends Component
         $this->aktualId = $id;
     }
 
+    public function waiting($id){
+        DetailPenjualan::find($id)->update([
+            'status' => 'WAITING'
+        ]);
+    }
+
+    public function confirmed($id){
+        DetailPenjualan::find($id)->update([
+            'status' => 'CONFIRMED'
+        ]);
+    }
+
     public function updateAktual()
     {
 
