@@ -88,6 +88,7 @@ class Invoice extends Component
 
     public function simpan()
     {
+
         $this->validate([
             'suplierId' => 'required'
         ]);
@@ -106,6 +107,7 @@ class Invoice extends Component
                 'suplier_id' => $this->suplierId,
                 'no_invoice' => $noInvoice,
                 'jenis_pembayaran' => $this->jenis_pembayaran,
+                'lunas' => $this->jenis_pembayaran == 'tunai'? true : false,
                 'uang_muka' => $this->jenis_pembayaran == 'kredit' ? $this->uangMuka : null
             ]);
 
