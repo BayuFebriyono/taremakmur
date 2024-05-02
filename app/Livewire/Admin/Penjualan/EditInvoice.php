@@ -93,7 +93,8 @@ class EditInvoice extends Component
             });
 
             // Hapus Barang dari detail order
-            $deletedDetail->delete();
+            DetailPenjualan::whereIn('id', $deletedDetail->pluck('id')->toArray())
+                ->delete();
         }
 
 
