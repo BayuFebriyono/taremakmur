@@ -1,6 +1,6 @@
 <div>
     {{-- Table --}}
-    {{-- @if (session('error'))
+    @if (session('error'))
         <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
             {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -10,7 +10,7 @@
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif --}}
+    @endif
     <div class="card mt-2">
         <div class="card-body">
             <div class="d-flex align-items-center">
