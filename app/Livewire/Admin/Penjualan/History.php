@@ -72,43 +72,60 @@ class History extends Component
         session()->flash('success', 'Data berhasil dihapus');
     }
 
+    public function lunas($noInvoice)
+    {
+        HeaderPenjualan::where('no_invoice', $noInvoice)->update([
+            'lunas' => true
+        ]);
+    }
+
     public function generateNota($no_invoice)
     {
-        $data = HeaderPenjualan::where('no_invoice', $no_invoice)->with(['detail_penjualan.barang', 'user'])->first();
-        $pdf = new Dompdf();
+        $data = HeaderPenjualan::where('no_invoice', $no_invoice)
+            ->with([
+                'detail_penjualan' => function ($query) {
+                    $query->with('barang')->orderBy('jenis_barang');
+                },
+                'user'
+            ])
+            ->first();
+        // dd($data->toArray());
 
-        $options = $pdf->getOptions();
-        $pdf->setPaper(array(0, 0, 226.772, 566.929), 'portrait');
+        // $pdf = new Dompdf();
 
-        $options->set(array(
-            'isRemoteEnabled' => true,
-            'isHtml5ParserEnabled' => true
-        ));
-        $pdf->setOptions($options);
-        $template = view('print.nota-penjualan', ['data' => $data])->render();
+        // $options = $pdf->getOptions();
+        // $pdf->setPaper(array(0, 0, 226.772, 566.929), 'portrait');
 
-        $pdf->loadHtml($template);
+        // $options->set(array(
+        //     'isRemoteEnabled' => true,
+        //     'isHtml5ParserEnabled' => true
+        // ));
+        // $pdf->setOptions($options);
+        // $template = view('print.nota-penjualan', ['data' => $data])->render();
 
-        $GLOBALS['bodyHeight'] = 0;
+        // $pdf->loadHtml($template);
 
-        $pdf->setCallbacks([
-            'myCallbacks' => [
-                'event' => 'end_frame',
-                'f' => function ($frame) {
-                    $node = $frame->get_node();
+        // $GLOBALS['bodyHeight'] = 0;
 
-                    if (strtolower($node->nodeName) === "body") {
-                        $padding_box = $frame->get_padding_box();
-                        $GLOBALS['bodyHeight'] += $padding_box['h'];
-                    }
-                }
-            ]
-        ]);
+        // $pdf->setCallbacks([
+        //     'myCallbacks' => [
+        //         'event' => 'end_frame',
+        //         'f' => function ($frame) {
+        //             $node = $frame->get_node();
 
-        $pdf->render();
-        unset($pdf);
-        $docHeight = $GLOBALS['bodyHeight'] + 100;
-        $pdf = Pdf::loadView('print.nota-penjualan', ['data' => $data])->setPaper([0, 0, 226.772, $docHeight])->output();
+        //             if (strtolower($node->nodeName) === "body") {
+        //                 $padding_box = $frame->get_padding_box();
+        //                 $GLOBALS['bodyHeight'] += $padding_box['h'];
+        //             }
+        //         }
+        //     ]
+        // ]);
+
+        // $pdf->render();
+        // unset($pdf);
+        // $docHeight = $GLOBALS['bodyHeight'] + 100;
+        $pdf = Pdf::loadView('print.nota-penjualan', ['data' => $data])->setPaper([0, 0, 226.772, 600])->output();
+        HeaderPenjualan::where('no_invoice', $no_invoice)->update(['sudah_cetak' => true]);
         return response()->streamDownload(
             fn () => print($pdf),
             'nota_penjualan.pdf'

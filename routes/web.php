@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\MasterData\Barang;
 use App\Livewire\Admin\MasterData\Customer;
 use App\Livewire\Admin\MasterData\Suplier;
@@ -40,6 +41,7 @@ Route::middleware('role:super_admin')->group(function () {
     Route::get('/barang', Barang::class);
 
     Route::get('/report', ReportQty::class);
+    Route::get('/dashboard', Dashboard::class);
 });
 
 // Route Admin and Super Admin

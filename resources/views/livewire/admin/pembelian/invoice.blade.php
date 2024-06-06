@@ -33,7 +33,7 @@
             @if (!$isEdit)
                 <livewire:admin.pembelian.waiting-confirm />
             @else
-                <livewire:admin.pembelian.edit-invoice :noInvoice="$noInvoice"/>
+                <livewire:admin.pembelian.edit-invoice :noInvoice="$noInvoice" />
             @endif
         </div>
     @else
@@ -60,16 +60,16 @@
 
                         <div class="col-md-6">
                             <label for="Diskon" class="form-label">Diskon</label>
-                            <input wire:model='diskon' type="number" class="form-control" placeholder="Masukkan diskon"
-                                required>
+                            <input wire:change='setHarga' wire:model='diskon' type="number" class="form-control"
+                                placeholder="Masukkan diskon" required>
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="qty" class="form-label">Quantity</label>
-                            <input wire:model='qty' type="number" id="qty" class="form-control"
-                                placeholder="masukkan quantity dalam dus" required>
+                            <input wire:change='setHarga' wire:model='qty' type="number" id="qty"
+                                class="form-control" placeholder="masukkan quantity dalam dus" required>
                         </div>
 
                         <div class="col-md-6">
@@ -190,6 +190,9 @@
                                     <td wire:click='showRemark("{{ $data['id'] }}")' role="button"
                                         class="text-primary"><u>{{ $data['remark'] ?? '-' }}</u></td>
                                     <td>
+                                        <span wire:click='hapus("{{ $data['id'] }}")'
+                                            wire:confirm='Apakah anda yakin ingin menghapus?' role="button"
+                                            class="btn btn-sm btn-danger"><i class="mdi mdi-trash-can"></i></span>
                                         @if ($data['status'] == 'WAITING')
                                             <span wire:click='confirmed("{{ $data['id'] }}")' role="button"
                                                 class="btn btn-sm btn-warning"><i
@@ -204,6 +207,42 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="row mt-4">
+                    <p class="fw-bold">Pilih Jenis Pembayaran</p>
+                    <div class="col-6">
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input wire:model.change='jenis_pembayaran' class="form-check-input" type="radio"
+                                    id="Kredit" value="kredit">
+                                <label class="form-check-label fs-3" for="Kredit">
+                                    Kredit
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="ms-3">
+                            <div class="form-check">
+                                <input wire:model.change='jenis_pembayaran' class="form-check-input" type="radio"
+                                    id="Tunai" value="tunai">
+                                <label class="form-check-label fs-3" for="Tunai">
+                                    Tunai
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if ($jenis_pembayaran == 'kredit')
+                        <div class="col-12 mt-2">
+                            <label class="form-label">Uang Muka</label>
+                            <input wire:model='uangMuka' type="number" class="form-control">
+                        </div>
+                    @endif
+
+                    <p class="fw-bold text-center mb-4">Total {{ formatRupiah($dataPembelian->sum('harga')) }} |
+                        Diskon {{ formatRupiah($dataPembelian->sum('diskon')) }}</p>
                 </div>
             </div>
         </div>

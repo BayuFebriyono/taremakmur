@@ -30,12 +30,15 @@ class Invoice extends Component
     public $noInvoice = '';
     public $isEdit = false;
 
+
     public $kodeBarang;
     public $hargaSatuan = 0;
     public $harga = 0;
     public $qty = 0;
     public $diskon = 0;
     public $keterangan = '';
+    public $jenis_pembayaran = 'tunai';
+    public $uangMuka = 0;
 
 
 
@@ -48,7 +51,7 @@ class Invoice extends Component
 
     public function render()
     {
-
+        $this->hitungHarga();
         return view('livewire.admin.penjualan.invoice');
     }
 
@@ -68,7 +71,8 @@ class Invoice extends Component
     public function store()
     {
         $this->validate([
-            'barang' => 'required'
+            'barang' => 'required',
+            'qty' => 'required|numeric|gt:0'
         ]);
 
         // cek stock dulu
@@ -84,7 +88,8 @@ class Invoice extends Component
                 'harga' => $this->harga,
                 'diskon' => $this->diskon,
                 'remark' => null,
-                'status' => 'CONFIRMED'
+                'status' => 'CONFIRMED',
+                'jenis_barang' => Barang::where('kode_barang', $this->kodeBarang)->first()->jenis
             ]);
             $this->qty = 0;
             $this->diskon = 0;
@@ -93,7 +98,7 @@ class Invoice extends Component
             $this->cariBarang();
         } else {
             $stock = Barang::where('kode_barang', $this->kodeBarang)->first();
-            $dus = $stock->stock_bayangan / $stock->jumlah_renteng;
+            $dus = number_format(floor($stock->stock_bayangan / $stock->jumlah_renteng), 0);
             session()->flash('error-top', "stok tidak mencukupi {$stock->stock_bayangan} Pack dan {$dus} Dus");
         }
     }
@@ -112,6 +117,9 @@ class Invoice extends Component
                 'customer_id' => $this->customerId,
                 'no_invoice' => $noInvoice,
                 'keterangan' => $this->keterangan,
+                'jenis_pembayaran' => $this->jenis_pembayaran,
+                'uang_muka' => $this->jenis_pembayaran == 'kredit' ? $this->uangMuka : null,
+                'lunas' => $this->jenis_pembayaran == 'kredit' ? false : true,
                 'status' => 'WAITING'
             ]);
             // menata collection sebelum looping
@@ -124,13 +132,13 @@ class Invoice extends Component
                 });
             $confirmedBarang->each(function ($item) {
                 $barang = Barang::where('kode_barang', $item['kode_barang'])->first();
-                if ($this->jenis == 'dus') {
+                if ($item['jenis'] == 'dus') {
                     $barang->update([
-                        'stock_bayangan' => $barang->stock_bayangan - ($item['qty'] * $barang->jumlah_renteng)
+                        'stock_bayangan' => $barang->stock_bayangan - ($item['aktual'] * $barang->jumlah_renteng)
                     ]);
                 } else {
                     $barang->update([
-                        'stock_bayangan' => $barang->stock_bayangan - ($item['qty'])
+                        'stock_bayangan' => $barang->stock_bayangan - ($item['aktual'])
                     ]);
                 }
                 DetailPenjualan::create($item);
@@ -149,6 +157,7 @@ class Invoice extends Component
         try {
             $this->barang = Barang::where('kode_barang', $this->kodeBarang)->first();
             $this->hargaSatuan = $this->jenis == 'dus' ? $this->barang->cash_dus : $this->barang->cash_pack;
+            $this->hitungHarga();
         } catch (Exception $e) {
             $this->barang = collect();
             $this->hargaSatuan = 0;

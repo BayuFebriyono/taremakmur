@@ -28,6 +28,8 @@ class Invoice extends Component
     public $cariBarang = '';
     public $barang;
     public $isEdit = false;
+    public $jenis_pembayaran = 'kredit';
+    public $uangMuka = 0;
 
 
     public $namaBarang;
@@ -76,9 +78,17 @@ class Invoice extends Component
         ]);
         $this->qty = 0;
     }
+    public function hapus($id)
+    {
+
+        $this->dataPembelian = $this->dataPembelian->reject(function ($item) use ($id) {
+            return $item['id'] == $id;
+        });
+    }
 
     public function simpan()
     {
+
         $this->validate([
             'suplierId' => 'required'
         ]);
@@ -91,11 +101,14 @@ class Invoice extends Component
             } catch (Exception $e) {
                 $no = 0;
             }
-            $noInvoice = (int)$no + 1 . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
+            $noInvoice =uniqid() . '/' .  Suplier::find($this->suplierId)->nama . '/' . now()->isoFormat('MM') . '/' . now()->isoFormat('YY');
             HeaderPembelian::create([
                 'user_id' => auth()->user()->id,
                 'suplier_id' => $this->suplierId,
-                'no_invoice' => $noInvoice
+                'no_invoice' => $noInvoice,
+                'jenis_pembayaran' => $this->jenis_pembayaran,
+                'lunas' => $this->jenis_pembayaran == 'tunai'? true : false,
+                'uang_muka' => $this->jenis_pembayaran == 'kredit' ? $this->uangMuka : null
             ]);
 
             // Menata collection sebelum di looping
@@ -223,6 +236,7 @@ class Invoice extends Component
         } catch (Exception $e) {
             $this->barang = collect();
         }
+        $this->setHarga();
     }
 
     public function cariInvoice()
@@ -235,5 +249,10 @@ class Invoice extends Component
     {
         $this->isEdit = false;
         if ($message) session()->flash($type, $message);
+    }
+
+    public function setHarga()
+    {
+        $this->harga = ((int)$this->barang->harga_beli_dus * (int)$this->qty) - (int)$this->diskon;
     }
 }

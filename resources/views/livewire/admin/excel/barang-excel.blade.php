@@ -8,7 +8,7 @@
 
                 <label for="Excel" class="form-label mt-3">Upload file anda</label>
                 <input wire:model='excel' type="file" class="form-control my-3">
-                <button type="submit" class="btn btn-primary">Import</button>
+                <button wire:loading.attr='disabled' wire:target='store' type="submit" class="btn btn-primary"><span wire:target='store' wire:loading class="spinner-grow spinner-grow-sm"></span>Import</button>
                 <button wire:click='cancelExcel' type="button" class="btn btn-secondary">Cancel</button>
             </form>
         </div>

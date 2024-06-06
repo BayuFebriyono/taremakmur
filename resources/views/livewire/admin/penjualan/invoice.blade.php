@@ -76,7 +76,7 @@
 
                         <div class="col-md-6">
                             <label for="Diskon" class="form-label">Diskon</label>
-                            <input wire:change='hitungHarga' wire:model.change='diskon' type="number"
+                            <input wire:change='hitungHarga' wire:model.live='diskon' type="number"
                                 class="form-control" placeholder="Masukkan diskon" required>
                         </div>
                     </div>
@@ -84,8 +84,11 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="qty" class="form-label">Quantity</label>
-                            <input wire:change='hitungHarga' wire:model.change='qty' type="number" id="qty"
-                                class="form-control" placeholder="masukkan quantity" required>
+                            <input wire:change='hitungHarga' wire:model.live='qty' min="0" type="number" id="qty"
+                                class="form-control @error('qty') is-invalid @enderror" placeholder="masukkan quantity" required>
+                                @error('qty')
+                                    <p class="text-danger">Jumlah harus lebih dari 0</p>
+                                @enderror
                         </div>
 
                         <div class="col-md-6">
@@ -199,8 +202,9 @@
                         <div class="col-6">
                             <div class="ms-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="Dus" value="kredit">
-                                    <label class="form-check-label fs-3" for="Dus">
+                                    <input wire:model.change='jenis_pembayaran' class="form-check-input"
+                                        type="radio" id="Kredit" value="kredit">
+                                    <label class="form-check-label fs-3" for="Kredit">
                                         Kredit
                                     </label>
                                 </div>
@@ -209,19 +213,27 @@
                         <div class="col-6">
                             <div class="ms-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="Renteng" value="tunai">
-                                    <label class="form-check-label fs-3" for="Renteng">
+                                    <input wire:model.change='jenis_pembayaran' class="form-check-input"
+                                        type="radio" id="Tunai" value="tunai">
+                                    <label class="form-check-label fs-3" for="Tunai">
                                         Tunai
                                     </label>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
+
+                        @if ($jenis_pembayaran == 'kredit')
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Uang Muka</label>
+                                <input wire:model='uangMuka' type="number" class="form-control">
+                            </div>
+                        @endif
                     </div>
 
 
                     <div class="p-2">
-                        <button wire:click='simpan' class="btn btn-ms btn-inverse-success fs-2" type="button"> <span
-                                wire:loading wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
+                        <button wire:loading.attr='disabled' wire:target='simpan' wire:click='simpan' class="btn btn-ms btn-inverse-success fs-2" type="button"> <span
+                                wire:loading wire:target='simpan'  class="spinner-grow spinner-grow-sm"></span>Simpan
                             Invoice</button>
                     </div>
                 </div>

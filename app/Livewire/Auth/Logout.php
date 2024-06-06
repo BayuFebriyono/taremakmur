@@ -13,7 +13,7 @@ class Logout extends Component
         <div>
         <li class="nav-item">
             <span role="button" wire:click="logout" class="nav-link">
-                <i class="mdi mdi-exit-to-app"></i>
+                <i class="menu-icon mdi mdi-exit-to-app"></i>
                 <span class="menu-title">Logout</span>
             </span>
         </li>

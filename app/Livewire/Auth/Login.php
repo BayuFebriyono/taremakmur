@@ -24,7 +24,7 @@ class Login extends Component
 
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
             if (Auth::user()->level == 'admin')  return $this->redirect('/penjualan-invoice', true);
-            return $this->redirect('/customer', true);
+            return $this->redirect('/dashboard', true);
         } else {
             session()->flash('error', 'Username atau Password Salah');
             return $this->redirect('/', true);

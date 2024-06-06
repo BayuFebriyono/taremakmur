@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->integer('in')->nullable();
             $table->integer('out')->nullable();
+            $table->integer('harga_beli')->nullable();
             $table->integer('harga')->nullable();
             $table->timestamps();
         });

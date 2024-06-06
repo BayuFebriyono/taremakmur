@@ -95,6 +95,7 @@
                             <th>Stok STO</th>
                             <th>IN</th>
                             <th>Out</th>
+                            <th>Harga Beli</th>
                             <th>Harga</th>
                             <th>Stock</th>
                         </tr>
@@ -107,6 +108,7 @@
                                 <td>{{ $r['stock'] }}</td>
                                 <td>{{ $r['in'] ?? '-' }}</td>
                                 <td>{{ $r['out'] ?? '-' }}</td>
+                                <td>{{ $r['harga_beli'] ?? '-' }}</td>
                                 <td>{{ $r['harga'] ?? '-' }}</td>
                                 <td>{{ $r['stock_barang'] ?? '-' }}</td>
 
