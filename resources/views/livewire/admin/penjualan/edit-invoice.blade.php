@@ -18,6 +18,7 @@
                     <h4 class="card-title">Data konfirmasi pembelian</h4>
                     <p class="my-2 text-muted">Data ini temporary tidak akan masuk ke database selama belum di save
                     </p>
+
                     {{-- <button wire:click='confirmAll' class="btn btn-md btn-inverse-warning">Confirm All</button> --}}
                     <button wire:click='simpan' class="btn btn-ms btn-inverse-success" type="button"> <span wire:loading
                             wire:target='simpan' class="spinner-grow spinner-grow-sm"></span>Simpan
@@ -64,8 +65,8 @@
                         <input wire:model='uangMuka' type="number" class="form-control">
                     </div>
                 @endif
-            </div>
 
+            </div>
             {{-- Aktual --}}
             @if ($aktualId)
                 <div class="row my-3">
@@ -114,15 +115,19 @@
                             <tr wire:key='{{ $data->id }}'>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->kode_barang }}</td>
+
                                 <td>{{ $data->barang->nama_barang ?? '-' }}</td>
                                 <td>{{ $data->qty  }}  {{ $data->jenis == 'dus' ? 'Dus' : 'Pack' }}</td>
                                 <td wire:click='showAktual("{{ $data->id }}")' class="text-primary" role="button">
                                     <u>{{ $data->aktual }}</u></td>
+
                                 <td>{{ formatRupiah($data->harga_satuan) }}</td>
                                 <td>{{ formatRupiah($data->harga) }}</td>
                                 <td>{{ formatRupiah($data->diskon) }}</td>
                                 <td wire:click='showRemark("{{ $data->id }}")' role="button" class="text-primary">
+
                                     <u>{{ $data->remark ?? '-' }}</u></td>
+
                                 <td>
                                     @if ($data->status == 'WAITING')
                                         <span wire:click='confirmed("{{ $data->id }}")' role="button"
